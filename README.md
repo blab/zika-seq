@@ -10,6 +10,14 @@ Install Python dependencies:
 
     pip install -r requirements.txt
 
+## Data sync
+
+From `zika-seq` run:
+
+    rsync -azP tbedford@rhino.fhcrc.org:/fh/fast/bedford_t/zika-seq/data/ data/
+
+Replacing `tbedford` with your username.
+
 ## Bioinformatic pipeline
 
 Data lives in the [`data/`](data/) directory and is not versioned within the repo. Directory structure described in its [README.md](data/).
