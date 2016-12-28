@@ -10,6 +10,13 @@ Install Python dependencies:
 
     pip install -r requirements.txt
 
+Build [SSW Library](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library):
+
+    git clone https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library.git
+    cd Complete-Striped-Smith-Waterman-Library/src/
+    cp libssw.so <path to zika-seq>/zika-seq/scripts/
+    cp ssw_lib.py <path to zika-seq>/zika-seq/scripts/
+    
 ## Data sync
 
 From `zika-seq` run:
@@ -26,7 +33,7 @@ Data lives in the [`data/`](data/) directory and is not versioned within the rep
 
 Convert raw MinION output to FAST5
 
-    metrichor-cli -a <API KEY> -w 1289 -f - -i <directory_with_fast5s> -o downloads
+    metrichor-cli
 
 ### Convert to FASTA/FASTQ
 
