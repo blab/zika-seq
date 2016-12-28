@@ -26,7 +26,7 @@ Data lives in the [`data/`](data/) directory and is not versioned within the rep
 
 Convert raw MinION output to FAST5
 
-    metrichor-cli
+    metrichor-cli -a <API KEY> -w 1289 -f - -i <directory_with_fast5s> -o downloads
 
 ### Convert to FASTA/FASTQ
 
