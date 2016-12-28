@@ -10,13 +10,26 @@ Install Python dependencies:
 
     pip install -r requirements.txt
 
-Build [SSW Library](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library):
+Install [SSW Library](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library):
 
     git clone https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library.git
     cd Complete-Striped-Smith-Waterman-Library/src/
     cp libssw.so <path to zika-seq>/zika-seq/scripts/
     cp ssw_lib.py <path to zika-seq>/zika-seq/scripts/
-    
+
+Install [marginAlign](https://github.com/benedictpaten/marginAlign):
+
+    git clone https://github.com/benedictpaten/marginAlign.git
+    cd marginAlign
+    git submodule update --init --recursive
+    make
+    export PATH=<path to marginAlign>/marginAlign/:$PATH
+
+Install [samtools](https://github.com/samtools/samtools):
+
+   brew tap homebrew/science
+   brew install samtools
+
 ## Data sync
 
 From `zika-seq` run:
@@ -35,9 +48,8 @@ Convert raw MinION output to FAST5
 
     metrichor-cli -a <API KEY> -w 1289 -f - -i <directory_with_fast5s> -o downloads
 
-### Convert to FASTA/FASTQ
+### Run pipeline
 
-Extract basecalled information from nanopore FAST5 files
+Run poretools, marginAlign, samtools:
 
-    poretools fasta --type 2D pass/
-    poretools fasta --type 2D --highquality fail/
+    python run.py
