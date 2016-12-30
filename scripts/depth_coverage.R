@@ -19,7 +19,7 @@ roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
   10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
 }
 
-makeOverlapGraphs <- function(pool1,pool2,minSeqDepth=40) {
+makeOverlapGraphs <- function(pool1,pool2) {
   
   path1 <- paste('/Users/bpotter/zika-seq-local/',pool1,'/processed/chr1.coverage',sep='')
   path2 <- paste('/Users/bpotter/zika-seq-local/',pool2,'/processed/chr1.coverage',sep='')
@@ -36,15 +36,34 @@ makeOverlapGraphs <- function(pool1,pool2,minSeqDepth=40) {
   graphHeight <- roundUpNice(maxDepth * 1.1)
   graphHeight
   
+  p20 <- 0
+  p40 <- 0
+  shorter = min(max(n1.chr1$locus),max(n2.chr1$locus))
+  for (i in 1:shorter) {
+    a = n1.chr1$depth[i]
+    b = n2.chr1$depth[i]
+    if (!is.na(a) & !is.na(b)) {
+      if ((a + b) >= 40) {
+        p20 <- p20 + (1/shorter)
+        p40 <- p40 + (1/shorter)
+      } else if ((a + b) >= 20) {
+        p20 <- p20 + (1/shorter)
+      }
+    }
+  }
+  
+  print(round(p20,digits = 4))
+  print(round(p40,digits = 4))
+  
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
   lines(x=n2.chr1$locus,y=n2.chr1$depth,col="green")
-  abline(a=minSeqDepth,b=0,col="orange",lwd=0.5)
+  abline(a=20,b=0,col="orange",lwd=0.5)
+  abline(a=20,b=0,col="red",lwd=0.75)
   grid()
   legend(0,max(n1.chr1$depth),c(pool1,pool2),lty=c(1,1),lwd=c(2.5,2.5),col=c('black','green'))
   dev.off()
   rm(list=ls())
-  
 }
 
 makeOverlapGraphs('NB01','NB07')

@@ -9,9 +9,14 @@
 6. Fill in <name1> and <name2> into pool1 and pool2 in `depth_coverage.R`
 7. Stats acquired using `poretools stats <path/to/base/called/reads`
 
+Reported p20 and p40 values represent percentage of the Zika genome which has at coverage of at least 20/40 reads, respectively.
+
 #### Overlap graphs and stats on `pass` libraries
 ##### NB01-NB07 Overlap
 ![](figures/Coverage-Overlap-NB01-NB07.png)
+
+p20: 0.9702
+p40: 0.9671
 
 |                 	| NB01     	| NB07     	|
 |------------------	|---------	|---------	|
@@ -28,6 +33,9 @@
 ##### NB02-NB08 Overlap
 ![](figures/Coverage-Overlap-NB02-NB08.png)
 
+p20: 0.8412
+p40: 0.7145
+
 |                 	| NB02     	| NB08     	|
 |------------------	|---------	|---------	|
 | total reads      	| 8277    	| 6462    	|
@@ -42,6 +50,9 @@
 
 ##### NB03-NB09 Overlap
 ![](figures/Coverage-Overlap-NB03-NB09.png)
+
+p20: 0.6571
+p40: 0.5022
 
 |                 	| NB03     	| NB09     	|
 |------------------	|---------	|---------	|
@@ -58,6 +69,9 @@
 ##### NB04-NB010 Overlap
 ![](figures/Coverage-Overlap-NB04-NB10.png)
 
+p20: 0.9384
+p40: 0.9087
+
 |                 	| NB04    	| NB10    	|
 |------------------	|---------	|---------	|
 | total reads      	| 12381   	| 7224    	|
@@ -73,6 +87,9 @@
 ##### NB05-NB11 Overlap
 ![](figures/Coverage-Overlap-NB05-NB11.png)
 
+p20: 0.9066
+p40: 0.8737
+
 |                 	| NB05    	| NB11    	|
 |------------------	|---------	|---------	|
 | total reads      	| 13479   	| 9558    	|
@@ -87,6 +104,9 @@
 
 ##### NB06-NB12 Overlap
 ![](figures/Coverage-Overlap-NB06-NB12.png)
+
+p20: 0
+p40: 0
 
 |                 	| NB06    | NB12   	|
 |------------------	|--------	|-------- |
