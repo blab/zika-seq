@@ -13,30 +13,44 @@
 #         NB04,NB10
 #         NB05,NB11
 #         NB06,NB12
+roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
+  if(length(x) != 1) stop("'x' must be of length 1")
+  10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
+}
 
-pool1 <- 'NB06'
-pool2 <- 'NB12'
+makeOverlapGraphs <- function(pool1,pool2) {
+  
+  path1 <- paste('/Users/bpotter/zika-seq-local/',pool1,'/processed/chr1.coverage',sep='')
+  path2 <- paste('/Users/bpotter/zika-seq-local/',pool2,'/processed/chr1.coverage',sep='')
+  pngName <- paste('/Users/bpotter/zika-seq-local/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
+  
+  n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
+  n2.chr1 <- read.table(path2, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
+  
+  library(reshape)
+  n1.chr1<-rename(n1.chr1,c(V1="Chr", V2="locus", V3="depth"))
+  n2.chr1<-rename(n2.chr1,c(V1="Chr", V2="locus", V3="depth"))
+  
+  maxDepth <- max(max(n1.chr1$depth),max(n2.chr1$depth))
+  graphHeight <- roundUpNice(maxDepth * 1.1)
+  graphHeight
+  
+  png(file=pngName,width=1200,height=600)
+  plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
+  lines(x=n2.chr1$locus,y=n2.chr1$depth,col="green")
+  grid()
+  legend(0,max(n1.chr1$depth),c(pool1,pool2),lty=c(1,1),lwd=c(2.5,2.5),col=c('black','green'))
+  dev.off()
+  rm(list=ls())
+  
+}
 
-path1 <- paste('/Users/bpotter/zika-seq/',pool1,'/processed/chr1.coverage',sep='')
-path1
-path2 <- paste('/Users/bpotter/zika-seq/',pool2,'/processed/chr1.coverage',sep='')
-path2
-pngName <- paste('/Users/bpotter/zika-seq/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
-pngName
+makeOverlapGraphs('NB01','NB07')
+makeOverlapGraphs('NB02','NB08')
+makeOverlapGraphs('NB03','NB09')
+makeOverlapGraphs('NB04','NB10')
+makeOverlapGraphs('NB05','NB11')
+makeOverlapGraphs('NB06','NB12')
 
-n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
-n1.chr1
-n2.chr1 <- read.table(path2, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
-n2.chr1
 
-library(reshape)
-n1.chr1<-rename(n1.chr1,c(V1="Chr", V2="locus", V3="depth"))
-n2.chr1<-rename(n2.chr1,c(V1="Chr", V2="locus", V3="depth"))
 
-png(file=pngName,width=1200,height=600)
-plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only")
-lines(x=n2.chr1$locus,y=n2.chr1$depth,col="green")
-legend(0,max(n1.chr1$depth),c(pool1,pool2),lty=c(1,1),lwd=c(2.5,2.5),col=c('black','green'))
-# dev.copy(png,pngName)
-dev.off()
-rm(list=ls())
