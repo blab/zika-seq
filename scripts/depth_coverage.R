@@ -58,10 +58,10 @@ makeOverlapGraphs <- function(pool1,pool2) {
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
   lines(x=n2.chr1$locus,y=n2.chr1$depth,col="green")
-  abline(a=20,b=0,col="orange",lwd=0.5)
+  abline(a=40,b=0,col="orange",lwd=0.5)
   abline(a=20,b=0,col="red",lwd=0.75)
   grid()
-  legend(0,max(n1.chr1$depth),c(pool1,pool2),lty=c(1,1),lwd=c(2.5,2.5),col=c('black','green'))
+  legend(0,(.95 * graphHeight),c(pool1,pool2,'40 read depth','20 read depth'),lty=c(1,1,1,1),lwd=c(2.5,2.5,1,1.5),col=c('black','green','orange','red'))
   dev.off()
   rm(list=ls())
 }
