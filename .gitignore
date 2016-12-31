@@ -1,7 +1,5 @@
 # For zika-seq repo #
 environment*
-data/libraries/
-scripts/ssw_lib.py
 
 # Jekyll #
 ##########
