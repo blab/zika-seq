@@ -1,5 +1,9 @@
-# Sample metadata
+# Sample and library metadata
 
-Line list of sample data is in `samples.tsv`. This obeys the following schema:
+## Samples
 
-* `strain`: This study / strain ID in the form of `ZVI1`, `ZVI2`, etc... This is the *primary key* of the table and is required for every sample.
+Line list of sample data is in [`samples.tsv`](samples.tsv).
+
+## Libraries
+
+Line list of library data is in [`libraries.tsv`](libraries.tsv)
