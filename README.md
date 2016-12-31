@@ -27,8 +27,8 @@ Install [marginAlign](https://github.com/benedictpaten/marginAlign):
 
 Install [samtools](https://github.com/samtools/samtools):
 
-   brew tap homebrew/science
-   brew install samtools
+    brew tap homebrew/science
+    brew install samtools
 
 ## Data sync
 

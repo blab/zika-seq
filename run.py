@@ -17,7 +17,7 @@ for library in libraries:
             os.makedirs(output_dir)
         f = open(output_file, "w")
         call = map(str, ['poretools', 'fastq', '--type', '2D', input_dir])
-        print(" ".join(call))
+        print('* ' + ' '.join(call))
         subprocess.call(call, stdout=f)
 
         # marginAlign to reference
@@ -30,7 +30,7 @@ for library in libraries:
         call = map(str, ['marginAlign', input_file, 'refs/Zika_FP.fasta', output_file])
         if os.path.exists('jobTree'):
             shutil.rmtree('jobTree')
-        print(" ".join(call))
+        print('* ' + ' '.join(call))
         subprocess.call(call)
         if os.path.exists('jobTree'):
             shutil.rmtree('jobTree')
@@ -43,7 +43,7 @@ for library in libraries:
             os.makedirs(output_dir)
         # samtools view -bS file.sam | samtools sort -o file_sorted
         call = 'samtools view -bS ' + input_file + ' | samtools sort -o ' + output_file
-        print(call)
+        print('* ' + call)
         subprocess.call(call, shell=True)
 
         # samtools create index from sorted bam
@@ -51,5 +51,5 @@ for library in libraries:
         output_file = 'data/libraries/' + library + '/bam_reads/' + barcode + '.bai'
         # samtools index test_sorted.bam test_sorted.bai
         call = map(str, ['samtools', 'index', input_file, output_file])
-        print(" ".join(call))
+        print('* ' + ' '.join(call))
         subprocess.call(call)
