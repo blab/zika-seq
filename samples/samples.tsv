@@ -1,6 +1,6 @@
-sample_id	collection_date	country	region	location	usvi_sample_id
-USVI/1/2016	2016-09-28	usvi	saint_croix	saint_croix	16VI2395U
-USVI/2/2016	2016-09-28	usvi	saint_croix	saint_croix	16VI2392U
-USVI/3/2016	2016-09-26	usvi	saint_thomas	saint_thomas	16VI2388U
-USVI/4/2016	2016-10-14	usvi	saint_thomas	saint_thomas	16VI24623
-USVI/5/2016	2016-10-17	usvi	saint_thomas	saint_thomas	16VI24624
+sample_id	strain	collection_date	country	region	location	usvi_sample_id
+VI1	USVI/1/2016	2016-09-28	usvi	saint_croix	saint_croix	16VI2395U
+VI2	USVI/2/2016	2016-09-28	usvi	saint_croix	saint_croix	16VI2392U
+VI3	USVI/3/2016	2016-09-26	usvi	saint_thomas	saint_thomas	16VI2388U
+VI4	USVI/4/2016	2016-10-14	usvi	saint_thomas	saint_thomas	16VI24623
+VI5	USVI/5/2016	2016-10-17	usvi	saint_thomas	saint_thomas	16VI24624
