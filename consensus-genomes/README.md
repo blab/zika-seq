@@ -12,7 +12,7 @@ Isolates `USVI/1/2016` to `USVI/5/2016` in `ZIKA_USVI_good.fasta` and `ZIKA_USVI
 
 Please cite as:
 
-> Allison Black A, Potter B, Dudas G, Feldstein L, Ellis BR, Ellis EM, Bedford T. 2017. Genetic characterization of the Zika virus epidemic in the US Virgin Islands. DOI: 10.5281/zenodo.229477.
+> Black A, Potter B, Dudas G, Feldstein L, Ellis BR, Ellis EM, Bedford T. 2017. Genetic characterization of the Zika virus epidemic in the US Virgin Islands. DOI: 10.5281/zenodo.229477.
 
 Citation is subject to revision.
 
