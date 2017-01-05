@@ -22,7 +22,7 @@ _additional thanks to Josh and Nate for lots of useful advice, which I've tried 
 
 _Perform the following in a hood or in a pre-PCR designated area_
 
-#### Reverse Transcription
+##### Reverse Transcription
 
 1. For each sample, mix the following in a PCR tube (preferably individually-hinged strip tubes):
 
@@ -43,7 +43,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
   * 80 degrees Celsius for 5 minutes
   * Hold at 10 degrees Celsius
 
-#### Amplification PCR
+##### Amplification PCR
 
 6. Make the following mastermix in a 1.5 mL tube. You will need both a Pool 1 mastermix and a Pool 2 mastermix.
 
@@ -67,7 +67,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
 
 ## Post-PCR clean-up and amplicon quantification
 
-#### Clean-up
+##### Clean-up
 
 1. Label two sets of DNA Lo-Bind tubes (one set for bead clean-up and the other for eluate with cleaned up amplicons)
 2. Allow AMPure XP beads to come up to room temperature, and homogenize by vortexing.
@@ -85,7 +85,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
 14. Replace tubes on magnetic rack and incubate until solution fully clears.
 15. Carefully pipette off 31 uL of supernatant without disturbing beads and place into new Lo-Bind tubes.
 
-#### Quantification
+##### Quantification
 
 _You should use the Qubit High Sensitivity dsDNA kit_
 
@@ -105,7 +105,7 @@ _You should use the Qubit High Sensitivity dsDNA kit_
 
 ## MinION Library Preparation
 
-#### Normalize amplicon concentrations
+##### Normalize amplicon concentrations
 
 _turn on 65 degree Celsius dry bath on now_
 
@@ -125,7 +125,7 @@ _example where target amount is 150 ng per pool_
 | samp1_pool1   | 41.8 ng/uL         | 3.6 uL           | 26.4 uL      |
 | samp1_pool2   | 55.4 ng/uL         | 2.7 uL           | 23.7 uL      |
 
-#### End repair and clean-up
+##### End repair and clean-up
 
 1. Add the following to each sample:
 
@@ -139,7 +139,7 @@ _example where target amount is 150 ng per pool_
 
 **this time resuspend pellet in 15 uL nuclease-free water**
 
-#### Barcoding and pooled clean-up
+##### Barcoding and pooled clean-up
 
 1. Thaw a native barcode for each sample. _for 6 genomes you'll have 12 barcodes since each pool has it's own barcode_
 2. Add 5 uL of one of the barcodes NB01-NB12 to the appropriate sample. Mix by inversion.
@@ -155,12 +155,12 @@ _example where target amount is 150 ng per pool_
 12. Allow pellet to air dry to the point that the pellet looks matte but not cracked. _because of the size of the pellet this can take a while. You can speed this up a bit by incubating for short periods at 65 degrees Celsius. Ensure you keep checking the pellet periodically though so you don't over dry._
 13. Elute the pooled reaction in 39 uL of nuclease-free water, resuspend pellet and incubate at room temperature on a hula mixer for 5 minutes. Remove the supernatant to a clean Lo-Bind tube.
 
-#### Pooled library quantification
+##### Pooled library quantification
 
 1. Prepare Qubit standards and sample reactions as described above.
 2. Target is >1000 ng DNA in the remaining 38 uL of pooled library.
 
-#### MinION adaptor ligation
+##### MinION adaptor ligation
 
 1. Add 10 uL BAM to cleaned-up library. Mix by inversion.
 2. Then add 2 uL BHP. Mix by inversion.
@@ -169,14 +169,19 @@ _example where target amount is 150 ng per pool_
 5. Add 1 uL HPT. Mix by inversion and spin down.
 6. Incubate at room temperature for 10 minutes.
 
-> MyONE CI bead preparation
-1. Vortex MyOne C1 beads until homogenous.
-2. Pipette 50 uL of beads and transfer to new Lo-Bind tube.
-3. Pellet beads on magnetic rack and discard supernatant.
-4. Wash beads twice with 100 uL BBB pipetting to resuspend. Ensure to scrape beads off of tube sides when resuspending pellets. Discard supernatant. Do not let the beads dry after the second wash.
-5. Resuspend cleaned beads in 100 uL BBB. These cleaned beads will be used for adaptor ligation clean-up.
+> MyONE C1 bead preparation
 
-#### Purify the adapted,tethered library
+> 1. Vortex MyOne C1 beads until homogenous.
+
+>2. Pipette 50 uL of beads and transfer to new Lo-Bind tube.
+
+>3. Pellet beads on magnetic rack and discard supernatant.
+
+>4. Wash beads twice with 100 uL BBB pipetting to resuspend. Ensure to scrape beads off of tube sides when resuspending pellets. Discard supernatant. Do not let the beads dry after the second wash.
+
+>5. Resuspend cleaned beads in 100 uL BBB. These cleaned beads will be used for adaptor ligation clean-up.
+
+##### Purify the adapted,tethered library
 
 1. Add 100 uL washed MyOne C1 beads to the adapted,tethered library.
 2. Incubate at room temperature on a hula mixer for 5 minutes.
@@ -184,6 +189,35 @@ _example where target amount is 150 ng per pool_
 4. Wash pellet twice with 150 uL of BBB pipetting to resuspend the pellet **after each wash**.
 5. Spin down, replace tube on magnet and pipette off any residual BBB. Close lid, **do not let pellet dry**.
 6. Resuspend the beads in 25 uL of ELB. _you'll need to scrape the beads off of the tube walls to ensure you fully resuspend the beads. This can take a while, but it's important to do it well to get sufficient library. The tube sides should not show any smear of beads._
-7. Pellet beads on magnetic rack and transfer eluate to new Lo-Bind tube.
+7. Pellet beads on magnetic rack and transfer eluate (tethered,adapted library in ELB) to new Lo-Bind tube.
 
-#### Adapted, tethered library quantification
+##### Adapted, tethered library quantification and normalization
+
+1. Make up Qubit Master Mix and standards as before.
+2. Quantify adapted, tethered library using 1 uL of library to 199 uL Qubit Master Mix.
+3. Determine the total ng of library, target is >100 ng. _if you have >200 ng of library you have enough adapted, tethered library for a second run. You can save this leftover library by keeping it at -20 degrees Celsius._
+4. Normalize the library to have 100 ng of library loaded on the flowcell. Bring library up to 37.5 uL volume with nuclease-free water. _multiply the library concentration by 24 uL (amount of library left post quantification) to determine total ng of library._
+
+| Library       |   concentration    | total_amt_library | volume_library_needed | volume_nfw |
+| ------------- |--------------------| ------------------|-----------------------|------------|
+| library1      | 9.9 ng/uL          |      237.6 ng     |       10.1 uL         | 27.4 uL    |
+
+5. Add 37.5 uL of RBF1 at room temperature to the library/nuclease-free water solution. Total library+RBF1 volume will be 75 uL. _this volume is specific to R9.4 spot on flow cells. If you're using an older non-spot on flowcell follow the protocol for your flowcell version._
+6. Mix by inversion and spin down.
+
+## Prime MinION flowcell and load the library (with lots of notes drawn from experience making mistakes)
+
+**protocol assumes a R9.4 spot on flowcell**
+
+_Ensure you've aleady QC'd the flowcell to determine the number of active pores._
+
+_Because the priming process takes a bit of time, you can do the priming steps during incubation periods earlier on in the protocol._
+
+1. Prepare the priming solution by mixing 500 uL of RBF1 with 500 uL of nuclease-free water. Mix by inversion and spin down. _use the same pipette to ensure that the ratio is correct even if there is error in the pipette._
+2. Open the sample port on the flowcell (leave the SpotON port closed). Draw back a few uL of buffer to ensure there's fluid up to the lip of the sample port. _this is to prevent you from introducing bubbles when priming the flowcell. This is easiest to do by inserting the tip of the pipette into the port and rather than drawing up volume using your normal pipetting action, simply adjust the pipette to increase the volume it holds, which very slowly allows you to draw up the buffer, ensuring you don't take up too much. This will also prevent shakes where you might accidentally push more buffer than you drew up into the flowcell, introducing a bubble._
+3. Load 500 uL of priming solution via the sample port. Wait 10 minutes. _again, it's more accident proof to load this by adjusting the pipette volume down rather than using a normal pipetting push down. Leave a few uL of priming solution in pipette tip to prevent introduction of a bubble._
+4. Load 300 uL of priming solution via the sample port. Wait 10 minutes.
+5. Lift the SpotON tab to reveal the SpotON port. Load 200 uL of priming solution via the SpotON port. _you want to avoid hitting the port with the pipette tip. To load slowly push a droplet of fluid out of the tip and touch the edge of the droplet to the port which should pull the droplet off the tip and into the port._
+6. Load the library+RBF1 mixture via the SpotON port using the same technique. _IMPORTANT: sometimes the capillary action doesn't work, and your first droplet of library just sits on the SpotON port without getting sucked in. If this happens don't panic, just make up another 200 uL of priming solution (100 uL of RBF1 + 100 uL of nuclease-free water) and repeat your 200 uL prime via the SpotON port. Then load the library after this second spot on prime._
+7. Close the sample port and SpotON port, making sure the bung goes into the SpotON port hole. Close the MinION lid.
+8. In MinKNOW choose the MAP_48Hr_Sequencing_Run_SQK_LSK208_FLOMIN106.py program. _Frustratingly there are pretty regular updates for MinKNOW and the autoupdate function doesn't seem to work on Mac. So if you're using a Mac as your sequencing laptop you'll probably need to do a complete uninstall and reinstall of MinKNOW each time there is an update. Also, if the MinKNOW run isn't working once you've started the sequencing run (e.g. performs calibration but never moves along to sequencing) try uninstalling and reinstalling MinKNOW and restarting the run._
