@@ -1,16 +1,12 @@
-# Protocol for multiplex PCR and sequencing of Zika virus from clinical isolates
+_This protocol is a bench-ready version of the protocol presented in the following paper_
 
-Version 1.0 (Jan 5 2016)
+# Multiplex PCR method for MinION and Illumina sequencing of Zika and other virus genomes directly from clinical samples
 
-Allison Black (black.alli@gmail.com)
+#### Josh Quick<sup>1</sup>1, Nathan D Grubaugh<sup>2</sup>, Steven T Pullan<sup>3</sup>, Ingra M Claro<sup>4</sup>, Andrew D Smith<sup>1</sup>, Karthik Gangavarapu<sup>2</sup>, Glenn Oliveira<sup>5</sup>, Refugio Robles-Sikisaka<sup>2</sup>, Thomas F Rogers<sup>2,6</sup>, Nathan A Beutler<sup>2</sup>, Dennis R Burton<sup>2</sup>, Lia Laura Lewis-Ximenez<sup>7</sup>, Jaqueline Goes de Jesus<sup>8</sup>, Marta Giovanetti<sup>8,9</sup>, Sarah Hill<sup>10</sup>, Allison Black<sup>11,12</sup>, Trevor Bedford<sup>11</sup>, Miles W Carroll<sup>3,13</sup>, Marcio Nunes<sup>14</sup>, Luiz Carlos Jr. Alcantara<sup>7</sup>, Ester C Sabino<sup>4</sup>, Sally A Baylis<sup>15</sup>, Nuno Faria<sup>9</sup>, Matthew Loose<sup>16</sup>, Jared T Simpson<sup>17</sup>, Oliver G Pybus<sup>10</sup>, Kristian G Andersen<sup>2,5</sup>, Nicholas J Loman<sup>1</sup>
 
-_please note that I did not develop this protocol; all credit goes towards the individuals listed below._
+<sup>1</sup>Institute of Microbiology and Infection, School of Biosciences, University of Birmingham, Birmingham, UK. <sup>2</sup>The Scripps Research Institute, La Jolla, CA, USA. <sup>3</sup>Public Health England, National infection Service, Porton Down, Salisbury, UK. <sup>4</sup>Department of Infectious Disease and Institute of Tropical Medicine, University of Saõ Paulo, Saõ Paulo, Brazil. <sup>5</sup>Scripps Translational Science Institute, La Jolla, CA, USA. <sup>6</sup>Massachusetts General Hospital, Boston, USA. <sup>7</sup>Instituto Oswaldo Cruz, Fundação Oswaldo Cruz, Rio de Janeiro <sup>8</sup>Fiocruz Bahia, Salvador, Brazil. <sup>9</sup>University of Rome, Tor Vergata. <sup>10</sup>Department of Zoology, University of Oxford, Oxford, UK. <sup>11</sup>Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Research Center, Seattle, USA. <sup>12</sup>Department of Epidemiology, University of Washington, Seattle, USA. <sup>13</sup>University of Southampton, South General Hospital, Southampton, UK. <sup>14</sup>Instituto Evandro Chagas, Belem, Brazil. <sup>15</sup>Paul-Ehrlich-Institut, Langen, Germany. <sup>16</sup>University of Nottingham, Nottingham, UK. <sup>17</sup>OICR, Toronto, Canada.
 
-* Multiplex PCR: Josh Quick and Nick Loman, University of Birmingham
-* MinION sequencing protocol: Josh Quick and Nick Loman, University of Birmingham
-* MiSeq sequencing protocol: Nathan Grubaugh, The Scripps Research Institute
-
-_additional thanks to Josh and Nate for lots of useful advice, which I've tried to work in to the protocol as helpful hints_
+_Additional thanks to Josh and Nathan for lots of useful advice, which I've tried to work in to the protocol as helpful hints._
 
 ## Equipment and Reagent Checklist
 
