@@ -1,28 +1,84 @@
 # Protocol for multiplex PCR and sequencing of Zika virus from clinical isolates
 
 Version 1.0 (Jan 5 2016)
+
 Allison Black (black.alli@gmail.com)
 
 _please note that I did not develop this protocol; all credit goes towards the individuals listed below._
+
 * Multiplex PCR: Josh Quick and Nick Loman, University of Birmingham
 * MinION sequencing protocol: Josh Quick and Nick Loman, University of Birmingham
 * MiSeq sequencing protocol: Nathan Grubaugh, The Scripps Research Institute
 
-_additional thanks to Josh and Nate for lots of useful advice, which I've tried to work in to the protocol where appropriate_
+_additional thanks to Josh and Nate for lots of useful advice, which I've tried to work in to the protocol as helpful hints_
 
 ## Equipment and Reagent Checklist
 
+##### Tiling amplicon generation
+* QIAamp Viral RNA Mini Kit (Qiagen, cat. no. 52906)
+* Random Hexamers (50 µM) (Thermo Fisher, cat. no. N8080127)
+* Protoscript II First Strand cDNA Synthesis Kit (NEB, cat. no. E6560)
+* Deoxynucleotide (dNTP) Solution Mix (NEB, cat. no. N0447)
+* Q5 Hot Start High-Fidelity DNA Polymerase (NEB, cat. no. M0493)
+* Custom PCR primers [click here for primer sequences]()
+* Agencourt AMPure XP beads (Beckman Coulter, cat. no. A63881)
+* Qubit dsDNA HS Assay Kit (Thermo Fisher, cat. no. Q32854)
+* HyClone Molecular Biology Grade Water (GE Life Sciences, cat. no. SH30221.10)
+* 100% Ethanol
+
+##### MinION sequencing
+* SpotON Flow Cell Mk I (R9.4) (Oxford Nanopore Technologies, cat. no. FLO-MIN106)
+* Nanopore Sequencing Kit (R9) (Oxford Nanopore Technologies, cat. no. SQK-NSK007)
+* Native Barcoding Kit (Oxford Nanopore Technologies, cat. no. EXP-NBD002)
+* NEBNext Ultra II End-repair/dA-tailing Module (NEB, cat no. E7546)
+* NEB Blunt/TA Ligase Master Mix (NEB, cat. no. M0367)
+* MyOne C1 Streptavidin beads (Thermo Fisher, cat. no. 65001)
+
 ## Protocol
 
-### Viral RNA extraction
+## Viral RNA extraction
 
-1.
+_We use the QiaAMP Viral RNA mini kit, and the protocol below is based off of the manufacturer's instructions. The protocol below is written out assuming a clinical sample volume of 200 uL. Note that you need 4x the amount of Buffer AVL as serum, so set Buffer AVL and carrier RNA amounts based off of your available sample volume. The volume of carrier RNA that should be used is 1/100th the volume of buffer AVL added._
+
+_We've also run this protocol on the QIAcube. To make the protocol compatible we use 140 uL of serum/urine and elution volume of 50 uL_
+
+_Other equivalent extraction methods can also be used (e.g. Trizol, Omega etc.)_
+
+_In addition to the samples, remember to have an extraction negative control (add nuclease-free water instead of serum/urine)._
+
+1.	Remove serum samples from freezer and allow to come up to room temperature.
+2.	Prepare stock solution of Buffer AVL + carrier RNA. _Per sample_ add:
+
+  *	800 uL Buffer AVL
+  * 8 uL Carrier RNA (previously resuspended in Buffer AVE)
+
+3.	Pipette 800 uL of Buffer AVL containing carrier RNA into 2.0 ml tube.
+4.	Add 200 uL of serum or urine to the tube with Buffer AVL.
+5.	Mix sample and buffer AVL by pulse-vortexing for 15 seconds.
+6.	Incubate mixture at room temperature for 10 minutes. Spin down.
+8.	Add 800 uL of 100% Ethanol to the sample + Buffer AVL mixture.
+9.	Mix by pulse vortexing for 15 seconds.
+10.	Spin down fluid from tube walls.
+11.	Take 2ml collection tubes and put the columns in the tubes.
+12. Perform the following 3 times in order to have run all 1800 uL of ethanol+sample+Buffer AVL mixture through the filter column.
+
+  * Pipette 600 uL ethanol+sample+Buffer AVL mixture into the column directly onto the filter. _do not touch tip to filter._
+  * Centrifuge at room temperature at 8000 rpm for 1 minute. Take column out and place in a new 2 mL collection tube.
+
+13.	Add 500 uL of Buffer AW1 to the column. _this volume does not need to be increased even if the sample volume was greater than 200 uL._
+14. Spin sample at 8000 rpm for 1 minute. Transfer column to a new 2 mL collection tube.
+15.	Add 500 uL of Buffer AW2.
+16.	Spin at full speed (14,000 RPM) for 3 minutes. Place column in a new collection tube and spin at full speed for 1 minute.
+17.	Place column in clean, labelled 1.5 mL tube. Add 50 uL of Buffer AVE at room temperature to column.
+18.	Incubate at room temp for 1 minute.
+19.	Centrifuge at room temp at 8000 rpm for 1 minute.
+20.	Place extracted RNA in eluate on ice if proceeding directly to PCR or store in freezer.
 
 ## Two-step RT-PCR for amplicon generation
 
 _Perform the following in a hood or in a pre-PCR designated area_
 
-##### Reverse Transcription
+#### Reverse Transcription
 
 1. For each sample, mix the following in a PCR tube (preferably individually-hinged strip tubes):
 
@@ -43,7 +99,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
   * 80 degrees Celsius for 5 minutes
   * Hold at 10 degrees Celsius
 
-##### Amplification PCR
+#### Amplification PCR
 
 6. Make the following mastermix in a 1.5 mL tube. You will need both a Pool 1 mastermix and a Pool 2 mastermix.
 
@@ -67,7 +123,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
 
 ## Post-PCR clean-up and amplicon quantification
 
-##### Clean-up
+#### Clean-up
 
 1. Label two sets of DNA Lo-Bind tubes (one set for bead clean-up and the other for eluate with cleaned up amplicons)
 2. Allow AMPure XP beads to come up to room temperature, and homogenize by vortexing.
@@ -85,7 +141,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
 14. Replace tubes on magnetic rack and incubate until solution fully clears.
 15. Carefully pipette off 31 uL of supernatant without disturbing beads and place into new Lo-Bind tubes.
 
-##### Quantification
+#### Quantification
 
 _You should use the Qubit High Sensitivity dsDNA kit_
 
@@ -105,7 +161,7 @@ _You should use the Qubit High Sensitivity dsDNA kit_
 
 ## MinION Library Preparation
 
-##### Normalize amplicon concentrations
+#### Normalize amplicon concentrations
 
 _turn on 65 degree Celsius dry bath on now_
 
@@ -125,7 +181,7 @@ _example where target amount is 150 ng per pool_
 | samp1_pool1   | 41.8 ng/uL         | 3.6 uL           | 26.4 uL      |
 | samp1_pool2   | 55.4 ng/uL         | 2.7 uL           | 23.7 uL      |
 
-##### End repair and clean-up
+#### End repair and clean-up
 
 1. Add the following to each sample:
 
@@ -139,7 +195,7 @@ _example where target amount is 150 ng per pool_
 
 **this time resuspend pellet in 15 uL nuclease-free water**
 
-##### Barcoding and pooled clean-up
+#### Barcoding and pooled clean-up
 
 1. Thaw a native barcode for each sample. _for 6 genomes you'll have 12 barcodes since each pool has it's own barcode_
 2. Add 5 uL of one of the barcodes NB01-NB12 to the appropriate sample. Mix by inversion.
@@ -155,12 +211,12 @@ _example where target amount is 150 ng per pool_
 12. Allow pellet to air dry to the point that the pellet looks matte but not cracked. _because of the size of the pellet this can take a while. You can speed this up a bit by incubating for short periods at 65 degrees Celsius. Ensure you keep checking the pellet periodically though so you don't over dry._
 13. Elute the pooled reaction in 39 uL of nuclease-free water, resuspend pellet and incubate at room temperature on a hula mixer for 5 minutes. Remove the supernatant to a clean Lo-Bind tube.
 
-##### Pooled library quantification
+#### Pooled library quantification
 
 1. Prepare Qubit standards and sample reactions as described above.
 2. Target is >1000 ng DNA in the remaining 38 uL of pooled library.
 
-##### MinION adaptor ligation
+#### MinION adaptor ligation
 
 1. Add 10 uL BAM to cleaned-up library. Mix by inversion.
 2. Then add 2 uL BHP. Mix by inversion.
@@ -181,7 +237,7 @@ _example where target amount is 150 ng per pool_
 
 >5. Resuspend cleaned beads in 100 uL BBB. These cleaned beads will be used for adaptor ligation clean-up.
 
-##### Purify the adapted,tethered library
+#### Purify the adapted,tethered library
 
 1. Add 100 uL washed MyOne C1 beads to the adapted,tethered library.
 2. Incubate at room temperature on a hula mixer for 5 minutes.
@@ -191,7 +247,7 @@ _example where target amount is 150 ng per pool_
 6. Resuspend the beads in 25 uL of ELB. _you'll need to scrape the beads off of the tube walls to ensure you fully resuspend the beads. This can take a while, but it's important to do it well to get sufficient library. The tube sides should not show any smear of beads._
 7. Pellet beads on magnetic rack and transfer eluate (tethered,adapted library in ELB) to new Lo-Bind tube.
 
-##### Adapted, tethered library quantification and normalization
+#### Adapted, tethered library quantification and normalization
 
 1. Make up Qubit Master Mix and standards as before.
 2. Quantify adapted, tethered library using 1 uL of library to 199 uL Qubit Master Mix.
