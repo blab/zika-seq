@@ -20,7 +20,7 @@ _additional thanks to Josh and Nate for lots of useful advice, which I've tried 
 * Protoscript II First Strand cDNA Synthesis Kit (NEB, cat. no. E6560)
 * Deoxynucleotide (dNTP) Solution Mix (NEB, cat. no. N0447)
 * Q5 Hot Start High-Fidelity DNA Polymerase (NEB, cat. no. M0493)
-* Custom PCR primers [click here for primer sequences]()
+* Custom PCR primers [click here for primer sequences](zika-multiplex-primers.xls)
 * Agencourt AMPure XP beads (Beckman Coulter, cat. no. A63881)
 * Qubit dsDNA HS Assay Kit (Thermo Fisher, cat. no. Q32854)
 * HyClone Molecular Biology Grade Water (GE Life Sciences, cat. no. SH30221.10)
