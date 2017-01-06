@@ -40,7 +40,7 @@ _example where target amount is 150 ng per pool_
 2. Add 5 uL of one of the barcodes NB01-NB12 to the appropriate sample. Mix by inversion.
 3. Add 20 uL of Blunt/TA Ligase Master Mix to each tube. Mix by inversion. Spin down.
 4. Incubate at room temperature for 10 minutes.
-5. Incubate at 65 degrees Celsius for 5 minutes to kill ligase. _Ensure that the temperature is correct. Samples will be pooled after this step so you need to prevent any further ligation that may cause sample-barcode mixtures._
+5. Incubate at 65 degrees Celsius for 10 minutes to kill ligase. _Ensure that the temperature is correct. Samples will be pooled after this step so you need to prevent any further ligation that may cause sample-barcode mixtures._
 6. Pool all of the samples together into a single Lo-Bind tube. If you have 12 samples the total volume will be 480 uL.
 7. Add 480 uL AMPure XP beads to the pooled samples (1:1 clean-up). _if fewer than 12 samples, add the same volume of beads as pooled samples_
 8. Incubate at room temperature on a hula mixer for 5 minutes.
