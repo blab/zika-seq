@@ -4,7 +4,7 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 
 ### The following primers should be pooled at a concentration of **10 uM**:
 
-|Pool 1                   |
+|Pool 1      |            |
 |------------|------------|
 |400_1_out_L |400_1_out_R |
 |400_5_out_L |400_5_out_R |
@@ -19,7 +19,7 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 |400_31_out_L|400_31_out_R|  
 |400_35_out_L|400_35_out_R|
 
-|Pool 2                   |
+|Pool 2      |            |
 |------------|------------|
 |400_2_out_L |400_2_out_R |
 |400_4_out_L |400_4_out_R |
@@ -33,7 +33,7 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 
 #### These primers should be pooled at a concentration of **50uM**:
 
-|Pool 1                     |
+|Pool 1       |             |
 |-------------|-------------|
 |400_3_out_L* |400_3_out_R* |
 |400_9_out_L* |400_9_out_R* |
@@ -41,7 +41,7 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 |400_20_out_L*|400_20_out_R*|
 |400_33_out_L*|400_33_out_R*|
 
-|Pool 2                     |
+|Pool 2       |             |
 |-------------|-------------|
 |400_8_out_L* |400_8_out_R* |
 |400_14_out_L*|400_14_out_R*|
@@ -50,12 +50,12 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 
 #### These primers should be pooled at a concentration of **100uM**:
 
-| Pool 1                         |
+| Pool 1        |                |
 |---------------|----------------|
 |400_17_out_L** | 400_17_out_R** |
 |400_25_out_L** | 400_25_out_R** |
 
-|Pool 2                          |
+|Pool 2         |                |
 |---------------|----------------|
 |400_18_out_L** | 400_18_out_R** |
 |400_22_out_L** | 400_22_out_R** |
