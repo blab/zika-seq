@@ -10,6 +10,8 @@
 
 > Quick J, Grubaugh ND, Pullan ST, Claro IM, Smith AD, Gangavarapu K, Oliveira G, Robles-Sikisaka R, Rogers TF, Beutler NA, Burton DR, Lewis-Ximenez LL, Goes de Jesus J, Giovanetti M, Hill S, Black A, Bedford T, Carroll MW, Nunes M, Alcantara LCJ, Sabino EC, Baylis SA, Faria N, Loose M, Simpson JT, Pybus OG, Andersen KG, Loman NJ. 2017. Multiplex PCR method for MinION and Illumina sequencing of Zika and other virus genomes directly from clinical samples. In prep.
 
+A pre-print of the paper can be found [here](http://biorxiv.org/content/early/2017/01/09/098913)
+
 *Additional thanks to Josh Quick and Nate Grubaugh for lots of useful advice, which I've tried to work in to the protocol as helpful hints.*
 
 ### Bench protocols
