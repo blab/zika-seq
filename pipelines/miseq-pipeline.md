@@ -2,15 +2,17 @@
 
 ## Data Sync
 
-Data from a completed MiSeq run will be transferred from the Genomics Core to the lab directory on rhino. Data is then transferred to `/fh/fast/bedford_t/zika-seq/data/` to a library specific directory.
+Data from a completed MiSeq run will be transferred from the Genomics Core to the lab directory on the FHCRC Rhino serve. We can then transfer data to `/fh/fast/bedford_t/zika-seq/data/` to a library specific directory.
 
-Data should also be copied onto the sequencing data external harddrive `Volumes/Meristem/data/<library>`
+Data should also be copied onto the sequencing data external hard drive `Volumes/Meristem/data/<library>`
+
+Note that if you make the directory you may need to update permissions to allow others to access the data. Check the permissions with `ls -lah` in the new library directory. If necessary, update permissions with `chmod 775` which allows the whole lab to have read/write/execute access.
 
 ## Bioinformatic pipeline
 
 Here we are using a slightly modified version of the [Andersen lab's bioinformatic pipeline](https://github.com/andersen-lab/zika-pipeline).
 
-Install the following (easiest install is with [Homebrew](http://brew.sh/))
+Install the following (easy installs via [Homebrew](http://brew.sh/))
 
     brew install samtools
     brew install trimmomatic
@@ -26,11 +28,11 @@ We also trim portions of the leading and trailing ends of the reads if those are
 
 Command:
 
-`trimmomatic PE -threads 16  {input.read1} {input.read2} {output.trim1} {output.trim_unpaired1} {output.trim2} {output.trim_unpaired2} ILLUMINACLIP:{input.primer}:2:30:12 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:25 MINLEN:30 HEADCROP:22`
+    trimmomatic PE -threads 16  {input.read1} {input.read2} {output.trim1} {output.trim_unpaired1} {output.trim2} {output.trim_unpaired2} ILLUMINACLIP:{input.primer}:2:30:12 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:25 MINLEN:30 HEADCROP:22
 
 Example with sample number 569, pool 1:
 
-`trimmomatic PE 569-1_S12_L001_R1_001.fastq.gz 569-1_S12_L001_R2_001.fastq.gz 569-1_R1.trimmed.fastq 569-1_R1.trim_unpaired1.fastq 569-1_R2.trimmed.fastq 569-1_R2.trim_unpaired2.fastq ILLUMINACLIP:amplicons_prefix.fa:2:30:12 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:25 MINLEN:30 HEADCROP:22`
+    trimmomatic PE 569-1_S12_L001_R1_001.fastq.gz 569-1_S12_L001_R2_001.fastq.gz 569-1_R1.trimmed.fastq 569-1_R1.trim_unpaired1.fastq 569-1_R2.trimmed.fastq 569-1_R2.trim_unpaired2.fastq ILLUMINACLIP:amplicons_prefix.fa:2:30:12 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:25 MINLEN:30 HEADCROP:22
 
 The vast majority of reads should be in your trimmed fastq files, however because some reads will be unpaired you need to specify an output file for these reads, but they will not be used downstream in the pipeline.
 
@@ -53,11 +55,11 @@ Align reads to reference ZIKV genome Zika (GenBank ID: KU853012) using novoalign
 
 Command:
 
-`novoalign -f {input[0]} {input[1]} -c 16 -r Random -l 40 -g 40 -x 20 -t 502 -d {input[2]} -o SAM | samtools view -F 4 -Sb -o {output}`
+    novoalign -f {input[0]} {input[1]} -c 16 -r Random -l 40 -g 40 -x 20 -t 502 -d {input[2]} -o SAM | samtools view -F 4 -Sb -o {output}
 
 Example using sample 569, pool 1, read 1 and read 2:
 
-`novoalign -f 569-1_R1.trimmed.fastq 569-1_R2.trimmed.fastq -r Random -l 40 -g 40 -x 20 -t 502 -d zika_dc_2016.nix -o SAM | samtools view -F 4 -Sb -o 569-1.trimmed.aligned.bam`
+    novoalign -f 569-1_R1.trimmed.fastq 569-1_R2.trimmed.fastq -r Random -l 40 -g 40 -x 20 -t 502 -d zika_dc_2016.nix -o SAM | samtools view -F 4 -Sb -o 569-1.trimmed.aligned.bam
 
 _Note: if you're not using samtools you could output to BAM format here instead._
 
