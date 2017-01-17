@@ -30,7 +30,8 @@ _You should use the Qubit High Sensitivity dsDNA kit_
 2. Add 190 uL mastermix + 10 uL standard 1 into one Qubit tube.
 3. Add 190 uL mastermix + 10 uL standard 2 into another Qubit tube.
 4. Add 199 uL mastermix + 1 uL cleaned-up PCR products into Qubit tube for each pool.
-5. Quantify the concentration of dsDNA in the sample.
+5. Vortex, spin down and wait 2 minutes.
+6. Quantify the concentration of dsDNA in the sample.
 
   * Negative extraction controls usually have concentrations around 3 or 4 ng/uL.
   * Negative PCR controls should have concentrations < 1 ng/uL.
