@@ -84,7 +84,8 @@ _example where target amount is 150 ng per pool_
 4. Wash pellet twice with 150 uL of BBB pipetting to resuspend the pellet **after each wash**.
 5. Spin down, replace tube on magnet and pipette off any residual BBB. Close lid, **do not let pellet dry**.
 6. Resuspend the beads in 25 uL of ELB. _you'll need to scrape the beads off of the tube walls to ensure you fully resuspend the beads. This can take a while, but it's important to do it well to get sufficient library. The tube sides should not show any smear of beads._
-7. Pellet beads on magnetic rack and transfer eluate (tethered,adapted library in ELB) to new Lo-Bind tube.
+7. Incubate at 37 degrees Celsius for 10 minutes.
+8. Pellet beads on magnetic rack and transfer eluate (tethered,adapted library in ELB) to new Lo-Bind tube.
 
 #### Adapted, tethered library quantification and normalization
 
