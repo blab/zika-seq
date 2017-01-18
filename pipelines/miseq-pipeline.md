@@ -71,8 +71,6 @@ Example using sample 569, pool 1, read 1 and read 2:
 * The reference genome in fasta format is [here](zika_dc_2016.fa).
 * The reference genome in novoalign index form is [here](zika_dc_2016.nix).
 
-_Note: if you're not using samtools you could output to BAM format here instead._
-
 Command line arguments:
 
 * `-f` Files containing the read sequences to be aligned. By specifying two files the program treats them as paired end reads.
@@ -83,3 +81,29 @@ Command line arguments:
 * `-x` sets gap extension penalty (default is 6, so we are using a higher penalty)
 * `-t` sets the maximum alignment score acceptable for the best alignment.
 * `-o` specifies output file type
+
+_Aside, if your are interested in looking under the hood a bit more_
+
+You can have a look at your BAM file by piping the outout of samtools view to `less`, e.g.:
+
+    samtools view <aligned BAM file> | less -S
+
+The [samtools pdf manual](https://samtools.github.io/hts-specs/SAMv1.pdf) provides an explanation for each of the columns of the BAM file.
+
+The FLAG field is an integer, but if translated from arabic form to binary form, provides a bunch of information about the read. The easiest way to do this translation is to type the flag into [this tool](https://broadinstitute.github.io/picard/explain-flags.html).
+
+### Sort the BAM file and generate an index file (a `.bai`):
+
+Sort the BAM file using the following command:
+
+    samtools sort -T </tmp/aln.sorted> -o <output.sorted.bam> <input.aligned.bam>
+
+An example with sample 569:
+
+    samtools sort -T /tmp/aln.sorted -o 569-1.trimmed.aligned.sorted.bam 569-1.trimmed.aligned.bam
+
+You will not be able to generate an index file unless the BAM file has been sorted already. To make the index file call the following command:
+
+    samtools index -b <input.sorted.bam> <output.sorted.bai>
+
+Note: if you are going to be analyzing the output in Tablet your index file needs to be named exactly the same as your sorted BAM file with the exception of having the `.bai` format instead of the `.bam`.
