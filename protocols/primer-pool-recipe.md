@@ -1,6 +1,6 @@
 # Primer pool recipe
 
-Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help normalize sequencing coverage different primer should be pooled at different concentrations. Below you will find which primers should be pooled at 10 uM, 50uM, or 100uM.
+Prepare two primer pools by mixing equal volumes of each primer. To help normalize sequencing coverage, different primers should be pooled at different concentrations. Below you will find which primers should be pooled at 10 uM, 50uM, or 100uM.
 
 ### The following primers should be pooled at a concentration of **10 uM**:
 
@@ -35,28 +35,28 @@ Prepare two primer pools by mixing equal volumes of each 10 µM primer. To help 
 
 |Pool 1       |             |
 |-------------|-------------|
-|400_3_out_L* |400_3_out_R* |
-|400_9_out_L* |400_9_out_R* |
-|400_21_out_L*|400_21_out_R*|
-|400_20_out_L*|400_20_out_R*|
-|400_33_out_L*|400_33_out_R*|
+|400_3_out_L  |400_3_out_R  |
+|400_9_out_L  |400_9_out_R  |
+|400_21_out_L |400_21_out_R |
+|400_20_out_L |400_20_out_R |
+|400_33_out_L |400_33_out_R |
 
 |Pool 2       |             |
 |-------------|-------------|
-|400_8_out_L* |400_8_out_R* |
-|400_14_out_L*|400_14_out_R*|
-|400_16_out_L*|400_16_out_R*|
-|400_34_out_L*|400_34_out_R*|
+|400_8_out_L  |400_8_out_R  |
+|400_14_out_L |400_14_out_R |
+|400_16_out_L |400_16_out_R |
+|400_34_out_L |400_34_out_R |
 
 #### These primers should be pooled at a concentration of **100uM**:
 
-| Pool 1        |                |
-|---------------|----------------|
-|400_17_out_L** | 400_17_out_R** |
-|400_25_out_L** | 400_25_out_R** |
+| Pool 1     |             |
+|------------|-------------|
+|400_17_out_L| 400_17_out_R|
+|400_25_out_L| 400_25_out_R|
 
-|Pool 2         |                |
-|---------------|----------------|
-|400_18_out_L** | 400_18_out_R** |
-|400_22_out_L** | 400_22_out_R** |
-|400_24_out_L** | 400_24_out_R** |
+|Pool 2      |             |
+|------------|-------------|
+|400_18_out_L| 400_18_out_R|
+|400_22_out_L| 400_22_out_R|
+|400_24_out_L| 400_24_out_R|
