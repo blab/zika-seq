@@ -92,7 +92,7 @@ The [samtools pdf manual](https://samtools.github.io/hts-specs/SAMv1.pdf) provid
 
 The FLAG field is an integer, but if translated from arabic form to binary form, provides a bunch of information about the read. The easiest way to do this translation is to type the flag into [this tool](https://broadinstitute.github.io/picard/explain-flags.html).
 
-### Sort the BAM file and generate an index file (a `.bai`):
+### Sort the BAM file and generate an index file (a `.bai`)
 
 Sort the BAM file using the following command:
 
@@ -107,3 +107,9 @@ You will not be able to generate an index file unless the BAM file has been sort
     samtools index -b <input.sorted.bam> <output.sorted.bai>
 
 Note: if you are going to be analyzing the output in Tablet your index file needs to be named exactly the same as your sorted BAM file with the exception of having the `.bai` format instead of the `.bam`.
+
+### Merge pool 1 and pool 2 BAM files
+
+To merge the pools together to get your full genome alignment, call:
+
+    samtools merge <outfile>.merged.bam <input-pool1>.trimmed.aligned.sorted.bam <input-pool2>.trimmed.aligned.sorted.bam
