@@ -1,6 +1,6 @@
 # Consensus genomes
 
-Genomes are collected into FASTAS with "good" coverage (>80%) and with "partial" coverage (50%-80%). FASTA headers obey the following format:
+Genomes are collected into FASTAS with "good" coverage (>80%), "partial" coverage (50%-80%), and "poor" coverage (<50%). FASTA headers obey the following format:
 
 strain      | sample_id | collection_date | country | division    | location
 ----------- | --------- | --------------- | ------- | ----------- | --------
@@ -8,7 +8,7 @@ USVI/1/2016 | VI1       | 2016-09-28      | usvi    | saint_croix | saint_croix
 
 ## USVI samples
 
-Isolates `USVI/1/2016` to `USVI/5/2016` in `ZIKA_USVI_good.fasta` and `ZIKA_USVI_partial.fasta`.
+Isolates `USVI/1/2016` to `USVI/14/2016` in `ZIKA_USVI_good.fasta`, `ZIKA_USVI_partial.fasta`, or `ZIKA_USVI_poor.fasta`.
 
 Please cite as:
 
