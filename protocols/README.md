@@ -16,7 +16,7 @@ A pre-print of the paper can be found [here](http://biorxiv.org/content/early/20
 
 ### Bench protocols
 
-_Regardless of which platform you'll be sequencing on, you'll need to follow these first three protocols to generate two pools of ZIKV amplicons_
+Regardless of which platform you'll be sequencing on, you'll need to follow these first four protocols to generate two pools of ZIKV amplicons
 
 1. [Make primer pools](primer-pool-recipe.md) _Note: the first time you do this, make up multiple aliquots of the pools_
 2. [Viral RNA extraction](viral-rna-extraction.md)
@@ -31,7 +31,6 @@ _Regardless of which platform you'll be sequencing on, you'll need to follow the
 #### Protocols for Illumina MiSeq
 
 7. [MiSeq library preparation](miseq-library-preparation.md)
-
 
 ### Equipment and Reagent Checklist
 
