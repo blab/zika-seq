@@ -1,4 +1,4 @@
-# Pipeline for generating consensus sequences from MiSeq run
+# MiSeq pipeline
 
 Here we are using a slightly modified version of the [Andersen lab's bioinformatic pipeline](https://github.com/andersen-lab/zika-pipeline).
 

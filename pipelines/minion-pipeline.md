@@ -1,3 +1,5 @@
+# MinION pipeline
+
 ## Data sync
 
 Primary sequencing data lives on the Rhino FHCRC cluster at:
