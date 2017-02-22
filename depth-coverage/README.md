@@ -1,5 +1,5 @@
-### Overlap Graphs
-#### To prepare libraries for this pipeline:
+## Overlap Graphs
+### To prepare libraries for this pipeline:
 1. `poretools fasta --type 2D <path/to/base/called/reads/> > <name.fasta>`
 2. `bwa mem -x on2d <indexed_reference.fasta> <name.fasta> | samtools view -bS - | samtools sort -o <name.sorted.bam> -`
 3. `samtools depth <name.sorted.bam> > <name.coverage>`
@@ -11,9 +11,9 @@
 
 Reported p20 and p40 values represent percentage of the Zika genome which has at coverage of at least 20/40 reads, respectively.
 
-#### Overlap graphs and stats on `pass` libraries
-##### NB01-NB07 Overlap
-![](figures/Coverage-Overlap-NB01-NB07.png)
+### Overlap graphs and stats on `pass` libraries: USVI Library 1
+#### NB01-NB07 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB01-NB07.png)
 
 p20: 0.9702
 p40: 0.9671
@@ -30,8 +30,8 @@ p40: 0.9671
 | N50              	| 552     	| 555     	|
 | N75              	| 520     	| 508     	|
 
-##### NB02-NB08 Overlap
-![](figures/Coverage-Overlap-NB02-NB08.png)
+#### NB02-NB08 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB02-NB08.png)
 
 p20: 0.8412
 p40: 0.7145
@@ -48,8 +48,8 @@ p40: 0.7145
 | N50              	| 544     	| 558     	|
 | N75              	| 518     	| 523     	|
 
-##### NB03-NB09 Overlap
-![](figures/Coverage-Overlap-NB03-NB09.png)
+#### NB03-NB09 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB03-NB09.png)
 
 p20: 0.6571
 p40: 0.5022
@@ -66,8 +66,8 @@ p40: 0.5022
 | N50              	| 535     	| 561     	|
 | N75              	| 501     	| 531     	|
 
-##### NB04-NB010 Overlap
-![](figures/Coverage-Overlap-NB04-NB10.png)
+#### NB04-NB010 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB04-NB10.png)
 
 p20: 0.9384
 p40: 0.9087
@@ -84,8 +84,8 @@ p40: 0.9087
 | N50              	| 544     	| 555     	|
 | N75              	| 498     	| 514     	|
 
-##### NB05-NB11 Overlap
-![](figures/Coverage-Overlap-NB05-NB11.png)
+#### NB05-NB11 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB05-NB11.png)
 
 p20: 0.9066
 p40: 0.8737
@@ -102,8 +102,8 @@ p40: 0.8737
 | N50              	| 554     	| 555     	|
 | N75              	| 530     	| 504     	|
 
-##### NB06-NB12 Overlap
-![](figures/Coverage-Overlap-NB06-NB12.png)
+#### NB06-NB12 Overlap
+![](figures/usvi-library1/Coverage-Overlap-NB06-NB12.png)
 
 p20: 0
 p40: 0
@@ -119,3 +119,40 @@ p40: 0
 | N25              	| 518    	| 574    	|
 | N50              	| 341    	| 546    	|
 | N75              	| 302    	| 476    	|
+
+### Overlap graphs and stats on `pass` libraries: USVI Library 3
+#### NB01-NB07 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB01-NB07.png)
+
+p20: 0.2896
+p40: 0.2658
+
+#### NB02-NB08 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB02-NB08.png)
+
+p20: 0
+p40: 0
+
+#### NB03-NB09 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB03-NB09.png)
+
+p20: 0.0925
+p40: 0
+
+#### NB04-NB10 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB04-NB10.png)
+
+p20: 0.3825
+p40: 0.3624
+
+#### NB05-NB11 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB05-NB11.png)
+
+p20: 0.974
+p40: 0.9675
+
+#### NB06-NB12 Overlap
+![](figures/usvi-library3/Coverage-Overlap-NB06-NB12.png)
+
+p20: 0
+p40: 0

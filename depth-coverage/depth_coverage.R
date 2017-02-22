@@ -2,13 +2,13 @@
 #   1. poretools fasta --type 2D <path/to/base/called/reads/> > <name.fasta>
 #   2. bwa mem -x on2d <indexed_reference.fasta> <name.fasta> | samtools view -bS - | samtools sort -o <name.sorted.bam> -
 #   3. samtools depth <name.sorted.bam> > <name.coverage>
-#   3a.head <name.coverage> # This finds the name of the 'chromosome'; there may be >1.
+#   3a.head <name.coverage> # This finds the name of the 'chromosome'; there may be >1
 #   4. awk '$1 == "<chromosomename>" {print $0}' <name.coverage> > chr1.coverage
 #   5. Repeat for paired library
 #   6. Fill in <name1> and <name2> into pool1 and pool2 below
 #
-#   Pairs NB01,NB07 Done
-#         NB02,NB08 Done
+#   Pairs NB01,NB07
+#         NB02,NB08
 #         NB03,NB09
 #         NB04,NB10
 #         NB05,NB11
@@ -21,9 +21,9 @@ roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
 
 makeOverlapGraphs <- function(pool1,pool2) {
   
-  path1 <- paste('/Users/bpotter/zika-seq-local/',pool1,'/processed/chr1.coverage',sep='')
-  path2 <- paste('/Users/bpotter/zika-seq-local/',pool2,'/processed/chr1.coverage',sep='')
-  pngName <- paste('/Users/bpotter/zika-seq/depth_coverage/figures/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
+  path1 <- paste('/Volumes/Meristem/data/usvi-library3-2017-02-02/second_call/pass/',pool1,'/processed/chr1.coverage',sep='')
+  path2 <- paste('/Volumes/Meristem/data/usvi-library3-2017-02-02/second_call/pass/',pool2,'/processed/chr1.coverage',sep='')
+  pngName <- paste('/Users/bpotter/zika-seq/depth-coverage/figures/usvi-library3/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
   
   n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
   n2.chr1 <- read.table(path2, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
@@ -57,12 +57,13 @@ makeOverlapGraphs <- function(pool1,pool2) {
   
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
-  lines(x=n2.chr1$locus,y=n2.chr1$depth,col="green")
-  abline(a=40,b=0,col="orange",lwd=0.5)
-  abline(a=20,b=0,col="red",lwd=0.75)
+  lines(x=n2.chr1$locus,y=n2.chr1$depth,col="blue")
+  abline(a=40,b=0,col="chocolate3",lwd=0.5)
+  abline(a=20,b=0,col="deeppink2",lwd=0.75)
   grid()
-  legend(0,(.95 * graphHeight),c(pool1,pool2,'40 read depth','20 read depth'),lty=c(1,1,1,1),lwd=c(2.5,2.5,1,1.5),col=c('black','green','orange','red'))
-  dev.off()
+  legend(0,(.95 * graphHeight),c(pool1,pool2,'40 read depth','20 read depth'),lty=c(1,1,1,1),lwd=c(2.5,2.5,1,1.5),col=c('black','blue','chocolate3','deeppink2'))
+  # dev.off()
+  graphics.off()
   rm(list=ls())
 }
 
@@ -72,6 +73,4 @@ makeOverlapGraphs('NB03','NB09')
 makeOverlapGraphs('NB04','NB10')
 makeOverlapGraphs('NB05','NB11')
 makeOverlapGraphs('NB06','NB12')
-
-
 
