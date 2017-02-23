@@ -21,9 +21,9 @@ roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
 
 makeOverlapGraphs <- function(pool1,pool2) {
   
-  path1 <- paste('/Volumes/Meristem/data/usvi-library3-2017-02-02/second_call/pass/',pool1,'/processed/chr1.coverage',sep='')
-  path2 <- paste('/Volumes/Meristem/data/usvi-library3-2017-02-02/second_call/pass/',pool2,'/processed/chr1.coverage',sep='')
-  pngName <- paste('/Users/bpotter/zika-seq/depth-coverage/figures/usvi-library3/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
+  path1 <- paste('/Volumes/Meristem/data/usvi-library1-2016-12-10/third_call/pass/',pool1,'/processed/chr1.coverage',sep='')
+  path2 <- paste('/Volumes/Meristem/data/usvi-library1-2016-12-10/third_call/pass/',pool2,'/processed/chr1.coverage',sep='')
+  pngName <- paste('/Users/bpotter/zika-seq/depth-coverage/figures/usvi-library1/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
   
   n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
   n2.chr1 <- read.table(path2, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
@@ -57,11 +57,11 @@ makeOverlapGraphs <- function(pool1,pool2) {
   
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
-  lines(x=n2.chr1$locus,y=n2.chr1$depth,col="blue")
-  abline(a=40,b=0,col="chocolate3",lwd=0.5)
-  abline(a=20,b=0,col="deeppink2",lwd=0.75)
+  lines(x=n2.chr1$locus,y=n2.chr1$depth,col="yellowgreen")
+  abline(a=40,b=0,col="goldenrod2",lwd=0.5)
+  abline(a=20,b=0,col="tomato2",lwd=0.75)
   grid()
-  legend(0,(.95 * graphHeight),c(pool1,pool2,'40 read depth','20 read depth'),lty=c(1,1,1,1),lwd=c(2.5,2.5,1,1.5),col=c('black','blue','chocolate3','deeppink2'))
+  legend(0,(.95 * graphHeight),c(pool1,pool2,'40 read depth','20 read depth'),lty=c(1,1,1,1),lwd=c(2.5,2.5,1,1.5),col=c('black','yellowgreen','goldenrod2','tomato2'))
   # dev.off()
   graphics.off()
   rm(list=ls())

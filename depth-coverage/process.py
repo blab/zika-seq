@@ -20,25 +20,25 @@ def preprocess(path):
 
         print("Processing library "+subdir)
         prdir = path+subdir+"/processed/"
-        # if not os.path.exists(prdir):
-        #     print("Making directory "+prdir)
-        #     os.makedirs(prdir)
-        # fName = prdir+subdir+".fasta"
-        # print("Building .fasta from .fast5's in "+subdir)
-        # fCall = "poretools fasta --type 2D "+path+subdir+" > "+fName
-        # print("$ "+fCall) #Test
-        # subprocess.call(fCall, shell=True)
-        #
-        # print("Done building "+subdir+".fasta, beginning bwa mem")
-        # bCall = "bwa mem -x ont2d refs/ZikaReferenceGenome.fasta "+fName+" | samtools view -bS - | samtools sort -o "+prdir+subdir+".sorted.bam -"
-        # subprocess.call(bCall, shell=True)
-        # print("$ "+bCall) #Test
-        #
-        # print("Done with bwa mem, beginning samtools depth")
-        # dCall = "samtools depth "+prdir+subdir+".sorted.bam > "+prdir+subdir+".coverage"
-        # # tCall = "head "+prdir+subdir+".coverage"
-        # subprocess.call(dCall, shell=True)
-        # print("$ "+dCall) #Test
+        if not os.path.exists(prdir):
+            print("Making directory "+prdir)
+            os.makedirs(prdir)
+        fName = prdir+subdir+".fasta"
+        print("Building .fasta from .fast5's in "+subdir)
+        fCall = "poretools fasta --type 2D "+path+subdir+" > "+fName
+        print("$ "+fCall) #Test
+        subprocess.call(fCall, shell=True)
+
+        print("Done building "+subdir+".fasta, beginning bwa mem")
+        bCall = "bwa mem -x ont2d refs/ZikaReferenceGenome.fasta "+fName+" | samtools view -bS - | samtools sort -o "+prdir+subdir+".sorted.bam -"
+        subprocess.call(bCall, shell=True)
+        print("$ "+bCall) #Test
+
+        print("Done with bwa mem, beginning samtools depth")
+        dCall = "samtools depth "+prdir+subdir+".sorted.bam > "+prdir+subdir+".coverage"
+        # tCall = "head "+prdir+subdir+".coverage"
+        subprocess.call(dCall, shell=True)
+        print("$ "+dCall) #Test
 
         print("Done with samtools depth, beginning awk")
         aCall = "awk '$1 == \"NC_012532.1\" {print $0}' "+prdir+subdir+".coverage > "+prdir+"chr1.coverage"
