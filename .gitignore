@@ -65,3 +65,7 @@ Thumbs.db
 # cluster log #
 ###############
 *.sh.*
+
+# R generated files #
+#####################
+.Rhistory
