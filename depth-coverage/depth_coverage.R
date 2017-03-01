@@ -14,21 +14,28 @@
 #         NB05,NB11
 #         NB06,NB12
 
+library(argparse)
+library(reshape)
+
+parser <- ArgumentParser(description='Make coverage graphs from multiplexed minION reads.')
+parser$add_argument('-i','--inputPath', type='character', help='path to directory contining multiplexed reads')
+parser$add_argument('-o','--outputPath', type='character', help='path to the output directory for .png files')
+
 roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
   if(length(x) != 1) stop("'x' must be of length 1")
   10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) * nice)[[1]]]]
 }
 
-makeOverlapGraphs <- function(pool1,pool2) {
+makeOverlapGraphs <- function(pool1,pool2,idir,odir) {
   
-  path1 <- paste('/Volumes/Meristem/data/usvi-library1-2016-12-10/third_call/pass/',pool1,'/processed/chr1.coverage',sep='')
-  path2 <- paste('/Volumes/Meristem/data/usvi-library1-2016-12-10/third_call/pass/',pool2,'/processed/chr1.coverage',sep='')
-  pngName <- paste('/Users/bpotter/zika-seq/depth-coverage/figures/usvi-library1/Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
+  path1 <- paste(idir,pool1,'/processed/chr1.coverage',sep='')
+  path2 <- paste(idir,pool2,'/processed/chr1.coverage',sep='')
+  pngName <- paste(odir,'Coverage-Overlap-',pool1,'-',pool2,'.png',sep='')
+  logFile <- paste(odir,'log',pool1,'-',pool2,'.txt',sep='')
   
   n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
   n2.chr1 <- read.table(path2, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
   
-  library(reshape)
   n1.chr1<-rename(n1.chr1,c(V1="Chr", V2="locus", V3="depth"))
   n2.chr1<-rename(n2.chr1,c(V1="Chr", V2="locus", V3="depth"))
   
@@ -52,8 +59,12 @@ makeOverlapGraphs <- function(pool1,pool2) {
     }
   }
   
-  print(round(p20,digits = 4))
-  print(round(p40,digits = 4))
+  p20 <- round(p20,digits = 4)
+  p40 <- round(p40,digits = 4)
+  write('Percentage over 20x depth:',logFile,append=TRUE)
+  write(p20,logFile,append=TRUE)
+  write('Percentage over 40x depth:',logFile,append=TRUE)
+  write(p40,logFile,append=TRUE)
   
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
@@ -67,10 +78,15 @@ makeOverlapGraphs <- function(pool1,pool2) {
   rm(list=ls())
 }
 
-makeOverlapGraphs('NB01','NB07')
-makeOverlapGraphs('NB02','NB08')
-makeOverlapGraphs('NB03','NB09')
-makeOverlapGraphs('NB04','NB10')
-makeOverlapGraphs('NB05','NB11')
-makeOverlapGraphs('NB06','NB12')
+main <- function () {
+  args <- parser$parse_args()
+  
+  makeOverlapGraphs('NB01','NB07',args$inputPath,args$outputPath)
+  makeOverlapGraphs('NB02','NB08',args$inputPath,args$outputPath)
+  makeOverlapGraphs('NB03','NB09',args$inputPath,args$outputPath)
+  makeOverlapGraphs('NB04','NB10',args$inputPath,args$outputPath)
+  makeOverlapGraphs('NB05','NB11',args$inputPath,args$outputPath)
+  makeOverlapGraphs('NB06','NB12',args$inputPath,args$outputPath)
+}
 
+main()
