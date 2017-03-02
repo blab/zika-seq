@@ -2,9 +2,9 @@
 
 Genomes are collected into FASTAS with "good" coverage (>80%), "partial" coverage (50%-80%), and "poor" coverage (<50%). FASTA headers obey the following format:
 
-strain      | sample_id | collection_date | country | division    | location
------------ | --------- | --------------- | ------- | ----------- | --------
-USVI/1/2016 | VI1       | 2016-09-28      | usvi    | saint_croix | saint_croix
+strain      | sample_id | collection_date | country | division    | location | platform |
+----------- | --------- | --------------- | ------- | ----------- | -------- | -------- |
+USVI/1/2016 | VI1       | 2016-09-28      | usvi    | saint_croix | saint_croix| minion |
 
 ## USVI samples
 
