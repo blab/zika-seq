@@ -31,7 +31,7 @@ _Perform the following in a hood or in a pre-PCR designated area_
   * 0.8 uL 10 mM dNTPs
   * 0.4 uL Q5 DNA polymerase
   * 24.4 uL Nuclease-free water
-  * 2.7 uL of primer pool (either pool 1 **OR** pool 2)
+  * 2.4 uL of primer pool (either pool 1 **OR** pool 2)
 
 7. Label 2 0.2mL PCR tubes for each sample.
 8. Pipette 36 uL of mastermix into the corresponding tubes.
