@@ -40,7 +40,9 @@ _Perform the following in a hood or in a pre-PCR designated area_
 11. Place on the thermocycler and run the following program:
 
   * Step 1: 98 degrees Celsius for 30 seconds (initial denaturation)
-  * Step 2: _perform 45 cycles of_
+  * Step 2: _perform 40 cycles of_
     * 98 degrees Celsius for 15 seconds
     * 65 degrees Celsius for 5 minutes
   * Step 3: Hold at 4 degrees Celsius.
+
+_**note: If generating amplicons for Miseq run rather than MinION run, you should do only 35 cycles of amplification, since you will have additional cycles of amplification during library prep_

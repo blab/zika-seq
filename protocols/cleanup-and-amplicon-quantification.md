@@ -2,9 +2,11 @@
 
 #### Clean-up
 
+_**update: from experience I've found that a 1x bead clean-up is preferable to a 1.8x clean-up if you are sequencing on the MinION. The MinION library prep features 1x clean-ups throughout the protocol, and I've found that if a 1.8x clean-up is used on the amplicons it's hard to keep the library concentration high enough throughout the prep, probably because the 1x clean-ups are more stringent bottlenecks. If you're going to be sequencing on the MiSeq, it should be fine to stick with the 1.8x clean-up._
+
 1. Label two sets of DNA Lo-Bind tubes (one set for bead clean-up and the other for eluate with cleaned up amplicons)
 2. Allow AMPure XP beads to come up to room temperature, and homogenize by vortexing.
-3. Add 72 uL of AMPure XP beads to each tube in one set of the Lo-Bind tubes. _this is a 1.8x bead clean-up_
+3. Add 40 or 72 uL of AMPure XP beads to each tube in one set of the Lo-Bind tubes depending on sequencing platform.
 4. Pipette 40 uL of PCR product into correspond tube with beads.
 5. Incubate beads and PCR products at room temperature on a hula mixer for 5 minutes. _if no access to a hula mixer, you can flick mix gently throughout the incubation_
 6. Place tubes on magnetic rack and incubate until the solution is clear.
@@ -35,4 +37,4 @@ _You should use the Qubit High Sensitivity dsDNA kit_
 
   * Negative extraction controls usually have concentrations around 3 or 4 ng/uL.
   * Negative PCR controls should have concentrations < 1 ng/uL.
-  * Properly amplified samples should have between 5 and 100 ng/uL.
+  * Properly amplified samples should have concentrations between 5 and 100 ng/uL.
