@@ -40,4 +40,6 @@ It would be super annoying to pipe ls to wc in every subdirectory that gets made
 
 `find <parent-dir> -type f -print | wc -l`
 
-`find 20160915_library20 -name *fast5 | wc -l`
+You can also specify to count specifically fast5 files with:
+
+`find <parent-dir> -name "*fast5" | wc -l`
