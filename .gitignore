@@ -69,3 +69,10 @@ Thumbs.db
 # R generated files #
 #####################
 .Rhistory
+
+# Albacore distributions
+*.whl
+*.deb
+
+# Raw data
+*.fast5
