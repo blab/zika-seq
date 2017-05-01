@@ -1,6 +1,6 @@
-# Zibra pipeline Docker container
+# Zika-seq Docker container adapted from Nick Loman's <n.j.loman@bham.ac.uk> zibra/zibra
 FROM ubuntu:16.04
-MAINTAINER Nick Loman <n.j.loman@bham.ac.uk>
+MAINTAINER Trevor Bedford
 
 # base software
 RUN apt-get update
@@ -35,22 +35,26 @@ RUN mkdir models && cd models && wget http://s3.climb.ac.uk/nanopore/nanopolish_
 RUN git clone https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library.git && cd Complete-Striped-Smith-Waterman-Library/src && make
 
 # basecalling setup
-RUN apt-get install python3
-RUN apt-get install python3-pip
-RUN wget https://mirror.oxfordnanoportal.com/software/analysis/ont_albacore-0.8.4-cp34-cp34m-manylinux1_x86_64.whl
-# RUN apt-get install ont_albacore-0.8.4-cp34-cp34m-manylinux1_x86_64.whl
+RUN wget -O- https://mirror.oxfordnanoportal.com/apt/ont-repo.pub | apt-key add -
+RUN echo "deb http://mirror.oxfordnanoportal.com/apt trusty-stable non-free" | tee /etc/apt/sources.list.d/nanoporetech.sources.list
+RUN apt-get install apt-transport-https
+RUN apt-get update
+COPY basecall/python3-ont-albacore_1.0.4-1-xenial_all.deb /tmp/
+RUN dpkg -i /tmp/python3-ont-albacore_1.0.4-1-xenial_all.deb || true
+RUN apt-get -y -f install
+RUN dpkg -i /tmp/python3-ont-albacore_1.0.4-1-xenial_all.deb
 
 # R
-RUN apt-get install -y r-base
+RUN apt-get install -y r-base --fix-missing
 RUN su - -c "R -e \"install.packages('argparse', repos = 'http://cran.rstudio.com/')\""
 RUN su - -c "R -e \"install.packages('reshape', repos = 'http://cran.rstudio.com/')\""
 
 # zibra pipeline
-RUN git clone https://github.com/zibraproject/zika-pipeline
-WORKDIR /zibra/zika-pipeline/
+RUN git clone https://github.com/blab/zika-seq
+WORKDIR /zibra/zika-seq/pipeline/
 
 # update
-ADD http://www.timeapi.org/utc/now /tmp/bustcache
+ADD https://script.google.com/macros/s/AKfycbyd5AcbAnWi2Yn0xhFRbyzS4qMq1VucMVgVvhul5XqS9HkAyJY/exec /tmp/bustcache
 RUN git pull
 
 # environmental variables
