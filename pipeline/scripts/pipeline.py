@@ -52,6 +52,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
         print("Demultiplexing: "+demultiplex_file)
         if dmname not in os.listdir(build_dir):
             f = open(demultiplex_file, "w+")
+            # Take this out if we ignore fail reads
             call = [ 'poretools', 'fasta', '--type', '2D', fail_folder ]
             print(" ".join(call))
             subprocess.call(call,stdout=f)
@@ -104,7 +105,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
                 with open(logfile, 'a') as f:
                     f.write(time.strftime('[%H:%M:%S] ' + output_file  + ' already in ' + build_dir + '\n'))
 
-
         # concatenate to single sample fasta
         input_file_list = [build_dir + sample + "_" + run + "_" + barcode + ".fasta"
             for (run, barcode) in sr_mapping[sample]]
@@ -124,7 +124,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
             with open(logfile, 'a') as f:
                 f.write("Unable to cat, no fasta files available for " + sample)
         print("")
-
 
 def process_sample_fastas(sm_mapping, build_dir, logfile):
     '''
@@ -243,8 +242,9 @@ def overlap(sr_mapping, build_dir, logfile):
 def per_base_error_rate(sr_mapping, build_dir, logfile):
     '''
     Calculate per-base error rates by walking through VCF files for each sample.
+    TODO: make this work
     '''
-    length = 10794.0
+    length = 10794.0 # TODO: Make sure this always works or is variable
     for sample in sr_mapping:
         error = 0
         vcf = build_dir + sample + '.vcf'
@@ -262,7 +262,6 @@ def per_base_error_rate(sr_mapping, build_dir, logfile):
                 f.write('Error rate: ' + str(error))
     with open(logfile, 'a') as f:
         f.write(time.strftime('[%H:%M:%S] Done calculating per-base error rates ' + sample + '\n'))
-
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description = "process data")
