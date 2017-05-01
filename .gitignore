@@ -76,3 +76,6 @@ Thumbs.db
 
 # Raw data
 *.fast5
+
+* Docker files
+.dockerignore
