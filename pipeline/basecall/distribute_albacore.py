@@ -3,7 +3,7 @@ import subprocess, os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--inpath', default=None, help="path to input directory containing non-basecalled reads")
+parser.add_argument('-i', '--inpath', default=None--, help="path to input directory containing non-basecalled reads")
 parser.add_argument('-o', '--outpath', default=None, help="path to output directory for basecalled reads")
 parser.add_argument('--dimension', default='1d', help="dimension of sequenced library; 1d or 2d")
 parser.add_argument('--email', default=None, help="email address for sbatch notifications")
@@ -18,7 +18,6 @@ else:
     w = 'r94_250bps_2d.cfg'
 
 if args.test:
-    assert args.email, "No email address given"
     call = 'sbatch --wrap=\"read_fast5_basecaller.py -h\"'
     print(call)
     try:
