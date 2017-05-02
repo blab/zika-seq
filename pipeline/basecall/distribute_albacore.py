@@ -24,7 +24,7 @@ if args.test:
     try:
         subprocess.call(call, shell=True)
     except:
-        print("Unable to run Albacore. Ensure that proper requisite module is loaded with:\nmodule load Python/3.5.2-foss-2016b-fh1")
+        print("Unable to run Albacore. Ensure that proper requisite module is loaded with:\n\nmodule load Python/3.5.2-foss-2016b-fh1\n")
 else:
     assert args.inpath, "No input path given"
     assert args.outpath, "No output path given"
