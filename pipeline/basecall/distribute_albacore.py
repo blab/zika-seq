@@ -30,7 +30,7 @@ else:
     assert args.email, "No email address given; necessary for SBATCH"
 
     for dirname in os.listdir(args.inpath):
-        acall = 'read_fast5_basecaller.py -i %s/%s/ -t 6 -c %s -r --barcoding -s %s'%(args.inpath, dirname, w, args.outpath)
+        acall = 'read_fast5_basecaller.py -i %s/%s -t 6 -c %s -r --barcoding -s %s'%(args.inpath, dirname, w, args.outpath)
         call = [ 'sbatch', '--time=24:00:00', '--mem=10000', '--mail-type=FAIL', '--mail-user=%s'%(args.email), '--wrap="%s"'%(acall) ]
         print(" ".join(call))
         if not args.dryrun:
