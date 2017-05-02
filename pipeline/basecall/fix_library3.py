@@ -7,6 +7,7 @@ lib3raw = lib3dir + 'raw_reads'
 for f in os.listdir(lib3dir):
     if f[-6:] == '.fast5':
         old = lib3dir + f
-        new = lib3raw + f
+
+        new = lib3raw + f[9:]
         print('mv %s %s'%(old, new))
-        os.rename(old, new)
+        #os.rename(old, new)
