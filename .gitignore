@@ -79,3 +79,5 @@ Thumbs.db
 
 * Docker files
 .dockerignore
+data/
+build/
