@@ -2,7 +2,7 @@
 import os
 
 lib3dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library3-2017-02-02/'
-lib3raw = lib3dir + 'raw_reads'
+lib3raw = lib3dir + 'raw_reads/'
 
 for f in os.listdir(lib3dir):
     if f[-6:] == '.fast5':
