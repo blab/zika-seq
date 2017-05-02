@@ -10,4 +10,4 @@ for f in os.listdir(lib3dir):
 
         new = lib3raw + f[9:]
         print('mv %s %s'%(old, new))
-        #os.rename(old, new)
+        os.rename(old, new)
