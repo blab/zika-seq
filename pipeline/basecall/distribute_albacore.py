@@ -3,7 +3,7 @@ import subprocess, os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--inpath', default=None--, help="path to input directory containing non-basecalled reads")
+parser.add_argument('-i', '--inpath', default=None, help="path to input directory containing non-basecalled reads")
 parser.add_argument('-o', '--outpath', default=None, help="path to output directory for basecalled reads")
 parser.add_argument('--dimension', default='1d', help="dimension of sequenced library; 1d or 2d")
 parser.add_argument('--email', default=None, help="email address for sbatch notifications")
