@@ -18,9 +18,11 @@ else:
     w = 'r94_250bps_2d.cfg'
 
 if args.test:
-    call = 'sbatch --wrap=\"read_fast5_basecaller.py -h\"'
+    assert args.email, "No email address given; necessary for SBATCH"
+    call = 'sbatch --mail-type=FAIL,END --mail-user=%s --wrap=\"read_fast5_basecaller.py -h\"'%(args.email)
     print(call)
     try:
+        subprocess.call('read_fast5_basecaller.py -h', shell=True)
         subprocess.call(call, shell=True)
     except:
         print("Unable to run Albacore. Ensure that proper requisite module is loaded with:\n\nmodule load Python/3.5.2-foss-2016b-fh1\n")

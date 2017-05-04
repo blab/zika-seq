@@ -41,36 +41,36 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
     '''
     Use nanopolish to construct a single fasta for all reads from a sample
     '''
-    runs = set()
-    for sample in sr_mapping:
-        for (run, barcode) in sr_mapping[sample]:
-            runs.add(run)
-    for r in runs:
-        fail_folder = data_dir + r + "/basecalled_reads/fail/"
-        dmname = r + '_fail_demultiplex.fasta'
-        demultiplex_file = build_dir + dmname
-        print("Demultiplexing: "+demultiplex_file)
-        if dmname not in os.listdir(build_dir):
-            f = open(demultiplex_file, "w+")
-            # Take this out if we ignore fail reads
-            call = [ 'poretools', 'fasta', '--type', '2D', fail_folder ]
-            print(" ".join(call))
-            subprocess.call(call,stdout=f)
-            f.close()
-            call = [ 'barcodes/demultiplex.py', '--barcodes', '/zibra/zika-pipeline/barcodes/barcodes.fasta', demultiplex_file]
-            print(" ".join(call))
-            subprocess.call(call)
-            with open(logfile, 'a') as f:
-                f.write(time.strftime('[%H:%M:%S] Done demultiplexing ' + run + '\n'))
-
-    # clean up the demultiplexed files.
-    for fl in os.listdir(build_dir):
-        if fl[0] == '>':
-            print("Fixing name of " + fl)
-            fname = fl[1:]
-            os.rename(build_dir + fl, build_dir + fname)
-            with open(logfile, 'a') as f:
-                f.write(time.strftime('[%H:%M:%S] Fixed name of ' + fname + '\n'))
+    # runs = set()
+    # for sample in sr_mapping:
+    #     for (run, barcode) in sr_mapping[sample]:
+    #         runs.add(run)
+    # for r in runs:
+    #     fail_folder = data_dir + r + "/basecalled_reads/fail/"
+    #     dmname = r + '_fail_demultiplex.fasta'
+    #     demultiplex_file = build_dir + dmname
+    #     print("Demultiplexing: "+demultiplex_file)
+    #     if dmname not in os.listdir(build_dir):
+    #         f = open(demultiplex_file, "w+")
+    #         # Take this out if we ignore fail reads
+    #         call = [ 'poretools', 'fasta', '--type', '2D', fail_folder ]
+    #         print(" ".join(call))
+    #         subprocess.call(call,stdout=f)
+    #         f.close()
+    #         call = [ 'barcodes/demultiplex.py', '--barcodes', '/zibra/zika-pipeline/barcodes/barcodes.fasta', demultiplex_file]
+    #         print(" ".join(call))
+    #         subprocess.call(call)
+    #         with open(logfile, 'a') as f:
+    #             f.write(time.strftime('[%H:%M:%S] Done demultiplexing ' + run + '\n'))
+    #
+    # # clean up the demultiplexed files.
+    # for fl in os.listdir(build_dir):
+    #     if fl[0] == '>':
+    #         print("Fixing name of " + fl)
+    #         fname = fl[1:]
+    #         os.rename(build_dir + fl, build_dir + fname)
+    #         with open(logfile, 'a') as f:
+    #             f.write(time.strftime('[%H:%M:%S] Fixed name of ' + fname + '\n'))
 
     import glob
     for sample in sr_mapping:
@@ -94,7 +94,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
         print("* Extracting " + sample)
         # nanopolish extract each run/barcode pair
         for (run, barcode) in sr_mapping[sample]:
-            input_dir = data_dir + run + "/basecalled_reads/pass/" + barcode # Update this
+            input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode # Update this
             output_file = build_dir + sample + "_" + run + "_" + barcode + ".fasta"
             f = open(output_file, "w")
             if output_file not in os.listdir(build_dir):
@@ -133,7 +133,7 @@ def process_sample_fastas(sm_mapping, build_dir, logfile):
         print("* Processing " + sample)
         # build consensus
         sample_stem = build_dir + sample
-        call = ['/zibra/zika-pipeline/scripts/fasta_to_consensus.sh', '/zibra/zika-pipeline/refs/KJ776791.2.fasta', sample_stem, '/zibra/zika-pipeline/metadata/v2_500.amplicons.ver2.bed']
+        call = ['pipeline/scripts/fasta_to_consensus.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
         print(" ".join(call))
         subprocess.call(call)
         # annotate consensus
@@ -270,7 +270,10 @@ if __name__=="__main__":
     parser.add_argument('--build_dir', type = str, default = "build/")
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI")
     parser.add_argument('--samples', type = str, nargs='*', default = None)
+    parser.add_argument('--dimension', type = str, default = '2d')
     params = parser.parse_args()
+
+    assert params.dimension in [ '1d', '2d' ], "Unknown library dimension"
 
     logfile = params.build_dir + 'log.txt'
     start_time = time.time()

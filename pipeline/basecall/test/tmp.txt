@@ -1,0 +1,3 @@
+sbatch --time=72:00:00 --mem=10000 --mail-type=START,FAIL,END --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/raw_reads/pass/ -t 6 -c r94_250bps_2d.cfg -r --barcoding -s /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/"
+
+Failed due to lack of permissions in usvi-library1 data directory
