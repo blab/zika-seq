@@ -5,7 +5,7 @@ import os, argparse
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--library', type=str, help='input library that needs to be subdivided')
-    parser.add_arguemnt('--real', default=False, action='store_true', help='actually run the command, not just print the commands')
+    parser.add_argument('--real', default=False, action='store_true', help='actually run the command, not just print the commands')
 
     args = parser.parse_args()
 
