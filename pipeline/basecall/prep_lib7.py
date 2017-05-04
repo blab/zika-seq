@@ -8,4 +8,4 @@ for bc in os.listdir(b):
         of = '%s/0/%s'%(bcd, f)
         nf = '%s/%s'%(bcd, f)
         print('mv %s %s'%(of, nf))
-        # os.rename(of, nf)
+        os.rename(of, nf)
