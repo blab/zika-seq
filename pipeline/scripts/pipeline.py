@@ -288,12 +288,10 @@ if __name__=="__main__":
 
     sr_mapping = sample_to_run_data_mapping(params.samples_dir)
     sm_mapping = sample_to_metadata_mapping(params.samples_dir)
-    if params.samples:
-        for sample in sr_mapping.keys():
-            if sample not in params.samples:
-                sr_mapping.pop(sample, None)
-            if sample not in params.samples:
-                sm_mapping.pop(sample, None)
+    tmp_sr = { s: sr_mapping[s] for s in params.samples }
+    tmp_sm = { s: sr_mapping[s] for s in params.samples }
+    sr_mapping = tmp_sr
+    sm_mapping = tmp_sm
 
     with open(logfile,'a') as f:
         f.write('Samples:\n')
