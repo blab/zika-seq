@@ -37,7 +37,7 @@ def sample_to_metadata_mapping(samples_dir):
             sm_mapping[sample] = metadata
     return sm_mapping
 
-def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
+def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension):
     '''
     Use nanopolish to construct a single fasta for all reads from a sample
     '''
@@ -94,11 +94,14 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
         print("* Extracting " + sample)
         # nanopolish extract each run/barcode pair
         for (run, barcode) in sr_mapping[sample]:
-            input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode # Update this
+            input_dir = data_dir + run + "/pass/" + barcode # Update this to /basecalled_reads/workspace/
             output_file = build_dir + sample + "_" + run + "_" + barcode + ".fasta"
             f = open(output_file, "w")
             if output_file not in os.listdir(build_dir):
-                call = ['nanopolish', 'extract', '--type', '2d', input_dir]
+                if dimension == '2d':
+                    call = ['nanopolish', 'extract', '--type', '2d', input_dir]
+                elif dimension == '1d':
+                    call = ['nanopolish', 'extract', '--type', '2d', input_dir]
                 print(" ".join(call) + " > " + output_file)
                 subprocess.call(call, stdout=f)
             else:
@@ -125,7 +128,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile):
                 f.write("Unable to cat, no fasta files available for " + sample)
         print("")
 
-def process_sample_fastas(sm_mapping, build_dir, logfile):
+def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
     '''
     Run fasta_to_consensus script to construct consensus files
     '''
@@ -133,7 +136,10 @@ def process_sample_fastas(sm_mapping, build_dir, logfile):
         print("* Processing " + sample)
         # build consensus
         sample_stem = build_dir + sample
-        call = ['pipeline/scripts/fasta_to_consensus.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
+        if dimension == '2d':
+            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
+        elif dimension == '1d':
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
         print(" ".join(call))
         subprocess.call(call)
         # annotate consensus
@@ -296,8 +302,8 @@ if __name__=="__main__":
             for (run, barcode) in sr_mapping[sample]:
                 f.write('\t('+run+', '+barcode+')\n')
 
-    construct_sample_fastas(sr_mapping, params.data_dir, params.build_dir, logfile)
-    process_sample_fastas(sm_mapping, params.build_dir, logfile)
+    construct_sample_fastas(sr_mapping, params.data_dir, params.build_dir, logfile, params.dimension)
+    process_sample_fastas(sm_mapping, params.build_dir, logfile, params.dimension)
     gather_consensus_fastas(sm_mapping, params.build_dir, params.prefix, logfile)
     overlap(sm_mapping, params.build_dir, logfile)
     per_base_error_rate(sr_mapping, params.build_dir, logfile)
