@@ -144,7 +144,7 @@ def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
         subprocess.call(call)
         # annotate consensus
         # >ZBRD116|ZBRD116|2015-08-28|brazil|alagoas|arapiraca|minion
-        fasta_header = ">" + "|".join(sm_mapping[sample])
+        fasta_header = ">" + "|".join(list(sm_mapping[sample]))
         fasta_header += "|minion"
         replacement = r"\~^>~s~.*~" + fasta_header + "~" # ~ rather than / to avoid conflict with strain names
         input_file = build_dir + sample + ".consensus.fasta"
