@@ -145,9 +145,6 @@ def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
         # annotate consensus
         # >ZBRD116|ZBRD116|2015-08-28|brazil|alagoas|arapiraca|minion
         print('#############\n')
-        print(sm_mapping)
-        print(sm_mapping[sample])
-        print(type(sm_mapping[sample]))
         fasta_header = ">" + "|".join(sm_mapping[sample])
         fasta_header += "|minion"
         replacement = r"\~^>~s~.*~" + fasta_header + "~" # ~ rather than / to avoid conflict with strain names
@@ -296,7 +293,7 @@ if __name__=="__main__":
     sr_mapping = sample_to_run_data_mapping(params.samples_dir)
     sm_mapping = sample_to_metadata_mapping(params.samples_dir)
     tmp_sr = { s: sr_mapping[s] for s in params.samples }
-    tmp_sm = { s: sr_mapping[s] for s in params.samples }
+    tmp_sm = { s: sm_mapping[s] for s in params.samples }
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
 
