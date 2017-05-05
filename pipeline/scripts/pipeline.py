@@ -271,9 +271,9 @@ def per_base_error_rate(sr_mapping, build_dir, logfile):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description = "process data")
-    parser.add_argument('--data_dir', type = str, default = "data/")
-    parser.add_argument('--samples_dir', type = str, default = "samples/")
-    parser.add_argument('--build_dir', type = str, default = "build/")
+    parser.add_argument('--data_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/data/")
+    parser.add_argument('--samples_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/samples/")
+    parser.add_argument('--build_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/build/")
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI")
     parser.add_argument('--samples', type = str, nargs='*', default = None)
     parser.add_argument('--dimension', type = str, default = '2d')
