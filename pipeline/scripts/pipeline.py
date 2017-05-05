@@ -103,7 +103,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
                 elif dimension == '1d':
                     call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '--type', '1d', '%s/'%(input_dir)]
                 print(" ".join(call) + " > " + output_file)
-                subprocess.call(call, stdout=f)
+                subprocess.call(" ".join(call), shell=True, stdout=f)
             else:
                 with open(logfile, 'a') as f:
                     f.write(time.strftime('[%H:%M:%S] ' + output_file  + ' already in ' + build_dir + '\n'))
