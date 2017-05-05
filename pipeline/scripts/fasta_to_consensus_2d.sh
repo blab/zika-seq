@@ -10,9 +10,9 @@ amplicons=$3
 # Files are written to working directory
 
 # 2) copy the r9.4 model files into current directory
-cp -f /zibra/models/new_fast_template.5mers.model .
-cp -f /zibra/models/new_fast_template.model .
-cp -f /zibra/models/new_models.fofn .
+cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.5mers.model .
+cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.model .
+cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_models.fofn .
 
 # 3) index the ref & align with bwa
 bwa index $ref
