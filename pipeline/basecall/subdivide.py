@@ -36,8 +36,8 @@ if __name__=="__main__":
                 newdir = '%s%s/'%(lib, str(dircount))
                 print('Count = %s; making new directory: %s.'%(count, newdir))
                 if args.real:
-                    if not os.path.exists(directory):
-                        os.makedirs(directory)
+                    if not os.path.exists(newdir):
+                        os.makedirs(newdir)
                 oldpath = '%s%s'%(lib, f)
                 newpath = '%s%s/%s'%(lib, str(dircount), f)
                 print('%s: mv %s %s'%(count, oldpath, newpath))
