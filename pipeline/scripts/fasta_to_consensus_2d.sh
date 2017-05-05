@@ -28,12 +28,12 @@ samtools index $sample.primertrimmed.sorted.bam
 #covplot.R $sample.alignreport.txt
 
 # 5) align the nanopore raw signal against the reference using the previous alignments as a guide
-nanopolish eventalign -vvvv -t 16 --models-fofn new_models.fofn --reads $sample.fasta -b $sample.trimmed.sorted.bam -g $ref --sam | samtools view -bS - | samtools sort -T $sample.tmp - -o $sample.np.sorted.bam
+$EBROOTNANOPOLISH/nanopolish eventalign -vvvv -t 16 --models-fofn new_models.fofn --reads $sample.fasta -b $sample.trimmed.sorted.bam -g $ref --sam | samtools view -bS - | samtools sort -T $sample.tmp - -o $sample.np.sorted.bam
 samtools index $sample.np.sorted.bam
 
 # 6) do variant calling using the raw signal alignment
-nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
-nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
+$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
+$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
 
 # 7) filter the variants and produce a consensus
 margin_cons.py $ref $sample.vcf $sample.trimmed.sorted.bam a > $sample.consensus.fasta
