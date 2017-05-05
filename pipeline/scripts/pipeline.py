@@ -137,9 +137,9 @@ def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
         # build consensus
         sample_stem = build_dir + sample
         if dimension == '2d':
-            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         print(" ".join(call))
         subprocess.call(call)
         # annotate consensus
