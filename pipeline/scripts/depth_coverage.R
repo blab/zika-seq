@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 # To prepare libraries for this pipeline:
 #   1. poretools fasta --type 2D <path/to/base/called/reads/> > <name.fasta>
 #   2. bwa mem -x on2d <indexed_reference.fasta> <name.fasta> | samtools view -bS - | samtools sort -o <name.sorted.bam> -
@@ -6,13 +8,16 @@
 #   4. awk '$1 == "<chromosomename>" {print $0}' <name.coverage> > chr1.coverage
 #
 
-library(argparse)
+library(optparse)
 library(reshape)
 
-parser <- ArgumentParser(description='Make coverage graphs from demultiplexed minION reads.')
-parser$add_argument('-i','--inFile', type='character', help='path to <name.chr1.coverage>')
-parser$add_argument('-o','--outPath', type='character', help='path to the output directory for .png files')
-parser$add_argument('-n','--name', type='character', help='run name')
+option_list <- list(
+  make_option(c('-i','--infile'), type=character, help='path to <name.chr1.coverage>'),
+  make_option(c('-o','--outPath'), type='character', help='path to the output directory for .png files'),
+  make_option(c('-n','--name'), type='character', help='run name')
+  )
+
+ parser <- OptionParser(usage = "%prog [options] file", option_list=option_list)
 
 roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
   if(length(x) != 1) stop("'x' must be of length 1")
@@ -20,19 +25,19 @@ roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
 }
 
 makeOverlapGraphs <- function(infile,odir,runName) {
-  
+
   path1 <- paste(infile)
   pngName <- paste(odir,runName,'-Coverage-Overlap.png',sep='')
   logFile <- paste(odir,runName,'-log.txt',sep='')
-  
+
   n1.chr1 <- read.table(path1, header=FALSE, sep="\t", na.strings="NA", dec=".", strip.white=TRUE)
-  
+
   n1.chr1<-rename(n1.chr1,c(V1="Chr", V2="locus", V3="depth"))
-  
+
   maxDepth <- max(n1.chr1$depth)
   graphHeight <- roundUpNice(maxDepth * 1.1)
   graphHeight
-  
+
   p20 <- 0
   p40 <- 0
   shorter = max(n1.chr1$locus)
@@ -54,7 +59,7 @@ makeOverlapGraphs <- function(infile,odir,runName) {
   write(p20,logFile,append=TRUE)
   write('Percentage over 40x depth:',logFile,append=TRUE)
   write(p40,logFile,append=TRUE)
-  
+
   png(file=pngName,width=1200,height=600)
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', col='#781C86', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
   abline(a=40,b=0,col="#D3AE4E",lwd=0.5)
@@ -66,8 +71,8 @@ makeOverlapGraphs <- function(infile,odir,runName) {
 }
 
 main <- function () {
-  args <- parser$parse_args()
-  
+  args <- parse_args(parser)
+
   i <- args$inFile
   o <- args$outPath
   n <- args$name
