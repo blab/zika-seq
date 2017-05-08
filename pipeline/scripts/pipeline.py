@@ -278,12 +278,15 @@ if __name__=="__main__":
                             help="directory containing samples and runs TSVs; default is \'/fh/fast/bedford_t/zika-seq/samples/\'" )
     parser.add_argument( '--build_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/build/",
                             help="directory for output data; default is \'/fh/fast/bedford_t/zika-seq/build/\'" )
-    parser.add_argument('--prefix', type = str, default = "ZIKA_USVI")
-    parser.add_argument('--samples', type = str, nargs='*', default = None)
-    parser.add_argument('--dimension', type = str, default = '2d')
+    parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
+                            help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
+    parser.add_argument('--samples', type = str, nargs='*', default = None,
+                            help="sample(s) to be run; if blank, default is all samples listed in runs.tsv")
+    parser.add_argument('--dimension', type = str, default = '2d',
+                            help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
     params = parser.parse_args()
 
-    assert params.dimension in [ '1d', '2d' ], "Unknown library dimension"
+    assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
 
     logfile = params.build_dir + 'log.txt'
     start_time = time.time()
