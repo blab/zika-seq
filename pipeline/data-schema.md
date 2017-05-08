@@ -2,26 +2,39 @@
 
 ## Nanopore reads
 
-Input data to the Zika pipeline arrives in the `data/` directory. This should be mounted to `data/` in the Docker container.
+Input data to the Zika pipeline arrives in the `data/` directory.
 
-  - `data`
-    - `usvi-library1-2016-12-10` - library
-      - `raw_reads` - squiggle graphs in fast5 format
-        - `pass` - contains `.fast5` files
-      - `basecalled_reads` - basecalled with Metrichor
-        - `pass_demultiplex` - demultiplexed basecalled reads
-          - `NB01` - contains `.fast5` files for NB01 barcode
-          - `NB02` - contains `.fast5` files for NB02 barcode
-          - etc...
-        - `nonNB_demultiplexed` - demultiplexed basecalled reads
-          - `BC01` - contains `.fast5` files for BC01 barcode
-          - `BC02` - contains `.fast5` files for BC02 barcode
-          - etc...        
-        - `fail` - contains `.fast5` files that weren't demultiplexed
+  - `data/`
+    - `usvi-library1-2016-12-10/` - library
+      - `raw_reads/` - squiggle graphs in fast5 format; all subdirectores are written automatically by MinKNOW
+        - `0/` - contains ~4000 raw `.fast5` files
+        - `1/` - contains ~4000 raw `.fast5` files
+        - etc ...
+      - `basecalled_reads/` - basecalled with Albacore 1.0.4; all subdirectores are written automatically by Albacore
+        - `sequencing_summary.txt` - summary of Albacore run; automatically made by Albacore
+        - `pipeline.log` - summary of Albacore run; automatically made by Albacore
+        - `workspace` - contains all basecalled, demultiplexed reads
+          - `barcode01/` - basecalled, demultiplexed reads with ONT barcode NB01
+            - `0/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - `1/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - etc ...
+          - `barcode02/` - basecalled, demultiplexed reads with ONT barcode NB02
+            - `0/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - `1/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - etc ...
+          - ...
+          - `barcode12/` - basecalled, demultiplexed reads with ONT barcode NB12
+            - `0/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - `1/` - contains ~4000 basecalled, demultiplexed `.fast5` files
+            - etc ...
+          - `unclassified/` - basecalled, non-demultiplexed reads
+            - `0/` - contains ~4000 basecalled, non-demultiplexed `.fast5` files
+            - `1/` - contains ~4000 basecalled, non-demultiplexed `.fast5` files
+            - etc ...
 
 ## Sample metadata
 
-Sample metadata for the Zika pipeline arrives in the `samples/` directory. This should be mounted to `samples/` in the Docker container.
+Sample metadata for the Zika pipeline arrives in the `samples/` directory.
 
   - `samples/`
     - `samples.tsv` - line list of sample metadata
