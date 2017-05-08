@@ -16,7 +16,7 @@ cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_models.fofn .
 
 # 3) index the ref & align with bwa
 bwa index $ref
-bwa mem -x ont1d $ref $sample.fasta | samtools view -bS - | samtools sort -o $sample.sorted.bam -
+bwa mem $ref $sample.fasta | samtools view -bS - | samtools sort -o $sample.sorted.bam -
 samtools index $sample.sorted.bam
 
 # 4) trim the alignments to the primer start sites and normalise the coverage to save time
