@@ -117,5 +117,5 @@ for record in vcf_reader:
 
 #print >>sys.stderr, str(sett)
 
-print ">%s" % (sys.argv[3])
+print ">%s"%(sys.argv[3])
 print "".join(cons)
