@@ -175,6 +175,7 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix, logfile):
         consensus_file = build_dir + sample + ".consensus.fasta"
         with open(consensus_file) as f:
             lines = f.readlines()
+        print('lines: %s'%(lines))
         seq = lines[1]
         coverage = 1 - seq.count("N") / float(len(seq))
         print(seq.count("N")) #DEBUG
