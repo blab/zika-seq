@@ -38,4 +38,4 @@ $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o 
 $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -g $ref -vv -w "`scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 
 # 7) filter the variants and produce a consensus
-margin_cons.py $ref $sample.vcf $sample.trimmed.sorted.bam a > $sample.consensus.fasta
+python /fh/fast/bedford_t/zika-seq/pipeline/scripts/margin_cons.py $ref $sample.vcf $sample.trimmed.sorted.bam a > $sample.consensus.fasta
