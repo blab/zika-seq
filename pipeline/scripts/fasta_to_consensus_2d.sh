@@ -20,8 +20,8 @@ bwa mem -x ont2d $ref $sample.fasta | samtools view -bS - | samtools sort -o $sa
 samtools index $sample.sorted.bam
 
 # 4) trim the alignments to the primer start sites and normalise the coverage to save time
-align_trim.py --start --normalise 100 $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.trimmed.sorted.bam
-align_trim.py --normalise 100 $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.primertrimmed.sorted.bam
+python /fh/fast/bedford_t/zika-seq/pipeline/scripts/align_trim.py --start --normalise 100 $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.trimmed.sorted.bam
+python /fh/fast/bedford_t/zika-seq/pipeline/scripts/align_trim.py --normalise 100 $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.primertrimmed.sorted.bam
 samtools index $sample.trimmed.sorted.bam
 samtools index $sample.primertrimmed.sorted.bam
 
