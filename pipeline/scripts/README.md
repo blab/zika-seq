@@ -15,7 +15,7 @@ Confirm that the correct modules have been loaded using `module list`.
 * Nanopolish: `module load nanopolish`
   - Note: nanopolish must be run with command `$EBROOTNANOPOLISH/nanopolish`
 * BWA: `module load BWA/0.7.15-foss-2016b`
-* SAMtools: `module load SAMtools/1.3.1-foss-2016b `
+* SAMtools: `module load SAMtools/1.3.1-foss-2016b`
 
 ## Running the pipeline
 
