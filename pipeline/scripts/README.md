@@ -11,7 +11,7 @@ Confirm that the correct modules have been loaded using `module list`.
 
 #### Consensus genomes:
 * Python: `module load Python/3.6.1-foss-2016b-fh1`
-* R: `module load R/3.4.0-foss-2016-fh1`
+* R: `module load R/3.4.0-foss-2016b-fh1`
 * Nanopolish: `module load nanopolish`
   - Note: nanopolish must be run with command `$EBROOTNANOPOLISH/nanopolish`
 * BWA: `module load BWA/0.7.15-foss-2016b`
