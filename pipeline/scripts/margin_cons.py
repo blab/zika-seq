@@ -28,9 +28,9 @@ def collect_depths(bamfile):
 	out, err = p.communicate()
 	depths = defaultdict(dict)
 	for ln in out.split("\n"):
-        	if ln:
-                	contig, pos, depth = ln.split("\t")
-                	depths[contig][int(pos)] = int(depth)
+		if ln:
+			contig, pos, depth = ln.split("\t")
+			depths[contig][int(pos)] = int(depth)
 	return depths
 
 depths = collect_depths(bamfile)
@@ -78,19 +78,19 @@ for record in vcf_reader:
 		support = float(record.INFO['SupportFraction'][0])
 		total_reads = int(record.INFO['TotalReads'][0])
 		qual = record.QUAL
-        REF = record.REF
-        ALT = str(record.ALT[0])
+		REF = record.REF
+		ALT = str(record.ALT[0])
 
-        if len(REF) > len(ALT):
-            print >>sys.stderr, "deletion"
-            continue
+		if len(REF) > len(ALT):
+			print >>sys.stderr, "deletion"
+			continue
 
-        if len(ALT) > len(REF):
-            print >>sys.stderr, "insertion"
-            continue
+		if len(ALT) > len(REF):
+			print >>sys.stderr, "insertion"
+			continue
 
 #		if support >= 0.75 and total_reads > 30:
-        if qual >= 200 and total_reads >= 20 and support > 0.75:
+		if qual >= 200 and total_reads >= 20 and support > 0.75:
 			print >>sys.stderr, REF, ALT
 
 			report(record, "variant", ALT)
@@ -110,7 +110,7 @@ for record in vcf_reader:
 			#		cons[record.POS-1+n] = ''
 			#else:
 			cons[record.POS-1] = str(ALT)
-        else:
+		else:
 			report(record, "low_qual_variant", "n")
 			cons[record.POS-1] = 'N'
 			continue
