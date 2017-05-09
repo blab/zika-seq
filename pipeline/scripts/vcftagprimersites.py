@@ -8,19 +8,19 @@ from collections import defaultdict
 
 def read_bed_file(fn):
 	bedfile = []
-        with open(fn) as csvfile:
+		with open(fn) as csvfile:
 		reader = csv.reader(csvfile, dialect='excel-tab')
 		for row in reader:
-                        # ref start end primername
-                        bedrow = {}
-                        bedrow['Primer_ID'] = row[3]
+			# ref start end primername
+			bedrow = {}
+			bedrow['Primer_ID'] = row[3]
 			bedrow['direction'] = row[5]
-                        if bedrow['direction'] == '+':
-		            bedrow['end'] = int(row[2])
-			    bedrow['start'] = int(row[1])
-                        else:
-                            bedrow['end'] = int(row[1])
-                            bedrow['start'] = int(row[2])
+			if bedrow['direction'] == '+':
+				bedrow['end'] = int(row[2])
+				bedrow['start'] = int(row[1])
+			else:
+				bedrow['end'] = int(row[1])
+				bedrow['start'] = int(row[2])
 			bedfile.append(bedrow)
 	return bedfile
 
