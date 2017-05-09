@@ -34,8 +34,8 @@ samtools index $sample.primertrimmed.sorted.bam
 # # 6) do variant calling using the raw signal alignment
 # $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
 # $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -e $sample.np.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --models-fofn new_models.fofn
-$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`scripts/nanopolish_header.py $ref`" --snps --ploidy 1
-$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -g $ref -vv -w "`scripts/nanopolish_header.py $ref`" --snps --ploidy 1
+$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
+$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 
 # 7) filter the variants and produce a consensus
 python /fh/fast/bedford_t/zika-seq/pipeline/scripts/margin_cons.py $ref $sample.vcf $sample.trimmed.sorted.bam a > $sample.consensus.fasta
