@@ -8,7 +8,7 @@ from collections import defaultdict
 
 def read_bed_file(fn):
 	bedfile = []
-		with open(fn) as csvfile:
+	with open(fn) as csvfile:
 		reader = csv.reader(csvfile, dialect='excel-tab')
 		for row in reader:
 			# ref start end primername
