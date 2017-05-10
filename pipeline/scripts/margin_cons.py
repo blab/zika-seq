@@ -21,7 +21,7 @@ def collect_depths(bamfile):
 	if not os.path.exists(bamfile):
 		raise SystemExit("bamfile %s doesn't exist" % (bamfile,))
 
-	print >>sys.stderr, bamfile
+	sys.stderr.write(bamfile)
 
 	p = subprocess.Popen(['samtools', 'depth', bamfile],
                              stdout=subprocess.PIPE)
@@ -37,11 +37,11 @@ depths = collect_depths(bamfile)
 
 def report(r, status, allele):
 	idfile = os.path.basename(vcffile).split(".")[0]
-	print >>sys.stderr, "%s\t%s\tstatus\t%s" % (idfile, r.POS, status)
-	print >>sys.stderr, "%s\t%s\tdepth\t%s" % (idfile, r.POS, record.INFO.get('TotalReads', ['n/a']))
-	print >>sys.stderr, "%s\t%s\tfrac\t%s" % (idfile, r.POS, record.INFO.get('BaseCalledFraction', ['n/a']))
-	print >>sys.stderr, "%s\t%s\tallele\t%s" % (idfile, r.POS, allele)
-	print >>sys.stderr, "%s\t%s\tref\t%s" % (idfile, r.POS, record.REF)
+	sys.stderr.write("%s\t%s\tstatus\t%s" % (idfile, r.POS, status))
+	sys.stderr.write("%s\t%s\tdepth\t%s" % (idfile, r.POS, record.INFO.get('TotalReads', ['n/a'])))
+	sys.stderr.write("%s\t%s\tfrac\t%s" % (idfile, r.POS, record.INFO.get('BaseCalledFraction', ['n/a'])))
+	sys.stderr.write("%s\t%s\tallele\t%s" % (idfile, r.POS, allele))
+	sys.stderr.write("%s\t%s\tref\t%s" % (idfile, r.POS, record.REF))
 
 cons = ''
 
@@ -82,25 +82,25 @@ for record in vcf_reader:
 		ALT = str(record.ALT[0])
 
 		if len(REF) > len(ALT):
-			print >>sys.stderr, "deletion"
+			sys.stderr.write("deletion")
 			continue
 
 		if len(ALT) > len(REF):
-			print >>sys.stderr, "insertion"
+			sys.stderr.write("insertion")
 			continue
 
 #		if support >= 0.75 and total_reads > 30:
 		if qual >= 200 and total_reads >= 20 and support > 0.75:
-			print >>sys.stderr, REF, ALT
+			sys.stderr.write(REF, ALT)
 
 			report(record, "variant", ALT)
 			sett.add(record.POS)
 			if len(REF) > len(ALT):
-				print >>sys.stderr, "deletion"
+				sys.stderr.write("deletion")
 				continue
 
 			if len(ALT) > len(REF):
-				print >>sys.stderr, "insertion"
+				sys.stderr.write("insertion")
 				continue
 
 			#for n, b in enumerate(REF):
@@ -115,7 +115,7 @@ for record in vcf_reader:
 			cons[record.POS-1] = 'N'
 			continue
 
-#print >>sys.stderr, str(sett)
+#sys.stderr.write(str(sett))
 
 print(">%s" % (sys.argv[3]))
 print("".join(cons))
