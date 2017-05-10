@@ -32,7 +32,7 @@ def overlaps(coords, pos):
 
 if __name__ == "__main__":
 	if sys.argv[1] not in sets:
-		print "Invalid set"
+		print("Invalid set")
 		raise SystemExit
 
 	bedfile = read_bed_file(sys.argv[1])
