@@ -27,9 +27,9 @@ def collect_depths(bamfile):
                              stdout=subprocess.PIPE)
 	out, err = p.communicate()
 	depths = defaultdict(dict)
-	for ln in out.split("\n"):
+	for ln in out.split(b"\n"):
 		if ln:
-			contig, pos, depth = ln.split("\t")
+			contig, pos, depth = ln.split(b"\t")
 			depths[contig][int(pos)] = int(depth)
 	return depths
 
