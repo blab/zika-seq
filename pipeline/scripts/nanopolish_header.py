@@ -3,8 +3,6 @@
 from Bio import SeqIO
 import sys
 
-print('sys.argv[0]')
-
 recs = list(SeqIO.parse(open(sys.argv[1], "r"), "fasta"))
 if len (recs) != 1:
     print >>sys.stderr, "FASTA has more than one sequence"
