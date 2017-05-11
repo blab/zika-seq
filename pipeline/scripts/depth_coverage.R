@@ -12,9 +12,9 @@ library(optparse)
 library(reshape)
 
 option_list <- list(
-  make_option(c('-i','--infile'), type='character', help='path to <name.chr1.coverage>'),
-  make_option(c('-o','--outPath'), type='character', help='path to the output directory for .png files'),
-  make_option(c('-n','--name'), type='character', help='run name')
+  make_option('--inFile', type='character', help='path to <name.chr1.coverage>'),
+  make_option('--outPath', type='character', help='path to the output directory for .png files'),
+  make_option('--name', type='character', help='run name')
   )
 
  parser <- OptionParser(usage = "%prog [options] file", option_list=option_list)
@@ -27,6 +27,7 @@ roundUpNice <- function(x, nice=c(1,2,4,5,6,8,10)) {
 makeOverlapGraphs <- function(infile,odir,runName) {
 
   path1 <- paste(infile)
+  print(infile)
   pngName <- paste(odir,runName,'-Coverage-Overlap.png',sep='')
   logFile <- paste(odir,runName,'-log.txt',sep='')
 
@@ -74,6 +75,8 @@ main <- function () {
   args <- parse_args(parser)
 
   i <- args$inFile
+  print(i)
+  print(typeof(i))
   o <- args$outPath
   n <- args$name
 
