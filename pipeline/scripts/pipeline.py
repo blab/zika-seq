@@ -188,7 +188,7 @@ def overlap(sr_mapping, build_dir, logfile):
         call = "awk '$1 == \"" + chromosome_name + "\" {print $0}' " + coveragefile + " > " + chfile
         print(call)
         subprocess.call([call], shell=True)
-        call = "Rscript /fh/fast/bedford_t/zika-seq/pipeline/scripts/depth_coverage.R -i " + chfile + " -o " + build_dir + " -n " + sample
+        call = "Rscript /fh/fast/bedford_t/zika-seq/pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
         print(call)
         subprocess.call([call], shell=True)
         print("")
