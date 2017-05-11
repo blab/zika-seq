@@ -12,7 +12,7 @@ library(optparse)
 library(reshape)
 
 option_list <- list(
-  make_option(c('-i','--infile'), type=character, help='path to <name.chr1.coverage>'),
+  make_option(c('-i','--infile'), type='character', help='path to <name.chr1.coverage>'),
   make_option(c('-o','--outPath'), type='character', help='path to the output directory for .png files'),
   make_option(c('-n','--name'), type='character', help='run name')
   )
