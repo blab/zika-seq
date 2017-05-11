@@ -63,7 +63,7 @@ makeOverlapGraphs <- function(infile,odir,runName) {
   write('Percentage over 40x depth:',logFile,append=TRUE)
   write(p40,logFile,append=TRUE)
 
-  png(file=pngName,width=1200,height=600)
+  png(file=pngName,width=1200,height=600,type="cairo")
   plot(x=n1.chr1$locus, y=n1.chr1$depth, type='l', xlab='locus', ylab='depth', col='#781C86', main="Depth of Coverage - Pass reads only", ylim=c(0, graphHeight))
   abline(a=40,b=0,col="#D3AE4E",lwd=0.5)
   abline(a=20,b=0,col="#DF4327",lwd=0.75)
