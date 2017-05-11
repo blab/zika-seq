@@ -41,54 +41,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
     '''
     Use nanopolish to construct a single fasta for all reads from a sample
     '''
-    # runs = set()
-    # for sample in sr_mapping:
-    #     for (run, barcode) in sr_mapping[sample]:
-    #         runs.add(run)
-    # for r in runs:
-    #     fail_folder = data_dir + r + "/basecalled_reads/fail/"
-    #     dmname = r + '_fail_demultiplex.fasta'
-    #     demultiplex_file = build_dir + dmname
-    #     print("Demultiplexing: "+demultiplex_file)
-    #     if dmname not in os.listdir(build_dir):
-    #         f = open(demultiplex_file, "w+")
-    #         # Take this out if we ignore fail reads
-    #         call = [ 'poretools', 'fasta', '--type', '2D', fail_folder ]
-    #         print(" ".join(call))
-    #         subprocess.call(call,stdout=f)
-    #         f.close()
-    #         call = [ 'barcodes/demultiplex.py', '--barcodes', '/zibra/zika-pipeline/barcodes/barcodes.fasta', demultiplex_file]
-    #         print(" ".join(call))
-    #         subprocess.call(call)
-    #         with open(logfile, 'a') as f:
-    #             f.write(time.strftime('[%H:%M:%S] Done demultiplexing ' + run + '\n'))
-    #
-    # # clean up the demultiplexed files.
-    # for fl in os.listdir(build_dir):
-    #     if fl[0] == '>':
-    #         print("Fixing name of " + fl)
-    #         fname = fl[1:]
-    #         os.rename(build_dir + fl, build_dir + fname)
-    #         with open(logfile, 'a') as f:
-    #             f.write(time.strftime('[%H:%M:%S] Fixed name of ' + fname + '\n'))
-
-    import glob
-    for sample in sr_mapping:
-        bc = []
-        fail_file = build_dir + sample + '_fail_demultiplex.fasta'
-        f = open(fail_file, "w+")
-        for (run, barcode) in sr_mapping[sample]:
-            bc += glob.glob(build_dir + barcode + '_' + run + '_fail_demultiplex.fasta')
-        call = ['cat'] + bc
-        if len(bc) >= 1:
-            print(" ".join(call + ['>', fail_file]))
-            subprocess.call(call, stdout=f)
-        else:
-            with open(logfile, 'a') as f:
-                f.write("Unable to cat, no demultiplexed files for " + sample)
-        with open(logfile, 'a') as f:
-            f.write(time.strftime('[%H:%M:%S] Done writing fail fasta for ' + sample + '\n'))
-
     # Pass reads
     for sample in sr_mapping:
         print("* Extracting " + sample)
@@ -111,9 +63,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
         # concatenate to single sample fasta
         input_file_list = [build_dir + sample + "_" + run + "_" + barcode + ".fasta"
             for (run, barcode) in sr_mapping[sample]]
-        # add demultiplex file
-        failed = build_dir + sample + '_fail_demultiplex.fasta'
-        input_file_list.append(failed)
         output_file = build_dir + sample + ".fasta"
         f = open(output_file, "w")
         call = ['cat'] + input_file_list
@@ -175,7 +124,6 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix, logfile):
         consensus_file = build_dir + sample + ".consensus.fasta"
         with open(consensus_file) as f:
             lines = f.readlines()
-        print('lines: %s'%(lines))
         seq = lines[1]
         coverage = 1 - seq.count("N") / float(len(seq))
         print(seq.count("N")) #DEBUG
@@ -240,7 +188,7 @@ def overlap(sr_mapping, build_dir, logfile):
         call = "awk '$1 == \"" + chromosome_name + "\" {print $0}' " + coveragefile + " > " + chfile
         print(call)
         subprocess.call([call], shell=True)
-        call = "Rscript scripts/depth_coverage.R -i " + chfile + " -o " + build_dir + " -n " + sample
+        call = "Rscript /fh/fast/bedford_t/zika-seq/pipeline/scripts/depth_coverage.R -i " + chfile + " -o " + build_dir + " -n " + sample
         print(call)
         subprocess.call([call], shell=True)
         print("")
