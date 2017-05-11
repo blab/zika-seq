@@ -11,6 +11,8 @@
 library(optparse)
 library(reshape)
 
+Sys.putenv("DISPLAY"=":0.0")
+
 option_list <- list(
   make_option('--inFile', type='character', help='path to <name.chr1.coverage>'),
   make_option('--outPath', type='character', help='path to the output directory for .png files'),
