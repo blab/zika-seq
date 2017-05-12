@@ -47,6 +47,9 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
         # nanopolish extract each run/barcode pair
         for (run, barcode) in sr_mapping[sample]:
             input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode # Update this to /basecalled_reads/workspace/
+            print('################\n')
+            print(input_dir)
+            print('################\n')
             print("")
             output_file = build_dir + sample + "_" + run + "_" + barcode + ".fasta"
             f = open(output_file, "w")
