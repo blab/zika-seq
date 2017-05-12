@@ -19,7 +19,8 @@ for bc in os.listdir(b):
     bcd = '%s/%s'%(b, bc)
     if bcd[-6:] != '.fast5':
         for f in os.listdir('%s/0/'%(bcd)):
-            of = '%s/0/%s'%(bcd, f)
-            nf = '%s/%s'%(bcd, f)
-            print('mv %s %s'%(of, nf))
-            os.rename(of, nf)
+            if f[-6:] == '.fast5':
+                of = '%s/0/%s'%(bcd, f)
+                nf = '%s/%s'%(bcd, f)
+                print('mv %s %s'%(of, nf))
+                os.rename(of, nf)
