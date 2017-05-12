@@ -46,7 +46,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
         print("* Extracting " + sample)
         # nanopolish extract each run/barcode pair
         for (run, barcode) in sr_mapping[sample]:
-            input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode + "/" # Update this to /basecalled_reads/workspace/
+            input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode # Update this to /basecalled_reads/workspace/
             print('################\n')
             print(input_dir)
             print('################\n')
