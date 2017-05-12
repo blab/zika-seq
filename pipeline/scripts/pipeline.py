@@ -55,9 +55,9 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension)
             f = open(output_file, "w")
             if output_file not in os.listdir(build_dir):
                 if dimension == '2d':
-                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '--type', '2d', '%s/'%(input_dir)]
+                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '%s/'%(input_dir)]
                 elif dimension == '1d':
-                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '--type', '1d', '%s/'%(input_dir)]
+                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '%s/'%(input_dir)]
                 print(" ".join(call) + " > " + output_file)
                 subprocess.call(" ".join(call), shell=True, stdout=f)
             else:
