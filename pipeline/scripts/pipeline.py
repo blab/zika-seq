@@ -233,15 +233,15 @@ if __name__=="__main__":
                             help="directory for output data; default is \'/fh/fast/bedford_t/zika-seq/build/\'" )
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
                             help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
-    parser.add_argument('--samples', type = str, nargs='*', default = None,
-                            help="sample(s) to be run; if blank, default is all samples listed in runs.tsv")
+    parser.add_argument('--samples', type = str, nargs='1', default = None,
+                            help="sample to be run")
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
 
-    logfile = params.build_dir + 'log.txt'
+    logfile = params.build_dir + '-'.join(args.samples) + 'log.txt'
     start_time = time.time()
     with open(logfile,'w+') as f:
         f.write(time.strftime('Pipeline started on %Y-%m-%d at %H:%M:%S\n'))
