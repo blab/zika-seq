@@ -27,7 +27,7 @@ samtools index $sample.primertrimmed.sorted.bam
 
 #covplot.R $sample.alignreport.txt
 
-# 5) align the nanopore raw signal against the reference using the previous alignments as a guide
+#5) align the nanopore raw signal against the reference using the previous alignments as a guide
 # $EBROOTNANOPOLISH/nanopolish eventalign -vvvv -t 16 --models-fofn new_models.fofn --reads $sample.fasta -b $sample.trimmed.sorted.bam -g $ref --sam | samtools view -bS - | samtools sort -T $sample.tmp - -o $sample.np.sorted.bam
 # samtools index $sample.np.sorted.bam
 #

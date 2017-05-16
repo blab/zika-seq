@@ -27,7 +27,7 @@ def trim(cigar, s, start_pos, end):
             flag, length = cigar.pop(0)
 
         if args.verbose:
-            print >>sys.stderr,  "Chomped a %s, %s" % (flag, length)
+            sys.stderr.write("Chomped a %s, %s" % (flag, length))
 
         if flag == 0:
             ## match
@@ -60,11 +60,11 @@ def trim(cigar, s, start_pos, end):
 
     extra = abs(pos - start_pos)
     if args.verbose:
-        print >> sys.stderr, "extra %s" % (extra)
+        sys.stderr.write("extra %s" % (extra))
     if extra:
         if flag == 0:
             if args.verbose:
-                print >>sys.stderr,  "Inserted a %s, %s" % (0, extra)
+                sys.stderr.write("Inserted a %s, %s" % (0, extra))
 
             if end:
                 cigar.append((0, extra))
@@ -76,7 +76,7 @@ def trim(cigar, s, start_pos, end):
         s.pos = pos - extra
 
     if args.verbose:
-        print >>sys.stderr,  "New pos: %s" % (s.pos)
+        sys.stderr.write("New pos: %s" % (s.pos))
 
     if end:
         cigar.append((4, eaten))
@@ -112,11 +112,11 @@ def go(args):
         ## a primer site, trim it off
 
         if s.is_unmapped:
-            print >>sys.stderr, "%s skipped as unmapped" % (s.query_name)
+            sys.stderr.write("%s skipped as unmapped" % (s.query_name))
             continue
 
         if s.is_supplementary:
-            print >>sys.stderr, "%s skipped as supplementary" % (s.query_name)
+            sys.stderr.write("%s skipped as supplementary" % (s.query_name))
             continue
 
         p1 = find_primer(bed, s.reference_start, '+')
@@ -124,10 +124,10 @@ def go(args):
 
         report = "%s\t%s\t%s\t%s_%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (s.query_name, s.reference_start, s.reference_end, p1[2]['Primer_ID'], p2[2]['Primer_ID'], p1[2]['Primer_ID'], abs(p1[1]), p2[2]['Primer_ID'], abs(p2[1]), s.is_secondary, s.is_supplementary, p1[2]['start'], p2[2]['end'])
         if args.report:
-            print >>reportfh, report
+            print(report, file=reportfh)
 
         if args.verbose:
-            print >>sys.stderr, report
+            sys.stderr.write(report)
 
         ## if the alignment starts before the end of the primer, trim to that position
 
@@ -141,7 +141,7 @@ def go(args):
                 trim(cigar, s, primer_position, 0)
             else:
                 if args.verbose:
-                    print >>sys.stderr, "ref start %s >= primer_position %s" % (s.reference_start, primer_position)
+                    sys.stderr.write("ref start %s >= primer_position %s" % (s.reference_start, primer_position))
 
             if args.start:
                 primer_position = p2[2]['start']
@@ -152,9 +152,9 @@ def go(args):
                 trim(cigar, s, primer_position, 1)
             else:
                 if args.verbose:
-                    print >>sys.stderr, "ref end %s >= primer_position %s" % (s.reference_end, primer_position)
+                    sys.stderr.write("ref end %s >= primer_position %s" % (s.reference_end, primer_position))
         except Exception:
-            print >>sys.stderr, "problem %s" % (e,)
+            sys.stderr.write("problem %s" % (e,))
             pass
 
         if args.normalise:
