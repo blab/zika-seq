@@ -153,7 +153,7 @@ def go(args):
             else:
                 if args.verbose:
                     sys.stderr.write("ref end %s >= primer_position %s" % (s.reference_end, primer_position))
-        except Exception:
+        except Exception as e:
             sys.stderr.write("problem %s" % (e,))
             pass
 
