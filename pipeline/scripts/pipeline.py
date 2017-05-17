@@ -241,7 +241,7 @@ if __name__=="__main__":
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
 
-    logfile = params.build_dir + '-'.join(args.samples) + 'log.txt'
+    logfile = params.build_dir + '-'.join(params.samples) + 'log.txt'
     start_time = time.time()
     with open(logfile,'w+') as f:
         f.write(time.strftime('Pipeline started on %Y-%m-%d at %H:%M:%S\n'))
