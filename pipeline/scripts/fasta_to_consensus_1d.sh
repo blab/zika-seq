@@ -10,9 +10,9 @@ amplicons=$3
 # Files are written to working directory
 
 # 2) copy the r9.4 model files into current directory
-cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.5mers.model .
-cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.model .
-cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_models.fofn .
+# cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.5mers.model .
+# cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_fast_template.model .
+# cp -f /fh/fast/bedford_t/zika-seq/pipeline/models/new_models.fofn .
 
 # 3) index the ref & align with bwa
 bwa index $ref
@@ -32,7 +32,12 @@ samtools index $sample.trimmed.sorted.bam
 # samtools index $sample.np.sorted.bam
 #
 # # 6) do variant calling using the raw signal alignment
-$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
+samtools mpileup -uf $ref $sample.trimmed.sorted.bam | bcftools view -vcg - > $sample.vcf
+
+#Revert to this line if above doesn't work.
+#$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
+
+
 #$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 
 # 7) filter the variants and produce a consensus
