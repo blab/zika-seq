@@ -20,7 +20,7 @@ bwa mem $ref $sample.fasta | samtools view -bS - | samtools sort -o $sample.sort
 samtools index $sample.sorted.bam
 
 # 4) trim the alignments to the primer start sites and normalise the coverage to save time
-python /fh/fast/bedford_t/zika-seq/pipeline/scripts/align_trim.py --start $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.trimmed.sorted.bam
+python /fh/fast/bedford_t/zika-seq/pipeline/scripts/align_trim.py --normalise 500 --start $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.trimmed.sorted.bam
 # python /fh/fast/bedford_t/zika-seq/pipeline/scripts/align_trim.py --normalise 100 $amplicons --report $sample.alignreport.txt < $sample.sorted.bam 2> $sample.alignreport.er | samtools view -bS - | samtools sort -T $sample - -o $sample.primertrimmed.sorted.bam
 samtools index $sample.trimmed.sorted.bam
 #samtools index $sample.primertrimmed.sorted.bam
@@ -32,11 +32,12 @@ samtools index $sample.trimmed.sorted.bam
 # samtools index $sample.np.sorted.bam
 #
 # # 6) do variant calling using the raw signal alignment
-samtools mpileup -uf $ref $sample.trimmed.sorted.bam | bcftools view -vcg - > $sample.vcf
+#samtools mpileup -uf $ref $sample.trimmed.sorted.bam | bcftools view -vcg - > $sample.vcf
 
 #Revert to this line if above doesn't work.
-#$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
+$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 
+# KJ776791.2:1-10808
 
 #$EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.primertrimmed.vcf -b $sample.primertrimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 
