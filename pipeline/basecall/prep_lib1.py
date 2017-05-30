@@ -2,11 +2,17 @@
 import os
 
 b = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/workspace'
-for bc in os.listdir(b):
-    bcd = '%s/%s'%(b, bc)
-    if os.path.isdir(bcd):
-        for f in os.listdir('%s/0/'%(bcd)):
-            of = '%s/0/%s'%(bcd, f)
-            nf = '%s/%s'%(bcd, f)
+for nf in os.listdir(b):
+    nfd = '%s/%s'%(b, nf)
+    if os.path.isdir(nfd):
+        for f in os.listdir(nfd):
+            of = '%s/%s'%(nfd, f)
+            nf = '%s/%s'%(b, f)
             print('mv %s %s'%(of, nf))
             os.rename(of, nf)
+for d in os.listdir(b):
+    nfd = '%s/%s'%(b, d)
+    if os.path.isdir(nfd):
+        os.rmdir(nfd)
+demux = '%s/demux/'
+os.mkdir(demux)
