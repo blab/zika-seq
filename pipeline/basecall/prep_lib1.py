@@ -14,5 +14,5 @@ for d in os.listdir(b):
     nfd = '%s/%s'%(b, d)
     if os.path.isdir(nfd):
         os.rmdir(nfd)
-demux = '%s/demux/'
+demux = '%s/demux/'%(b)
 os.mkdir(demux)

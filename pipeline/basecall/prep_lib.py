@@ -15,12 +15,17 @@ libraries = { '3' : 'usvi-library3-2017-02-02',
 assert args.library in libraries.keys(), "%s not a valid library"%(args.library)
 
 b = '/fh/fast/bedford_t/zika-seq/data/%s/basecalled_reads/workspace'%(libraries[args.library])
-for bc in os.listdir(b):
-    bcd = '%s/%s'%(b, bc)
-    if bcd[-6:] != '.fast5':
-        for f in os.listdir('%s/0/'%(bcd)):
-            if f[-6:] == '.fast5':
-                of = '%s/0/%s'%(bcd, f)
-                nf = '%s/%s'%(bcd, f)
-                print('mv %s %s'%(of, nf))
-                os.rename(of, nf)
+for nf in os.listdir(b):
+    nfd = '%s/%s'%(b, nf)
+    if os.path.isdir(nfd):
+        for f in os.listdir(nfd):
+            of = '%s/%s'%(nfd, f)
+            nf = '%s/%s'%(b, f)
+            print('mv %s %s'%(of, nf))
+            os.rename(of, nf)
+for d in os.listdir(b):
+    nfd = '%s/%s'%(b, d)
+    if os.path.isdir(nfd):
+        os.rmdir(nfd)
+demux = '%s/demux/'%(b)
+os.mkdir(demux)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import subprocess, os
 import argparse
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--inpath', default=None, help="path to input directory containing non-basecalled reads")
@@ -32,8 +33,9 @@ else:
     assert args.email, "No email address given; necessary for SBATCH"
 
     for dirname in os.listdir(args.inpath):
-        acall = 'read_fast5_basecaller.py -i %s/%s -t 6 -c %s -r --barcoding -s %s'%(args.inpath, dirname, w, args.outpath)
-        call = [ 'sbatch', '--time=24:00:00', '--mem=10000', '--mail-type=FAIL', '--mail-user=%s'%(args.email), '--wrap="%s"'%(acall) ]
+        acall = 'read_fast5_basecaller.py -i %s/%s -t 8 -c %s -r -s %s -o fast5'%(args.inpath, dirname, w, args.outpath)
+        call = [ 'sbatch', '--time=24:00:00', '--mem=30000', '--mail-type=FAIL', '--mail-user=%s'%(args.email), '--wrap="%s"'%(acall) ]
         print(" ".join(call))
         if not args.dryrun:
             subprocess.call(" ".join(call), shell=True)
+            time.sleep(15)
