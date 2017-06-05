@@ -10,7 +10,7 @@ libraries = { '3' : 'usvi-library3-2017-02-02',
               '4' : 'usvi-library4-2017-03-03',
               '5' : 'usvi-library5-2017-03-14',
               '6' : 'usvi-library6-2017-03-22',
-              '7' : 'usvi-library7-1d-2017-03-24,
+              '7' : 'usvi-library7-1d-2017-03-24',
               '8' : 'usvi-library8-1d-2017-03-31' }
 
 assert args.library in libraries.keys(), "%s not a valid library"%(args.library)
