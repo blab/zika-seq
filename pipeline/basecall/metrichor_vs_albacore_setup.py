@@ -12,8 +12,8 @@ for barcode in os.listdir(pass_dir):
     if os.path.isdir(bcd):
         for f in os.listdir(bcd):
             print('f:',f)
-            print('f[:-6]',f[:-6])
-            if f[:-6] == '.fast5':
+            print('f[-6:]',f[-6:])
+            if f[-6:] == '.fast5':
                 old = bcd + f
                 new = new_dir + f
                 print('mv %s %s'%(old, new))
@@ -22,7 +22,7 @@ for barcode in os.listdir(pass_dir):
 print('Moving fail files:')
 for f in os.listdir(fail_dir):
     print(f)
-    if f[:-6] == '.fast5':
+    if f[-6:] == '.fast5':
         old = fail_dir + f
         new = new_dir + f
         print('mv %s %s'%(old, new))
