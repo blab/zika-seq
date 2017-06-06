@@ -31,6 +31,7 @@ samtools index $sample.trimmed.sorted.bam
 # $EBROOTNANOPOLISH/nanopolish eventalign -vvvv -t 16 --models-fofn new_models.fofn --reads $sample.fasta -b $sample.trimmed.sorted.bam -g $ref --sam | samtools view -bS - | samtools sort -T $sample.tmp - -o $sample.np.sorted.bam
 # samtools index $sample.np.sorted.bam
 #
+
 # # 6) do variant calling using the raw signal alignment
 #samtools mpileup -uf $ref $sample.trimmed.sorted.bam | bcftools view -vcg - > $sample.vcf
 
