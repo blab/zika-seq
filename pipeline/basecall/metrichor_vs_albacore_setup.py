@@ -8,7 +8,9 @@ new_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test/'
 print('Moving pass files:')
 for barcode in os.listdir(pass_dir):
     bcd = pass_dir + barcode + '/'
+    print(bcd)
     if os.path.isdir(bcd):
+        print(f)
         for f in bcd:
             if f[:-6] == '.fast5':
                 old = bcd + f
@@ -18,6 +20,7 @@ for barcode in os.listdir(pass_dir):
 
 print('Moving fail files:')
 for f in os.listdir(fail_dir):
+    print(f)
     if f[:-6] == '.fast5':
         old = fail_dir + f
         new = new_dir + f
