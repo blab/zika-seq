@@ -11,8 +11,8 @@ for barcode in os.listdir(pass_dir):
     print(bcd)
     if os.path.isdir(bcd):
         for f in os.listdir(bcd):
-            print(f)
-            print(f[:-6])
+            print('f:',f)
+            print('f[:-6]',f[:-6])
             if f[:-6] == '.fast5':
                 old = bcd + f
                 new = new_dir + f
