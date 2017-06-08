@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import os
-from shutil
+import os, shutil
 
 from_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/'
 to_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/workspace/demux/'
