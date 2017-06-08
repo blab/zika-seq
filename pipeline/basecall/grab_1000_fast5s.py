@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import os, shutil
+import os, shutil, sys
 
-from_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/'
+from_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/workspace/'
 to_dir = '/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/basecalled_reads/workspace/demux/'
 count = 0
 
@@ -13,3 +13,5 @@ for f in os.listdir(from_dir):
         print('%s: mv %s %s'%(count, old, new))
         # shutil.copyfile()
         count += 1
+    else:
+        sys.exit()
