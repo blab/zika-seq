@@ -16,7 +16,10 @@ if __name__=='__main__':
     for f in os.listdir(lib):
         if f[-6:] == '.fast5':
             if count % dirsize == 0:
-                os.makedir(lib + str(count // dirsize) + '/')
+                try:
+                    os.makedirs(lib + str(count // dirsize) + '/')
+                except:
+                    print('Couldn\'t make directory %s.' % (str(count // dirsize)))
             old = lib + f
             new = lib + str(count // dirsize) + '/' + f
             print('%s: mv %s %s' % (count, old, new))
