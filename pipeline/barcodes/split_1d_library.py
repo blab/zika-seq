@@ -14,7 +14,7 @@ if __name__=='__main__':
     lib = args.libraryPath
 
     for f in os.listdir(lib):
-        if f[-6:] == '.fast5'
+        if f[-6:] == '.fast5':
             if count % dirsize == 0:
                 os.makedir(lib + str(count // dirsize) + '/')
             old = lib + f
