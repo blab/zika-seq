@@ -8,7 +8,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Script to move fast5 files into batches of 500,000, within numbered folders.')
     parser.add_argument('--libraryPath', type=str, help='Path to the library that needs to be split up.')
     parser.add_argument('--run', default=False, action='store_true', help='Run the move command')
-    args = parser.parse_args
+    args = parser.parse_args()
     dirsize = 500000
     count = 0
     lib = args.libraryPath
