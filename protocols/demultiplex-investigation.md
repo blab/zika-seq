@@ -118,7 +118,21 @@ unclassified: 1762939
 ```
 This is 3418430 classified out of 5181369 total or 66% classified.
 #### Porechop demux
-**_Still Running_**
+```
+NB01.fasta:297955
+NB02.fasta:303588
+NB03.fasta:299221
+NB04.fasta:311595
+NB05.fasta:362862
+NB06.fasta:2050
+NB07.fasta:244370
+NB08.fasta:242056
+NB09.fasta:323541
+NB11.fasta:352631
+NB12.fasta:354824
+none.fasta:2040605
+```
+This is 3094693 out of 5181369 total or 59% classified.
 
 ## Nanopolish vs Poretools
 We also wanted to test the quality of `fasta` extraction by [Nanopolish](https://github.com/jts/nanopolish) and [Poretools](https://github.com/arq5x/poretools). For this, we took 1000 `fast5` subsets of Libraries 1 and 7, and ran either `nanopolish extract` or `poretools fasta` to make four FASTAs, then counted the number of reads represented in the FASTA using `grep -c '>' <FASTA>`. Those read counts were:
