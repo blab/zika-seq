@@ -15,7 +15,7 @@ for d in dirs:
         g1 = path + g
         call = 'gunzip %s' % (g1)
         print(call)
-        # subprocess.call(call, shell=True)
+        subprocess.call(call, shell=True)
     print('\n#####\n\n')
 
 nb01s = [ base + o + demux_fastas[0] for o in dirs ]
@@ -52,8 +52,8 @@ counter = 1
 for b in barcodes:
     fname = '%sNB%02d_complete.fasta' % (out,counter)
     call = " ".join(['cat'] + b) + ' > %s' % (fname)
-    #f = open(fname, 'w+')
+    f = open(fname, 'w+')
     print(fname)
     print(call)
-    #subprocess.call(call, shell=True, stdout=f)
+    subprocess.call(call, shell=True, stdout=f)
     counter += 1
