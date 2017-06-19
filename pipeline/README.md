@@ -1,39 +1,21 @@
-# Zika bioinformatics pipeline
+# Zika bioinformatics pipeline -- Rhino
 
-Run scripts via [Docker](https://www.docker.com/). Notes on building and pushing Docker image are [here](docker-notes.md).
+In this directory are all the scripts used in various parts of the bioinformatic analysis of USVI Zika analysis on the [Rhino cluster](https://github.com/blab/wiki/wiki/Rhino-cluster). For explanation of the Docker pipeline, see `docker_README.md`.
 
-## Run
+## Required modules
+Different modules are required for different parts of the pipeline; they can be loaded using `module load <module name>` from Rhino.
+- Barcoding:
+  - `Python/2.7.13-foss-2016b-fh2`: Poretools
+  - `Python/3.5.2-foss-2016b-fh1`: Porechop
+- Basecalls:
+  - __Albacore is not working at this time; issue with Rhino installation, it seems.__
+- Pipeline:
+  - `module load Python/3.6.1-foss-2016b-fh1`
+  - `R/3.4.0-foss-2016b-fh1`
+  - `BWA/0.7.15-foss-2016b`
+  - `SAMtools/1.3.1-foss-2016b`
+  - `nanopolish`
 
-### Data volume
 
-Create a named data volume that mirrors local MinION `data/` to `data/` within container:
-
-    docker create --name zibra-data -v /Volumes/Meristem/data:/data zibra/zibra
-
-This is to get MinION data into the Docker container. Note that the path to local directory has to be an absolute path. Change `/Volumes/Meristem/data` to wherever local data is stored. [Notes on data schema are here](data-schema.md).
-
-### Samples volume
-
-Create a named data volume that mirrors local sample metadata `samples/` to `samples/` within container:
-
-    docker create --name zibra-samples -v /Volumes/Meristem/samples:/samples zibra/zibra
-
-This is to get sample metadata into the Docker container. Note that the path to local directory has to be an absolute path. Change `/Volumes/Meristem/samples` to wherever local data is stored. [Notes on metadata schema are here](data-schema.md)
-
-### Build volume
-
-Create a named data volume that mirrors local `build/` to `build/` within container:
-
-    docker create --name zibra-build -v /Volumes/Meristem/build:/build zibra/zibra
-
-This is to get data out of the Docker container. Note that the path to local directory has to be an absolute path. Change `/Volumes/Meristem/build` to wherever local results are stored.
-
-### Start
-
-Enter docker image:
-
-    docker run -t -i --volumes-from zibra-data --volumes-from zibra-samples --volumes-from zibra-build zibra/zibra /bin/bash
-
-Run script:
-
-    python scripts/pipeline.py
+### `barcodes/`
+Contains scripts and
