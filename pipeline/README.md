@@ -8,6 +8,7 @@ Different modules are required for different parts of the pipeline; they can be 
   - `Python/2.7.13-foss-2016b-fh2`: Poretools
   - `Python/3.5.2-foss-2016b-fh1`: Porechop
 - Basecalls:
+  - `Python/3.5.2-foss-2016b-fh2`
   - __Albacore is not working at this time; issue with Rhino installation, it seems.__
 - Pipeline:
   - `module load Python/3.6.1-foss-2016b-fh1`
@@ -18,4 +19,10 @@ Different modules are required for different parts of the pipeline; they can be 
 
 
 ### `barcodes/`
-Contains scripts and
+Contains scripts and files relating to the demultiplexing of basecalled reads.
+
+### `basecall/`
+Contains scripts used to prepare libraries for basecalling. __This directory is a work in progress, it will be made more user friendly soon.__
+
+### `scripts/`
+Contains the majority of the scripts necessary to make consensus genomes from basecalled, demultiplexed reads, as well as for the generation of summary statistics and figures.
