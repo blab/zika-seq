@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 import os
+'''
+Count how many reads were demultiplexeded for each library using Albacore.
+Note that Albacore native demuxing is no longer being used.
+'''
+
 
 out_file = '/fh/fast/bedford_t/zika-seq/pipeline/basecall/ratios.txt'
-
 prefix = '/fh/fast/bedford_t/zika-seq/data/'
 
+# Names of Albacore output directories
 barcodes = [ 'barcode01', 'barcode02', 'barcode03', 'barcode04',
              'barcode05', 'barcode06', 'barcode07', 'barcode08',
              'barcode09', 'barcode10', 'barcode11', 'barcode12' ]
 
-libraries = { #'1' : 'usvi-library1-2016-12-10/pass', #remove lib1 until directory structure reformatted
+# Our library data paths
+libraries = { '1' : 'usvi-library1-2016-12-10/basecalled_reads/workspace',
               '3' : 'usvi-library3-2017-02-02/basecalled_reads/workspace',
               '4' : 'usvi-library4-2017-03-03/basecalled_reads/workspace',
               '5' : 'usvi-library5-2017-03-14/basecalled_reads/workspace',

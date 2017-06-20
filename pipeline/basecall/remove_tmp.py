@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse, os
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description='Remove .tmp prefix of library 8 files that were not completely transferred at minKNOW runtime.')
 parser.add_argument('-i', '--input', default='/fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/tmp/tmp/')
 parser.add_argument('-o', '--output', default='/fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads/')
 

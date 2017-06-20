@@ -2,7 +2,7 @@
 import shutil, argparse
 
 if __name__=="__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Completely remove the contents of a library\'s basecalled workspace directory.')
     parser.add_argument('--library', default=None, type=str, help="library that needs a clean workspace")
 
     args = parser.parse_args()
