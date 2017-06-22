@@ -126,7 +126,7 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     print("Good samples: " + " ".join(good_samples))
     print("Partial samples: " + " ".join(partial_samples))
     print("Poor samples: " + " ".join(poor_samples))
-    # concatenate partial samples 
+    # concatenate partial samples
     input_file_list = [build_dir + sample + ".consensus.fasta" for sample in partial_samples]
     output_file = build_dir + prefix + "_partial.fasta"
     f = open(output_file, "w")
@@ -212,10 +212,8 @@ if __name__=="__main__":
                             help="sample to be run")
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
-    parser.add_argument('--start_from', type = str, default = 'construct_fasta',
-                            help="step from which to start the pipeline:\n\tconstruct_fasta \n\tprocess_fasta \n\tgather_consensus \n\tgenerate_overlap \n\tcalculate_error_rates") # TODO: This should be made more sensitive.
-    parser.add_argument('--go_through', type = str, default = 'calculate_error_rates',
-                            help="step through which the pipeline should be run:\n\tconstruct_fasta \n\tprocess_fasta \n\tgather_consensus \n\tgenerate_overlap \n\tcalculate_error_rates") # TODO: This should be made more sensitive.
+    parser.add_argument('--run_steps', type = str, default = None, nargs='*',
+                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas \n\t2. Process sample fastas \n\t3. Gather consensus fastas \n\t 4. Generate overlap graphs \n\t5. Calculate per-base error rates")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
@@ -243,21 +241,26 @@ if __name__=="__main__":
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
 
-    pipeline = ['construct_fasta', 'process_fasta', 'gather_consensus', 'generate_overlap', 'calculate_error_rates']
-    start = pipeline.index(params.start_from)
-    end = pipeline.index(params.go_through)
-    ops = pipeline[start:end+1]
-
-    if 'construct_fasta' in ops:
+    # Only run specified run_steps.
+    # If pipeline is modified, add helper function here and put its name in pipeline below
+    def csf():
         construct_sample_fastas(sr_mapping, dd, bd)
-    if 'process_fasta' in ops:
-        process_sample_fastas(sm_mapping, bd, params.dimension)
-    if 'gather_consensus' in ops:
+    def psf():
+        process_sample_fastas(sm_mapping)
+    def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
-    if 'generate_overlap' in ops:
-        overlap(sm_mapping, bd)
-    if 'calculate_error_rates' ops:
+    def go():
+        overlap(sm_mappng, bd)
+    def pber():
         per_base_error_rate(sr_mapping, bd)
+
+    pipeline = [ csf, psf, gcf, go, pber ]
+    if params.run_steps is None:
+        for fxn in pipeprime:
+            fxn()
+    else:
+        for index in params.run_steps:
+            pipeprime[index-1]()
 
     time_elapsed = time.time() - start_time
     m, s = divmod(time_elapsed, 60)
