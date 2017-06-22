@@ -162,3 +162,11 @@ We also wanted to test the quality of `fasta` extraction by [Nanopolish](https:/
 Both sets generated using Albacore -> fast5 files detailed above
 * 1d: `/fh/fast/bedford_t/zika-seq/data/usvi-library7-1d-2017-03-24/test/workspace/demux/poretools_test`
 * 2d: `/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test/demux/poretools_test`
+
+### Albacore 1.2.1 test (22 June 2017)
+
+Got Albacore 1.2.1 installed on Rhino, testing on library1 to see if it basecalls 2d reads better:
+```
+sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test2/ -o fast5"
+Submitted batch job 52158518
+```
