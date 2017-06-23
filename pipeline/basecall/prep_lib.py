@@ -22,6 +22,8 @@ assert args.library in libraries.keys(), "%s not a valid library"%(args.library)
 # Check for test directories: 1 and 7
 if args.library[-4:] != 'test':
     b = '/fh/fast/bedford_t/zika-seq/data/%s/basecalled_reads/workspace'%(libraries[args.library])
+else:
+    b = '/fh/fast/bedford_t/zika-seq/data/%s' % (libraries[args.library])
 
 # Iterate over numbered folders in basecalled directory
 for nf in os.listdir(b):
