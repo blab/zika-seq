@@ -11,3 +11,6 @@ Basecalls: `/fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/test/ba
 bpotter@rhino1:/fh/fast/bedford_t/zika-seq$ sbatch --time=96:00:00 --mem=30000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads/ -t 8 -c r94_450bps_linear.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/test/basecalled_reads/ -o fast5"
 Submitted batch job 52101562
 ```
+Just over 2 days of Albacore runtime:
+
+SLURM Job_id=52101562 Name=wrap Ended, Run time 2-00:50:09, COMPLETED, ExitCode 0
