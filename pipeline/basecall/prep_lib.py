@@ -14,6 +14,7 @@ libraries = { '1' : 'usvi-library1-2016-12-10',
               '7' : 'usvi-library7-1d-2017-03-24',
               '8' : 'usvi-library8-1d-2017-03-31',
               '1_test' : 'usvi-library1-2016-12-10/test/workspace',
+              '1-2_test' : 'usvi-library1-2016-12-10/test2/workspace' 
               '7_test' : 'usvi-library7-1d-2017-03-24/test/workspace',
               '8_test' : 'usvi-library8-1d-2017-03-31/test/basecalled_reads/workspace' }
 
