@@ -223,11 +223,11 @@ if __name__=="__main__":
     sd = params.samples_dir
 
     # This will reduce my own frustration
-    if dd[-1] not '/':
+    if dd[-1] != '/':
         dd += '/'
-    if bd[-1] not '/':
+    if bd[-1] != '/':
         bd += '/'
-    if sd[-1] not '/':
+    if sd[-1] != '/':
         sd += '/'
 
     start_time = time.time()
