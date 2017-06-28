@@ -53,7 +53,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         unzipped = [ fasta[:-2] for fasta in fastas ]
         # Output the sampel fasta to the build directory
         fname = '%s%s_complete.fasta' % (build_dir, sample)
-        with open(fname, w+) as f:
+        with open(fname, 'w+') as f:
             call = 'cat ' + " ".join(unzipped)
             print('%s > %s' % (call, fname))
             subprocess.call(call, shell=True, stdout=f)
