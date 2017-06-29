@@ -47,7 +47,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         for fasta in fastas:
             if fasta.endswith('na_complete.fasta.gz'):
                 fastas.remove(fasta)
-                print 'Remvoed 1 fasta ending in na_complete.fasta.gz'
+                print 'Remvoed 1 fasta ending in na.fasta.gz'
         print fastas
         # TODO: Check that this assertion catches un-zipped fastas
         assert len(fastas) == 2, 'Expected 2 .fasta.gz files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
