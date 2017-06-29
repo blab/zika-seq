@@ -244,7 +244,7 @@ if __name__=="__main__":
     def csf():
         construct_sample_fastas(sr_mapping, dd, bd)
     def psf():
-        process_sample_fastas(sm_mapping, bd, params.prefix)
+        process_sample_fastas(sm_mapping, bd, params.dimension)
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():
