@@ -212,7 +212,7 @@ if __name__=="__main__":
                             help="sample to be run")
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
-    parser.add_argument('--run_steps', type = int, default = [ 1, 2, 3, 4, 5], nargs='*',
+    parser.add_argument('--run_steps', type = int, default = None, nargs='*',
                             help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas \n\t2. Process sample fastas \n\t3. Gather consensus fastas \n\t 4. Generate overlap graphs \n\t5. Calculate per-base error rates")
     params = parser.parse_args()
 
@@ -258,11 +258,11 @@ if __name__=="__main__":
         assert index in [1,2,3,4,5], 'Unknown index %s, options are 1, 2, 3, 4, or 5.' % (index)
     pipeline = [ csf, psf, gcf, go, pber ]
     if params.run_steps is None:
-        for fxn in pipeprime:
+        for fxn in pipeline:
             fxn()
     else:
         for index in params.run_steps:
-            pipeprime[index-1]()
+            pipeline[index-1]()
 
     time_elapsed = time.time() - start_time
     m, s = divmod(time_elapsed, 60)
