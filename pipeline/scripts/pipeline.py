@@ -51,18 +51,16 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 print('Remvoed 1 fasta ending in na.fasta')
         print(fastas)
         assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
-        complete_fasta = '%s%s_complete.fasta'
+        complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
         with open(complete_fasta, 'w+') as f:
             with open(fastas[0], 'r') as f1:
                 print('Writing %s to %s' % (fastas[0],complete_fasta))
                 content = f1.read()
-                print(type(content))
-                print(content)
-                sys.exit()
-                f.write(f1.read())
+                f.write(content)
             with open(fastas[1], 'r') as f2:
                 print('Writing %s to %s' % (fastas[1],complete_fasta))
-                f.write(f2.read())
+                content = f2.read()
+                f.write(content)
 
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
