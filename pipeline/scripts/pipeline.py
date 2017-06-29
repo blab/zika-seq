@@ -43,7 +43,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
-        fastas = [ '%s%s/test2/workspace/demux/%s_complete.fasta.gz' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        fastas = [ '%s%s/test2/workspace/demux/%s.fasta.gz' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
         for fasta in fastas:
             if fasta.endswith('na_complete.fasta.gz'):
                 fastas.remove(fasta)
