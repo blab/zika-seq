@@ -254,8 +254,9 @@ if __name__=="__main__":
     def pber():
         per_base_error_rate(sr_mapping, bd)
 
-    for index in params.run_steps:
-        assert index in [1,2,3,4,5], 'Unknown index %s, options are 1, 2, 3, 4, or 5.' % (index)
+    if params.run_steps is not None:
+        for index in params.run_steps:
+            assert index in [1,2,3,4,5], 'Unknown step number %s, options are 1, 2, 3, 4, or 5.' % (index)
     pipeline = [ csf, psf, gcf, go, pber ]
     if params.run_steps is None:
         for fxn in pipeline:
