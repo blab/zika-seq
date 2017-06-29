@@ -51,7 +51,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 print('Remvoed 1 fasta ending in na.fasta')
         print(fastas)
         assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
-        complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
+        complete_fasta = '%s%s.fasta' % (build_dir, sample)
         with open(complete_fasta, 'w+') as f:
             with open(fastas[0], 'r') as f1:
                 print('Writing %s to %s' % (fastas[0],complete_fasta))
