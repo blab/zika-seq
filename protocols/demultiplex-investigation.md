@@ -99,6 +99,25 @@ NB11        128     56,433  ./NB11.fasta.gz
 none     15,592  5,208,138  ./none.fasta.gz
 ```
 This is 913 classified out of 610948 total or 0.1% classified.
+
+### Porechop demux -- Alba 1.2.1
+```
+Barcode  Reads    Bases        File           
+NB01      90,709   45,285,862  ./NB01.fasta.gz
+NB02      74,934   36,026,773  ./NB02.fasta.gz
+NB03      31,151   14,969,214  ./NB03.fasta.gz
+NB04     118,013   57,559,436  ./NB04.fasta.gz
+NB05     118,381   61,031,544  ./NB05.fasta.gz
+NB06         821      245,996  ./NB06.fasta.gz
+NB07      73,477   37,587,302  ./NB07.fasta.gz
+NB08      56,900   27,756,199  ./NB08.fasta.gz
+NB09      41,428   20,822,908  ./NB09.fasta.gz
+NB10      67,290   33,201,724  ./NB10.fasta.gz
+NB11      94,667   46,163,231  ./NB11.fasta.gz
+NB12         267      129,935  ./NB12.fasta.gz
+none     294,522  258,037,455  ./none.fasta.gz
+```
+
 ### Library 7 (1D)
 #### Albacore demux
 ```
