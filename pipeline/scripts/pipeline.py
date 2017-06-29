@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse, csv, subprocess, time
+import sys
 from Bio import SeqIO
 import os
 
@@ -51,35 +52,36 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         print fastas
         # TODO: Check that this assertion catches un-zipped fastas
         assert len(fastas) == 2, 'Expected 2 .fasta.gz files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
-        with gzip.open(fastas[0],'rb') as f1:
-            file_content1 = f1.read()
-        with gzip.open(fastas[1],'rb') as f2:
-            file_content2 = f2.read()
-        print type(file_content1)
-        print type(file_content2)
-        sys.exit()
+        complete_fasta = '%s%s_complete.fasta'
+        with open(complete_fasta, 'w+') as f:
+            with gzip.open(fastas[0], 'rb') as f1:
+                print 'Writing %s to %s' % (fastas[0],complete_fasta)
+                f.write(f1.read())
+            with gzip.open(fastas[1], 'rb') as f2:
+                print 'Writing %s to %s' % (fastas[1],complete_fasta)
+                f.write(f2.read())
 
 
 
 
 
-        for fasta in fastas:
-            call = 'gunzip %s' % (fasta) # TODO: Make sure this is correct use of gunzip
-            print(call)
-            subprocess.call(call, shell=True)
-        # Iterate over unzipped files
-        unzipped = [ fasta[:-2] for fasta in fastas ]
-        # Output the sampel fasta to the build directory
-        fname = '%s%s_complete.fasta' % (build_dir, sample)
-        with open(fname, 'w+') as f:
-            call = 'cat ' + " ".join(unzipped)
-            print('%s > %s' % (call, fname))
-            subprocess.call(call, shell=True, stdout=f)
-        # Zip 'em back up!
-        for fasta in unzipped:
-            call = 'gzip %s' % (fasta) # TODO: Make sure this is the correct use of gzip
-            print(call)
-            subprocess.call(call, shell=True)
+        # for fasta in fastas:
+        #     call = 'gunzip %s' % (fasta) # TODO: Make sure this is correct use of gunzip
+        #     print(call)
+        #     subprocess.call(call, shell=True)
+        # # Iterate over unzipped files
+        # unzipped = [ fasta[:-2] for fasta in fastas ]
+        # # Output the sampel fasta to the build directory
+        # fname = '%s%s_complete.fasta' % (build_dir, sample)
+        # with open(fname, 'w+') as f:
+        #     call = 'cat ' + " ".join(unzipped)
+        #     print('%s > %s' % (call, fname))
+        #     subprocess.call(call, shell=True, stdout=f)
+        # # Zip 'em back up!
+        # for fasta in unzipped:
+        #     call = 'gzip %s' % (fasta) # TODO: Make sure this is the correct use of gzip
+        #     print(call)
+        #     subprocess.call(call, shell=True)
 
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
