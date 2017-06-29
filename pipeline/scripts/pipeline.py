@@ -57,6 +57,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             with gzip.open(fastas[0], 'r') as f1:
                 print('Writing %s to %s' % (fastas[0],complete_fasta))
                 print(type(f1.read()))
+                print(f1.read())
                 f.write(f1.read())
             with gzip.open(fastas[1], 'r') as f2:
                 print('Writing %s to %s' % (fastas[1],complete_fasta))
