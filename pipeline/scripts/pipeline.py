@@ -61,28 +61,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 print 'Writing %s to %s' % (fastas[1],complete_fasta)
                 f.write(f2.read())
 
-
-
-
-
-        # for fasta in fastas:
-        #     call = 'gunzip %s' % (fasta) # TODO: Make sure this is correct use of gunzip
-        #     print(call)
-        #     subprocess.call(call, shell=True)
-        # # Iterate over unzipped files
-        # unzipped = [ fasta[:-2] for fasta in fastas ]
-        # # Output the sampel fasta to the build directory
-        # fname = '%s%s_complete.fasta' % (build_dir, sample)
-        # with open(fname, 'w+') as f:
-        #     call = 'cat ' + " ".join(unzipped)
-        #     print('%s > %s' % (call, fname))
-        #     subprocess.call(call, shell=True, stdout=f)
-        # # Zip 'em back up!
-        # for fasta in unzipped:
-        #     call = 'gzip %s' % (fasta) # TODO: Make sure this is the correct use of gzip
-        #     print(call)
-        #     subprocess.call(call, shell=True)
-
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
@@ -266,7 +244,7 @@ if __name__=="__main__":
     def csf():
         construct_sample_fastas(sr_mapping, dd, bd)
     def psf():
-        process_sample_fastas(sm_mapping)
+        process_sample_fastas(sm_mapping, bd, params.prefix)
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():
