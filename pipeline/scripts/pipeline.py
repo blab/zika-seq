@@ -64,7 +64,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
 
         final_fasta = '%s%s.fasta' % (build_dir, sample)
         with open(final_fasta, 'w+') as f:
-            (run, barcode) = sr_mapping[sample][0]:
+            (run, barcode) = sr_mapping[sample][0]
             sed_str = '%s%s/test2/workspace' % (data_dir, run)
             sed_str = sed_str.split('/')
             sed_str = '\/'.join(sed_str)
