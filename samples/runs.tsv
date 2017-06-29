@@ -1,4 +1,4 @@
-run_name	NB_id	sample_id	primer_scheme	seq_platform
+run_name	barcode_id	sample_id	primer_scheme	seq_platform
 usvi-library1-2016-12-10	NB01	VI1	v2_500.amplicons.ver2	minion
 usvi-library1-2016-12-10	NB07	VI1	v2_500.amplicons.ver2	minion
 usvi-library1-2016-12-10	NB02	VI2	v2_500.amplicons.ver2	minion
