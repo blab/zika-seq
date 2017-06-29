@@ -1,16 +1,16 @@
-run_name	barcode_id	sample_id	primer_scheme	seq_platform
-usvi-library1-2016-12-10	barcode01	VI1	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode07	VI1	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode02	VI2	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode08	VI2	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode03	VI3	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode09	VI3	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode04	VI4	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode10	VI4	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode05	VI5	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode11	VI5	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode06	neg_control_1	v2_500.amplicons.ver2	minion
-usvi-library1-2016-12-10	barcode12	neg_control_1	v2_500.amplicons.ver2	minion
+run_name	NB_id	sample_id	primer_scheme	seq_platform
+usvi-library1-2016-12-10	NB01	VI1	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB07	VI1	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB02	VI2	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB08	VI2	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB03	VI3	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB09	VI3	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB04	VI4	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB10	VI4	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB05	VI5	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB11	VI5	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB06	neg_control_1	v2_500.amplicons.ver2	minion
+usvi-library1-2016-12-10	NB12	neg_control_1	v2_500.amplicons.ver2	minion
 usvi-library2msq-2017-01-10	na	VI1	v2_500.amplicons.ver2	miseq
 usvi-library2msq-2017-01-10	na	VI4	v2_500.amplicons.ver2	miseq
 usvi-library2msq-2017-01-10	na	VI6	v2_500.amplicons.ver2	miseq
@@ -24,75 +24,75 @@ usvi-library2msq-2017-01-10	na	VI13	v2_500.amplicons.ver2	miseq
 usvi-library2msq-2017-01-10	na	VI14	v2_500.amplicons.ver2	miseq
 usvi-library2msq-2017-01-10	na	ext_neg_101	v2_500.amplicons.ver2	miseq
 usvi-library2msq-2017-01-10	na	water_neg	v2_500.amplicons.ver2	miseq
-usvi-library3-2017-02-02	barcode01	VI18	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode07	VI18	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode02	VI16	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode08	VI16	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode03	VI15	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode09	VI15	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode04	VI17	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode10	VI17	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode05	VI19	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode11	VI19	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode06	neg_control_2	v2_500.amplicons.ver2	minion
-usvi-library3-2017-02-02	barcode12	neg_control_2	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode01	VI20	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode07	VI20	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode02	VI21	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode08	VI21	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode03	VI22	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode09	VI22	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode04	VI23	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode10	VI23	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode05	VI24	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode11	VI24	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode06	neg_control_3	v2_500.amplicons.ver2	minion
-usvi-library4-2017-03-03	barcode12	neg_control_3	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode01	VI9	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode07	VI9	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode02	VI26	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode08	VI26	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode03	VI27	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode09	VI27	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode04	VI28	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode10	VI28	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode05	VI29	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode11	VI29	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode06	neg_control_4	v2_500.amplicons.ver2	minion
-usvi-library5-2017-03-14	barcode12	neg_control_4	v2_500.amplicons.ver2	minion
-usvi-library6-2017-03-22	barcode01	VI25	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode07	VI25	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode02	VI30	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode08	VI30	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode03	VI31	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode09	VI31	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode04	VI32	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode10	VI32	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode05	VI33	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode11	VI33	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode06	neg_control_5	v2_500.amplicons.ver2	
-usvi-library6-2017-03-22	barcode12	neg_control_5	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode01	VI34	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode07	VI34	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode02	VI35	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode08	VI35	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode03	VI36	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode09	VI36	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode04	VI37	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode11	VI37	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode05	VI38	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode12	VI38	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode06	neg_control_6	v2_500.amplicons.ver2	
-usvi-library7-1d-2017-03-24	barcode06	neg_control_6	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode01	VI39	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode07	VI39	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode02	VI40	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode08	VI40	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode03	VI41	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode09	VI41	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode04	VI42	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode10	VI42	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode05	VI43	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode11	VI43	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode06	neg_control_7	v2_500.amplicons.ver2	
-usvi-library8-1d-2017-03-31	barcode12	neg_control_7	v2_500.amplicons.ver2	
+usvi-library3-2017-02-02	NB01	VI18	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB07	VI18	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB02	VI16	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB08	VI16	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB03	VI15	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB09	VI15	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB04	VI17	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB10	VI17	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB05	VI19	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB11	VI19	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB06	neg_control_2	v2_500.amplicons.ver2	minion
+usvi-library3-2017-02-02	NB12	neg_control_2	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB01	VI20	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB07	VI20	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB02	VI21	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB08	VI21	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB03	VI22	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB09	VI22	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB04	VI23	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB10	VI23	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB05	VI24	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB11	VI24	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB06	neg_control_3	v2_500.amplicons.ver2	minion
+usvi-library4-2017-03-03	NB12	neg_control_3	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB01	VI9	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB07	VI9	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB02	VI26	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB08	VI26	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB03	VI27	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB09	VI27	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB04	VI28	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB10	VI28	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB05	VI29	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB11	VI29	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB06	neg_control_4	v2_500.amplicons.ver2	minion
+usvi-library5-2017-03-14	NB12	neg_control_4	v2_500.amplicons.ver2	minion
+usvi-library6-2017-03-22	NB01	VI25	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB07	VI25	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB02	VI30	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB08	VI30	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB03	VI31	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB09	VI31	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB04	VI32	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB10	VI32	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB05	VI33	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB11	VI33	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB06	neg_control_5	v2_500.amplicons.ver2
+usvi-library6-2017-03-22	NB12	neg_control_5	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB01	VI34	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB07	VI34	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB02	VI35	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB08	VI35	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB03	VI36	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB09	VI36	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB04	VI37	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB11	VI37	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB05	VI38	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB12	VI38	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB06	neg_control_6	v2_500.amplicons.ver2
+usvi-library7-1d-2017-03-24	NB06	neg_control_6	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB01	VI39	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB07	VI39	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB02	VI40	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB08	VI40	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB03	VI41	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB09	VI41	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB04	VI42	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB10	VI42	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB05	VI43	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB11	VI43	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB06	neg_control_7	v2_500.amplicons.ver2
+usvi-library8-1d-2017-03-31	NB12	neg_control_7	v2_500.amplicons.ver2
