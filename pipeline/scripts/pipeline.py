@@ -62,7 +62,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 content = f2.read()
                 f.write(content)
 
-    sed_str = '%s%s/test2/workspace'
+    sed_str = '%s%s/test2/workspace' % (data_dir, run)
     sed_str = sed_str.split('/')
     sed_str = '\/'.join(sed_str)
     print(sed_str)
