@@ -62,6 +62,13 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 content = f2.read()
                 f.write(content)
 
+    sed_str = '%s%s/test2/workspace'
+    sed_str = sed_str.split('/')
+    sed_str = '\/'.join(sed_str)
+    print(sed_str)
+    sys.exit()
+    call = 'sed \'s\/.\.\'
+
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
