@@ -43,6 +43,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
         fastas = [ '%s%s/test2/workspace/demux/%s_complete.fasta.gz' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        print fastas
         # TODO: Check that this assertion catches un-zipped fastas
         assert len(fastas) == 2, 'Expected 2 .fasta.gz files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
         for fasta in fastas:
