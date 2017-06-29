@@ -66,9 +66,9 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             sed_str = '%s%s/test2/workspace' % (data_dir, run)
             sed_str = sed_str.split('/')
             sed_str = '\/'.join(sed_str)
-            print(sed_str)
+            call = 'sed \'s\/.\.%s %s.fasta' % (sed_str, sample)
+            print(call)
             sys.exit()
-            call = 'sed \'s\/.\.\''
 
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
