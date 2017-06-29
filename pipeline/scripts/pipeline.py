@@ -68,7 +68,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             sed_str = '%s%s/test2/workspace' % (data_dir, run)
             sed_str = sed_str.split('/')
             sed_str = '\/'.join(sed_str)
-            call = 'sed \'s/\.\./%s\' %s_complete.fasta' % (sed_str, sample)
+            call = 'sed \'s/\.\./%s/\' %s_complete.fasta' % (sed_str, sample)
             print(" > ".join([call, final_fasta]))
             subprocess.call(call, shell=True, stdout=f)
 
