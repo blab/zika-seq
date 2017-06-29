@@ -44,14 +44,13 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
-        fastas = [ '%s%s/test2/workspace/demux/%s.fasta.gz' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        fastas = [ '%s%s/test2/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
         for fasta in fastas:
-            if fasta.endswith('na.fasta.gz'):
+            if fasta.endswith('na.fasta'):
                 fastas.remove(fasta)
-                print('Remvoed 1 fasta ending in na.fasta.gz')
+                print('Remvoed 1 fasta ending in na.fasta')
         print(fastas)
-        # TODO: Check that this assertion catches un-zipped fastas
-        assert len(fastas) == 2, 'Expected 2 .fasta.gz files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
+        assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
         complete_fasta = '%s%s_complete.fasta'
         with open(complete_fasta, 'w+') as f:
             with open(fastas[0], 'r') as f1:
