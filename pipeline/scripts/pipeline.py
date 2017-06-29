@@ -51,7 +51,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 print('Remvoed 1 fasta ending in na.fasta')
         print(fastas)
         assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
-        complete_fasta = '%s%s.fasta' % (build_dir, sample)
+        complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
         with open(complete_fasta, 'w+') as f:
             with open(fastas[0], 'r') as f1:
                 print('Writing %s to %s' % (fastas[0],complete_fasta))
@@ -62,13 +62,16 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 content = f2.read()
                 f.write(content)
 
-        for (run, barcode) in sr_mapping[sample]:
+        final_fasta = '%s%s.fasta' % (build_dir, sample)
+        with open(final_fasta, 'w+') as f:
+            (run, barcode) = sr_mapping[sample][0]:
             sed_str = '%s%s/test2/workspace' % (data_dir, run)
             sed_str = sed_str.split('/')
             sed_str = '\/'.join(sed_str)
-            call = 'sed \'s\/.\.%s %s.fasta' % (sed_str, sample)
+            call = 'sed \'s\/.\.%s\' %s_complete.fasta' % (sed_str, sample)
             print(call)
             sys.exit()
+            subprocess.call(call, shell=True, stdout=f)
 
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
