@@ -40,6 +40,7 @@ def sample_to_metadata_mapping(samples_dir):
 def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     ''' Construct one fasta for each sample from two input fastas.
     '''
+    import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
         fastas = [ '%s%s/test2/workspace/demux/%s_complete.fasta.gz' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
@@ -50,6 +51,18 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         print fastas
         # TODO: Check that this assertion catches un-zipped fastas
         assert len(fastas) == 2, 'Expected 2 .fasta.gz files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
+        with gzip.open(fastas[0],'rb') as f1:
+            file_content1 = f1.read()
+        with gzip.open(fastas[1],'rb') as f2:
+            file_content2 = f2.read()
+        print type(file_content1)
+        print type(file_content2)
+        sys.exit()
+
+
+
+
+
         for fasta in fastas:
             call = 'gunzip %s' % (fasta) # TODO: Make sure this is correct use of gunzip
             print(call)
