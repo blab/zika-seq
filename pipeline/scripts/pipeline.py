@@ -55,8 +55,9 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         with open(complete_fasta, 'w+') as f:
             with open(fastas[0], 'r') as f1:
                 print('Writing %s to %s' % (fastas[0],complete_fasta))
-                print(type(f1.read()))
-                print(f1.read())
+                content = f1.read()
+                print(type(content))
+                print(content)
                 sys.exit()
                 f.write(f1.read())
             with open(fastas[1], 'r') as f2:
