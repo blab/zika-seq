@@ -189,3 +189,15 @@ Got Albacore 1.2.1 installed on Rhino, testing on library1 to see if it basecall
 sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test2/ -o fast5"
 Submitted batch job 52158518
 ```
+This seemed to work really well, and gave us better output than with Metrichor, moving forward running on libraries 3, 4, 5, and 6. 
+```
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library3-2017-02-02/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library3-2017-02-02/alba121/ -o fast5"
+Submitted batch job 52549825
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library4-2017-03-03/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library4-2017-03-03/alba121/ -o fast5"
+Submitted batch job 52549827
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library5-2017-03-14/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library5-2017-03-14/alba121/ -o fast5"
+Submitted batch job 52549874
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library6-2017-03-22/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library6-2017-03-22/alba121/ -o fast5"
+Submitted batch job 52549875
+```
+Last 3 of the above 4 commands failed because the raw reads were zipped. Unzipping and I will try again.
