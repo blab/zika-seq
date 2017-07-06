@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse, csv, subprocess, time
+import sys
 from Bio import SeqIO
 import os
 
@@ -37,53 +38,43 @@ def sample_to_metadata_mapping(samples_dir):
             sm_mapping[sample] = metadata
     return sm_mapping
 
-def construct_sample_fastas(sr_mapping, data_dir, build_dir, logfile, dimension):
+def construct_sample_fastas(sr_mapping, data_dir, build_dir):
+    ''' Construct one fasta for each sample from two input fastas.
     '''
-    Use nanopolish to construct a single fasta for all reads from a sample
-    '''
-    # Pass reads
+    import gzip
     for sample in sr_mapping:
-        print("* Extracting " + sample)
-        # nanopolish extract each run/barcode pair
-        for (run, barcode) in sr_mapping[sample]:
-            input_dir = data_dir + run + "/basecalled_reads/workspace/" + barcode # Update this to /basecalled_reads/workspace/
-            print('################\n')
-            print(input_dir)
-            print('################\n')
-            print("")
-            output_file = build_dir + sample + "_" + run + "_" + barcode + ".fasta"
-            f = open(output_file, "w")
-            if output_file not in os.listdir(build_dir):
-                if dimension == '2d':
-                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '%s/'%(input_dir)]
-                elif dimension == '1d':
-                    call = ['$EBROOTNANOPOLISH/nanopolish', 'extract', '%s/'%(input_dir)]
-                print(" ".join(call) + " > " + output_file)
-                subprocess.call(" ".join(call), shell=True, stdout=f)
-            else:
-                with open(logfile, 'a') as f:
-                    f.write(time.strftime('[%H:%M:%S] ' + output_file  + ' already in ' + build_dir + '\n'))
+        # Grab a matched pair of barcode fastas; global paths
+        fastas = [ '%s%s/test2/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        for fasta in fastas:
+            if fasta.endswith('na.fasta'):
+                fastas.remove(fasta)
+                print('Remvoed 1 fasta ending in na.fasta')
+        print(fastas)
+        assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
+        complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
+        with open(complete_fasta, 'w+') as f:
+            with open(fastas[0], 'r') as f1:
+                print('Writing %s to %s' % (fastas[0],complete_fasta))
+                content = f1.read()
+                f.write(content)
+            with open(fastas[1], 'r') as f2:
+                print('Writing %s to %s' % (fastas[1],complete_fasta))
+                content = f2.read()
+                f.write(content)
 
-        # concatenate to single sample fasta
-        input_file_list = [build_dir + sample + "_" + run + "_" + barcode + ".fasta"
-            for (run, barcode) in sr_mapping[sample]]
-        output_file = build_dir + sample + ".fasta"
-        f = open(output_file, "w")
-        call = ['cat'] + input_file_list
-        # Check if any files exist to prevent freezing
-        if len(input_file_list) >= 1:
-            print(" ".join(call) + " > " + output_file )
-            subprocess.call(call, stdout=f)
-            with open(logfile, 'a') as f:
-                f.write(time.strftime('[%H:%M:%S] Done writing complete fasta for ' + sample + '\n'))
-        else:
-            with open(logfile, 'a') as f:
-                f.write("Unable to cat, no fasta files available for " + sample)
-        print("")
+        final_fasta = '%s%s.fasta' % (build_dir, sample)
+        with open(final_fasta, 'w+') as f:
+            (run, barcode) = sr_mapping[sample][0]
+            sed_str = '%s%s/test2/workspace' % (data_dir, run)
+            sed_str = sed_str.split('/')
+            sed_str = '\/'.join(sed_str)
+            call = 'sed \'s/\.\./%s/\' %s%s_complete.fasta' % (sed_str, build_dir, sample)
+            print(" > ".join([call, final_fasta]))
+            subprocess.call(call, shell=True, stdout=f)
 
-def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
-    '''
-    Run fasta_to_consensus script to construct consensus files
+def process_sample_fastas(sm_mapping, build_dir, dimension):
+    ''' Run fasta_to_consensus script to construct consensus files.
+    TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
     '''
     for sample in sm_mapping:
         print("* Processing " + sample)
@@ -110,14 +101,12 @@ def process_sample_fastas(sm_mapping, build_dir, logfile, dimension):
         call = ['mv', output_file, input_file]
         print(" ".join(call))
         subprocess.call(call)
-        with open(logfile, 'a') as f:
-            f.write(time.strftime('[%H:%M:%S] Consensus fasta completed for ' + sample + '\n'))
         print("")
 
-def gather_consensus_fastas(sm_mapping, build_dir, prefix, logfile):
+def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     '''
-    Gather consensus files into genomes with 'partial' (50-80% coverage)
-    and good (>80% coverage) coverage
+    Gather consensus files into genomes with 'partial' (50-80 percent coverage)
+    and good (>80 percent coverage) coverage
     '''
     # identify partial and good samples
     print("* Concatenating consensus fastas")
@@ -146,6 +135,7 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix, logfile):
     print("Good samples: " + " ".join(good_samples))
     print("Partial samples: " + " ".join(partial_samples))
     print("Poor samples: " + " ".join(poor_samples))
+    # concatenate partial samples
     input_file_list = [build_dir + sample + ".consensus.fasta" for sample in partial_samples]
     output_file = build_dir + prefix + "_partial.fasta"
     f = open(output_file, "w")
@@ -168,11 +158,9 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix, logfile):
     call = ['cat'] + input_file_list
     print(" ".join(call) + " > " + output_file)
     subprocess.call(call, stdout=f)
-    with open(logfile, 'a') as f:
-        f.write(time.strftime('[%H:%M:%S] Done gathering consensus fastas\n'))
     print("")
 
-def overlap(sr_mapping, build_dir, logfile):
+def overlap(sr_mapping, build_dir):
     # prepare sorted bam files for coverage plots
     for sample in sr_mapping:
         # samtools depth <name.sorted.bam> > <name.coverage>
@@ -196,10 +184,8 @@ def overlap(sr_mapping, build_dir, logfile):
         print(call)
         subprocess.call([call], shell=True)
         print("")
-        with open(logfile, 'a') as f:
-            f.write(time.strftime('[%H:%M:%S] Done drawing overlap graphs for ' + sample + '\n'))
 
-def per_base_error_rate(sr_mapping, build_dir, logfile):
+def per_base_error_rate(sr_mapping, build_dir):
     '''
     Calculate per-base error rates by walking through VCF files for each sample.
     TODO: make this work
@@ -220,11 +206,9 @@ def per_base_error_rate(sr_mapping, build_dir, logfile):
             error = error / length
             with open(outfile, 'w+') as f:
                 f.write('Error rate: ' + str(error))
-    with open(logfile, 'a') as f:
-        f.write(time.strftime('[%H:%M:%S] Done calculating per-base error rates ' + sample + '\n'))
 
 if __name__=="__main__":
-    parser = argparse.ArgumentParser( description = "process data" )
+    parser = argparse.ArgumentParser( description = "Bioinformatic pipeline for generating consensus genomes from demultiplexed Zika fastas" )
     parser.add_argument( '--data_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/data/",
                             help="directory containing data; default is \'/fh/fast/bedford_t/zika-seq/data/\'")
     parser.add_argument( '--samples_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/samples/",
@@ -237,38 +221,60 @@ if __name__=="__main__":
                             help="sample to be run")
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
+    parser.add_argument('--run_steps', type = int, default = None, nargs='*',
+                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas \n\t2. Process sample fastas \n\t3. Gather consensus fastas \n\t 4. Generate overlap graphs \n\t5. Calculate per-base error rates")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
 
-    logfile = params.build_dir + '-'.join(params.samples) + 'log.txt'
-    start_time = time.time()
-    with open(logfile,'w+') as f:
-        f.write(time.strftime('Pipeline started on %Y-%m-%d at %H:%M:%S\n'))
+    dd = params.data_dir
+    bd = params.build_dir
+    sd = params.samples_dir
 
-    sr_mapping = sample_to_run_data_mapping(params.samples_dir)
-    sm_mapping = sample_to_metadata_mapping(params.samples_dir)
+    # This will reduce my own frustration
+    if dd[-1] != '/':
+        dd += '/'
+    if bd[-1] != '/':
+        bd += '/'
+    if sd[-1] != '/':
+        sd += '/'
+
+    start_time = time.time()
+
+    # Parse samples directory and remove unwanted samples
+    # TODO: This can be run more efficiently in the future by making sample_to_run_data_mapping and sample_to_metadata_mapping smarter
+    sr_mapping = sample_to_run_data_mapping(sd)
+    sm_mapping = sample_to_metadata_mapping(sd)
     tmp_sr = { s: sr_mapping[s] for s in params.samples }
     tmp_sm = { s: sm_mapping[s] for s in params.samples }
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
 
-    with open(logfile,'a') as f:
-        f.write('Samples:\n')
-        for sample in sr_mapping:
-            f.write(sample+'\n')
-            for (run, barcode) in sr_mapping[sample]:
-                f.write('\t('+run+', '+barcode+')\n')
+    # Only run specified run_steps.
+    # If pipeline is modified, add helper function here and put its name in pipeline below
+    def csf():
+        construct_sample_fastas(sr_mapping, dd, bd)
+    def psf():
+        process_sample_fastas(sm_mapping, bd, params.dimension)
+    def gcf():
+        gather_consensus_fastas(sm_mapping, bd, params.prefix)
+    def go():
+        overlap(sm_mappng, bd)
+    def pber():
+        per_base_error_rate(sr_mapping, bd)
 
-    construct_sample_fastas(sr_mapping, params.data_dir, params.build_dir, logfile, params.dimension)
-    process_sample_fastas(sm_mapping, params.build_dir, logfile, params.dimension)
-    gather_consensus_fastas(sm_mapping, params.build_dir, params.prefix, logfile)
-    overlap(sm_mapping, params.build_dir, logfile)
-    per_base_error_rate(sr_mapping, params.build_dir, logfile)
+    if params.run_steps is not None:
+        for index in params.run_steps:
+            assert index in [1,2,3,4,5], 'Unknown step number %s, options are 1, 2, 3, 4, or 5.' % (index)
+    pipeline = [ csf, psf, gcf, go, pber ]
+    if params.run_steps is None:
+        for fxn in pipeline:
+            fxn()
+    else:
+        for index in params.run_steps:
+            pipeline[index-1]()
 
     time_elapsed = time.time() - start_time
     m, s = divmod(time_elapsed, 60)
     h, m = divmod(m, 60)
-    with open(logfile,'a') as f:
-        f.write(time.strftime('Pipeline completed on %Y-%m-%d at %H:%M:%S\n'))
-        f.write('Total runtime: %d:%02d:%02d' % (h, m, s))
+    print('Total runtime: %d:%02d:%02d' % (h, m, s))

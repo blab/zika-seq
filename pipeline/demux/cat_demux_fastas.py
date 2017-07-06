@@ -12,10 +12,10 @@ demux_fastas = [ ( 'NB%02d.fasta' % (i) ) for i in range(1,13) ]
 for d in dirs:
     path = base + d
     for g in demux_gzs:
-        g1 = path + g
-        call = 'gunzip %s' % (g1)
-        print(call)
-        subprocess.call(call, shell=True)
+	g1 = path + g
+	call = 'gunzip %s' % (g1)
+	print(call)
+	subprocess.call(call, shell=True)
     print('\n#####\n\n')
 
 nb01s = [ base + o + demux_fastas[0] for o in dirs ]

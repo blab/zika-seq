@@ -7,7 +7,7 @@ Prior to running different parts of the pipeline, make sure that the requisite m
 Confirm that the correct modules have been loaded using `module list`.
 
 #### Basecalling:
-* ONT Albacore 1.0.4; loaded with `module load Python/3.5.2-foss-2016b-fh1`
+* ONT Albacore 1.2.1; loaded with `module load Python/3.5.2-foss-2016b-fh2`
 
 #### Consensus genomes:
 * Python: `module load Python/3.6.1-foss-2016b-fh1`

@@ -99,6 +99,25 @@ NB11        128     56,433  ./NB11.fasta.gz
 none     15,592  5,208,138  ./none.fasta.gz
 ```
 This is 913 classified out of 610948 total or 0.1% classified.
+
+### Porechop demux -- Alba 1.2.1
+```
+Barcode  Reads    Bases        File           
+NB01      90,709   45,285,862  ./NB01.fasta.gz
+NB02      74,934   36,026,773  ./NB02.fasta.gz
+NB03      31,151   14,969,214  ./NB03.fasta.gz
+NB04     118,013   57,559,436  ./NB04.fasta.gz
+NB05     118,381   61,031,544  ./NB05.fasta.gz
+NB06         821      245,996  ./NB06.fasta.gz
+NB07      73,477   37,587,302  ./NB07.fasta.gz
+NB08      56,900   27,756,199  ./NB08.fasta.gz
+NB09      41,428   20,822,908  ./NB09.fasta.gz
+NB10      67,290   33,201,724  ./NB10.fasta.gz
+NB11      94,667   46,163,231  ./NB11.fasta.gz
+NB12         267      129,935  ./NB12.fasta.gz
+none     294,522  258,037,455  ./none.fasta.gz
+```
+
 ### Library 7 (1D)
 #### Albacore demux
 ```
@@ -162,3 +181,23 @@ We also wanted to test the quality of `fasta` extraction by [Nanopolish](https:/
 Both sets generated using Albacore -> fast5 files detailed above
 * 1d: `/fh/fast/bedford_t/zika-seq/data/usvi-library7-1d-2017-03-24/test/workspace/demux/poretools_test`
 * 2d: `/fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test/demux/poretools_test`
+
+### Albacore 1.2.1 test (22 June 2017)
+
+Got Albacore 1.2.1 installed on Rhino, testing on library1 to see if it basecalls 2d reads better:
+```
+sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library1-2016-12-10/test2/ -o fast5"
+Submitted batch job 52158518
+```
+This seemed to work really well, and gave us better output than with Metrichor, moving forward running on libraries 3, 4, 5, and 6. 
+```
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library3-2017-02-02/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library3-2017-02-02/alba121/ -o fast5"
+Submitted batch job 52549825
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library4-2017-03-03/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library4-2017-03-03/alba121/ -o fast5"
+Submitted batch job 52549827
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library5-2017-03-14/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library5-2017-03-14/alba121/ -o fast5"
+Submitted batch job 52549874
+bpotter@rhino3:/fh/fast/bedford_t/zika-seq$ sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=bpotter@fhcrc.org --wrap="read_fast5_basecaller.py -i /fh/fast/bedford_t/zika-seq/data/usvi-library6-2017-03-22/raw_reads/ -t 8 --config r94_250bps_nsk007_2d.cfg -r -s /fh/fast/bedford_t/zika-seq/data/usvi-library6-2017-03-22/alba121/ -o fast5"
+Submitted batch job 52549875
+```
+Last 3 of the above 4 commands failed because the raw reads were zipped. Unzipping and I will try again.
