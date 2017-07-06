@@ -1,49 +1,43 @@
 # Zika-USVI Pipeline
 Pipeline for processing raw nanopore-sequenced Zika samples to create consensus genomes. Developed for use on Rhino.
 
-## Requirements
-Prior to running different parts of the pipeline, make sure that the requisite modules have been loaded on Rhino using `module load <module>`.
+## `pipeline.py`
 
-Confirm that the correct modules have been loaded using `module list`.
+This script constitutes the bulk of the pipeline, generating consensus genomes from demultiplexed FASTAs.
 
-#### Basecalling:
-* ONT Albacore 1.2.1; loaded with `module load Python/3.5.2-foss-2016b-fh2`
+### Arguments:
+- `--data_dir`: Directory containing all libraries and data. Default is `/fh/fast/bedford_t/zika-seq/data/`. Contained in this directory should be demultiplexed FASTAs in the subfolder `<run>/alba121/workspace/demux/`
+- `--samples_dir`: Directory containing a `runs.tsv` file and a `samples.tsv` file. These files are parsed by `pipeline.py` to generate metadata for each sample. Default is `/fh/fast/bedford_t/zika-seq/samples/`.
+- `--build_dir`: Directory into which all intermediary files and output from `pipeline.py` will be written. Default is `/fh/fast/bedford_t/zika-seq/build/`.
+- `--prefix`: String that will be prepended onto all output consensus genome files. Default is `ZIKA_USVI`.
+- `--samples`: Names of samples that should be processed. Acceptable samples can be found in `<samples_dir>/samples.tsv`. Samples should be listed separated by spaces. If excluded from command, all samples listed in `samples.tsv` will be processed.
+- `--dimension`: Dimension of the library being processed. Options are `1d` or `2d`; default is `2d`.
+- `--run_steps`: Numbered steps to run (explained below in more detail):
+  1. Construct sample FASTAs
+  2. Process sample FASTAs
+  3. Gather consensus FASTAs
+  4. Generate coverage overlap plots
+  5. Calculate per-base error rates
 
-#### Consensus genomes:
-* Python: `module load Python/3.6.1-foss-2016b-fh1`
-* R: `module load R/3.4.0-foss-2016b-fh1`
-* Nanopolish: `module load nanopolish`
-  - Note: nanopolish must be run with command `$EBROOTNANOPOLISH/nanopolish`
-* BWA: `module load BWA/0.7.15-foss-2016b`
-* SAMtools: `module load SAMtools/1.3.1-foss-2016b`
-
-## Running the pipeline
-
-#### Basecalling:
-
-Basecalling can be distributed to Rhino automatically using the command:
-
-`python distribute_albacore.py -i </path/to/library/raw_reads> -o </path/to/library/basecalled_reads/> --email <user email>`
-
-This command will distribute an SBATCH command for each of the subdirectores of `raw_reads/`, each containing roughly 4000 `.fast5` files. Emails will be sent to the given address for each subdirectory that failed, typically ~5-10 per distribution. Most failures happen at the beginning of the runs.
-
-`distribute_albacore.py` has the following arguments that can be specified by the user (`inpath`, `outpath`, and `email` are required):
-
-* `-i`, `--inpath`: path to input directory containing non-basecalled reads
-  - Note this directory name _should not_ be followed by a terminal `/`
-* `-o`, `--outpath`: path to output directory for basecalled reads
-  - Note this directory name _should_ be followed by a terminal `/`
-* `--dimension`: dimension of sequenced library; `1d` or `2d`
-  - Default is `1d`
-* `--email`: email address for sbatch notifications
-* `--test`: make sure that albacore is working correctly
-  - Passes albacore help call, `read_fast5_basecaller.py -h`, to SLURM. Should give a `slurm.out` file within a few minutes that contains the help messages for albacore. If there is an error with albacore (usually incorrect modules have been loaded, see above), it will show here.
-* `--dryrun`: print commands to be run, but do not call them
-  - Will print all SBATCH calls to the screen, but will not execute them. Usefull for making sure that all input is correct before submitting hundreds of jobs to SLURM.
-
-It generally works run in 3 steps, to avoid hundreds or thousands of error emails being sent immediately:
-1. Full command with `--test` to make sure that the proper modules have been loaded.
-2. Full command with `--dryrun` to make sure that all input is correct. A common error happens if `--inpath` is specified with a terminal `/` (i.e. `path/to/library/raw_reads/` rather than `path/to/library/raw_reads`).
-3. Full command without any test flags, to submit jobs to SLURM.
-
-If multiple libraries are being submitted at the same time, it is recommended to allow 10-15 minutes to pass between `distribute_albacore` calls. Most errors happen during the first few minutes after submission, so separating calls by some time helps when determining which error email corresponded to which library.
+### Pipeline overview
+##### Construct sample FASTAs
+FASTAs for each sample are constructed by concatenating the two demultiplexed FASTAs that correspond to a given sample. The complete FASTA is written to `<build_dir>`.
+##### Process sample FASTAs
+Take a complete FASTA and construct a consensus genome. This is done by calling the script `fasta_to_consensus_<dimension>.sh`, which does the following:
+  1. Aligns reads with `bwa mem`.
+  2. Trims alignment to primer start sites with `align_trim.py`.
+  3. Normalizes reads to sequencing depth of 500 in order to save time with `align_trim.py`.
+  4. Creates a sorted BAM file with `samtools sort` and `samtools index`.
+  5. Variant calling using `nanopolish variants`.
+  6. Consensus genome construction with `margin_cons.py`.
+Output consensus genomes are written to `<build_dir>` by sample name.
+##### Gather consensus FASTAs
+Iterates over all samples in `<build_dir>` to determine the percent of the genome that was called as 'N', and joins the consensus FASTAs into one of three files depending on percent N:
+  - `ZIKA_USVI_good.fasta`: Less than 20% N
+  - `ZIKA_USVI_partial.fasta`: Between 20% and 50% N
+  - `ZIKA_USVI_poor.fasta`: Less than 50% N
+##### Generate coverage overlap plots
+Looks at the BAM files to determine the depth of sequencing at each site along the reference genome. Using this, plots are generated using `depth_coverage.R`. PNG files for each plot are written to `<build_dir>`.
+* _Note:_ These plots can be generated without consensus genomes by running `depth_process.py` before calling `depth_coverage.R`.
+##### Calculate per-base error rates
+Walks through VCF files made by `nanopolish variants` to determine per-base error rates. _Currently broken_
