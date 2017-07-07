@@ -44,7 +44,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
-        fastas = [ '%s%s/test2/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        fastas = [ '%s%s/alba121/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
         for fasta in fastas:
             if fasta.endswith('na.fasta'):
                 fastas.remove(fasta)
@@ -65,7 +65,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
         final_fasta = '%s%s.fasta' % (build_dir, sample)
         with open(final_fasta, 'w+') as f:
             (run, barcode) = sr_mapping[sample][0]
-            sed_str = '%s%s/test2/workspace' % (data_dir, run)
+            sed_str = '%s%s/alba121/workspace' % (data_dir, run)
             sed_str = sed_str.split('/')
             sed_str = '\/'.join(sed_str)
             call = 'sed \'s/\.\./%s/\' %s%s_complete.fasta' % (sed_str, build_dir, sample)
