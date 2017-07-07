@@ -57,6 +57,7 @@ If this is the case, then you will need to split the files back up into smaller 
   3. Submit job as `sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="poretools fasta ../ > <FILENAME.fasta>`.
   4. Load Porechop with `module load Python/3.5.2-foss-2016b-fh1` (uses Python 3).
   5. Submit job as `sbatch --time=24:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="porechop -i <FILENAME.fasta> -b . --barcode_threshold 75 --threads 16 --check_reads 100000"`.
+  6. Once job completes, run `gunzip NB*` from within the directory to unzip the files in preparation for consensus genome generation.
 
 Porechop will write out a fasta file for each barcode in the `demux/` directory (for example, `demux/NB01.fasta`). If you had a large library, and you split basecalled reads into subdirectories of 500,000 files each, and submitted a Porechop job for _each_ subdirectory, then you'll have multiple fastas with the demultiplexed reads. In such cases, use [`cat_demux_fastas.py`](barcodes/cat_demux_fastas.py) to consolidate all of the reads into a single fasta for each barcode.
 
