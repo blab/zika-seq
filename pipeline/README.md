@@ -49,7 +49,7 @@ Albacore writes basecalled `fast5` files into subdirectories within the `workspa
 
 ###### Note: Your library might be huge, in which case there will be too many files in `workspace` for Porechop to handle.
 
-If this is the case, then you will need to split the files back up into smaller subdirectories, and you'll need to submit a Porechop job _for each subdirectory_. If your library has more than 4 million reads, you can use the [`split_1d_library.py`](barcodes/split_1d_library.py) to sort reads into directories that contain 500,000 reads per directory.
+If this is the case, then you will need to split the files back up into smaller subdirectories, and you'll need to submit a Porechop job _for each subdirectory_. If your library has more than 4 million reads, you can use the [`split_1d_library.py`](demux/split_1d_library.py) to sort reads into directories that contain 500,000 reads per directory.
 
 ##### Extract fasta files from basecalled reads and demultiplex reads based on barcoding:
   1. Load Poretools with `module load Python/2.7.13-foss-2016b-fh2` (Uses Python 2).
@@ -59,7 +59,7 @@ If this is the case, then you will need to split the files back up into smaller 
   5. Submit job as `sbatch --time=24:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="porechop -i <FILENAME.fasta> -b . --barcode_threshold 75 --threads 16 --check_reads 100000"`.
   6. Once job completes, run `gunzip NB*` from within the directory to unzip the files in preparation for consensus genome generation.
 
-Porechop will write out a fasta file for each barcode in the `demux/` directory (for example, `demux/NB01.fasta`). If you had a large library, and you split basecalled reads into subdirectories of 500,000 files each, and submitted a Porechop job for _each_ subdirectory, then you'll have multiple fastas with the demultiplexed reads. In such cases, use [`cat_demux_fastas.py`](barcodes/cat_demux_fastas.py) to consolidate all of the reads into a single fasta for each barcode.
+Porechop will write out a fasta file for each barcode in the `demux/` directory (for example, `demux/NB01.fasta`). If you had a large library, and you split basecalled reads into subdirectories of 500,000 files each, and submitted a Porechop job for _each_ subdirectory, then you'll have multiple fastas with the demultiplexed reads. In such cases, use [`cat_demux_fastas.py`](demux/cat_demux_fastas.py) to consolidate all of the reads into a single fasta for each barcode.
 
 ##### Generating consensus sequences:
 
@@ -76,11 +76,11 @@ The [`pipeline.py`](scripts/pipeline.py) script does all the heavy lifting in te
 
 ## Description of directories within `pipeline`:
 
-### `barcodes/`
+#### `demux/`
 Contains scripts and files relating to the demultiplexing of basecalled reads.
 
-### `basecall/`
+#### `basecall/`
 Contains scripts used to prepare libraries for basecalling. __This directory is a work in progress, it will be made more user friendly soon.__
 
-### `scripts/`
+#### `scripts/`
 Contains the majority of the scripts necessary to make consensus genomes from basecalled, demultiplexed reads, as well as for the generation of summary statistics and figures.
