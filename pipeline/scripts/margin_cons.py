@@ -21,7 +21,7 @@ def collect_depths(bamfile):
     if not os.path.exists(bamfile):
         raise SystemExit("bamfile %s doesn't exist" % (bamfile,))
 
-    print >>sys.stderr, bamfile
+    print(bamfile, file=sys.stderr)
 
     p = subprocess.Popen(['samtools', 'depth', bamfile],
                              stdout=subprocess.PIPE)
@@ -37,12 +37,12 @@ depths = collect_depths(bamfile)
 
 def report(r, status, allele):
     idfile = os.path.basename(vcffile).split(".")[0]
-    print >>sys.stderr, "%s\t%s\tstatus\t%s" % (idfile, r.POS, status)
-    print >>sys.stderr, "%s\t%s\tdepth\t%s" % (idfile, r.POS, record.INFO.get('TotalReads', ['n/a']))
-    print >>sys.stderr, "%s\t%s\tbasecalledfrac\t%s" % (idfile, r.POS, record.INFO.get('BaseCalledFraction', ['n/a']))
-    print >>sys.stderr, "%s\t%s\tsupportfrac\t%s" % (idfile, r.POS, record.INFO.get('SupportFraction', ['n/a']))
-    print >>sys.stderr, "%s\t%s\tallele\t%s" % (idfile, r.POS, allele)
-    print >>sys.stderr, "%s\t%s\tref\t%s" % (idfile, r.POS, record.REF)
+    print("%s\t%s\tstatus\t%s" % (idfile, r.POS, status), file=sys.stderr)
+    print("%s\t%s\tdepth\t%s" % (idfile, r.POS, record.INFO.get('TotalReads', ['n/a'])), file=sys.stderr)
+    print("%s\t%s\tbasecalledfrac\t%s" % (idfile, r.POS, record.INFO.get('BaseCalledFraction', ['n/a'])), file=sys.stderr)
+    print("%s\t%s\tsupportfrac\t%s" % (idfile, r.POS, record.INFO.get('SupportFraction', ['n/a'])), file=sys.stderr)
+    print("%s\t%s\tallele\t%s" % (idfile, r.POS, allele), file=sys.stderr)
+    print("%s\t%s\tref\t%s" % (idfile, r.POS, record.REF), file=sys.stderr)
 
 cons = ''
 
@@ -84,12 +84,12 @@ for record in vcf_reader:
         ALT = str(record.ALT[0])
 
         if len(ALT) > len(REF):
-            print >>sys.stderr, "Skipping insertion at position: %s" % (record.POS)
+            print("Skipping insertion at position: %s" % (record.POS), file=sys.stderr)
             continue
 
         if qual >= 200 and total_reads >= 20:
             if len(REF) > len(ALT):
-                print >>sys.stderr, "N-masking confident deletion at %s" % (record.POS)
+                print("N-masking confident deletion at %s" % (record.POS), file=sys.stderr)
                 for n in xrange(len(REF)):
                     cons[record.POS-1+n] = 'N'
                 continue
@@ -97,11 +97,11 @@ for record in vcf_reader:
             report(record, "variant", ALT)
             sett.add(record.POS)
             if len(REF) > len(ALT):
-                print >>sys.stderr, "deletion"
+                print("deletion", file=sys.stderr)
                 continue
 
             if len(ALT) > len(REF):
-                print >>sys.stderr, "insertion"
+                print("insertion", file=sys.stderr)
                 continue
 
             cons[record.POS-1] = str(ALT)
@@ -114,5 +114,5 @@ for record in vcf_reader:
 
 #print >>sys.stderr, str(sett)
 
-print ">%s" % (sys.argv[3])
-print "".join(cons)
+print(">%s" % (sys.argv[3]))
+print("".join(cons))
