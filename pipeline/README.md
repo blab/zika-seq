@@ -70,7 +70,7 @@ Porechop will write out a fasta file for each barcode in the `demux/` directory 
    - `ml BWA/0.7.15-foss-2016b`
    - `ml SAMtools/1.3.1-foss-2016b`
    - `ml nanopolish/0.7.1-foss-2016b`: __Breaks one step of pipeline, waiting for update from SciComp.__
-   3. Submit the job as `sbatch --time=48:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="python pipeline/scripts/pipeline.py --samples <SAMPLES_TO_RUN> --dimension <DIMENSION>"`.
+   3. Submit the job as `sbatch --time=48:00:00 --mem=30000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="python pipeline/scripts/pipeline.py --samples <SAMPLES_TO_RUN> --dimension <DIMENSION>"`.
 
 The [`pipeline.py`](scripts/pipeline.py) script does all the heavy lifting in terms of alignment to a reference, calling variants, and writing consensus genomes. Details are in a separate [`README`](scripts/README.md). Note that output is written to the `build/` directory.
 
