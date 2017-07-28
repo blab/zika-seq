@@ -90,7 +90,7 @@ for record in vcf_reader:
         if qual >= 200 and total_reads >= 20:
             if len(REF) > len(ALT):
                 print("N-masking confident deletion at %s" % (record.POS), file=sys.stderr)
-                for n in xrange(len(REF)):
+                for n in range(len(REF)):
                     cons[record.POS-1+n] = 'N'
                 continue
 
