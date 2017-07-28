@@ -119,9 +119,9 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
             lines = f.readlines()
         seq = lines[1]
         coverage = 1 - seq.count("N") / float(len(seq))
-        print(seq.count("N")) #DEBUG
-        print(len(seq)) #DEBUG
-        print("COVERAGE: "+ str(coverage)) #DEBUG
+        print("N's in consensus: " + seq.count("N")) #DEBUG
+        print("Total genome length: " + len(seq)) #DEBUG
+        print("Non-N percentage: "+ str(coverage)) #DEBUG
         if coverage >= 0.5 and coverage < 0.8:
             partial_samples.append(sample)
         elif coverage >= 0.8:
