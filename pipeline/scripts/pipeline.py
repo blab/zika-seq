@@ -259,7 +259,7 @@ if __name__=="__main__":
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():
-        overlap(sm_mappng, bd)
+        overlap(sm_mapping, bd)
     def pber():
         per_base_error_rate(sr_mapping, bd)
 
