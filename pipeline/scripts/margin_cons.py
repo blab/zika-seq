@@ -32,7 +32,7 @@ def collect_depths(bamfile):
     p = subprocess.Popen(['samtools', 'depth', bamfile],
                              stdout=subprocess.PIPE)
     out, err = p.communicate()
-    out.decode('utf-8')
+    out = out.decode('utf-8')
     depths = defaultdict(dict)
     for ln in out.split("\n"):
             if ln:
