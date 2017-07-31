@@ -18,18 +18,25 @@ bamfile = sys.argv[3]
 DEPTH_THRESHOLD = 20
 
 def collect_depths(bamfile):
+    '''
+    '''
+
+    # Check that bamfile exists
     if not os.path.exists(bamfile):
         raise SystemExit("bamfile %s doesn't exist" % (bamfile,))
 
+    # Using sys.stderr in place of sys.stdout, since sys.stdout will be where the file is written
     print(bamfile, file=sys.stderr)
 
+    # Call samtools depth
     p = subprocess.Popen(['samtools', 'depth', bamfile],
                              stdout=subprocess.PIPE)
     out, err = p.communicate()
+    out.decode('utf-8')
     depths = defaultdict(dict)
-    for ln in out.split(b"\n"):
+    for ln in out.split("\n"):
             if ln:
-                    contig, pos, depth = ln.split(b"\t")
+                    contig, pos, depth = ln.split("\t")
                     depths[contig][int(pos)] = int(depth)
     return depths
 
