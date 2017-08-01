@@ -119,7 +119,7 @@ for record in vcf_reader:
             cons[record.POS-1] = 'N'
             continue
 
-#print >>sys.stderr, str(sett)
+#print(str(sett), file=sys.stderr)
 
 print(">%s" % (sys.argv[3]))
 print("".join(cons))
