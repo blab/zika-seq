@@ -81,3 +81,5 @@ Thumbs.db
 .dockerignore
 data/
 build/
+
+seq-validation/\.ipynb_checkpoints/
