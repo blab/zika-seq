@@ -77,9 +77,10 @@ Thumbs.db
 # Raw data
 *.fast5
 
+# iPython
+*.ipynb_checkpoints
+
 * Docker files
 .dockerignore
 data/
 build/
-
-seq-validation/\.ipynb_checkpoints/
