@@ -65,8 +65,8 @@ Porechop will write out a fasta file for each barcode in the `demux/` directory 
 
    1. Change working directory to `/fh/fast/bedford_t/zika-seq/`
    2. Load all of the following modules (`ml` is a default Rhino alias for `module load`):
+   - `ml R/3.4.0-foss-2016b-fh1`   
    - `ml Python/3.6.1-foss-2016b-fh1`
-   - `ml R/3.4.0-foss-2016b-fh1`
    - `ml BWA/0.7.15-foss-2016b`
    - `ml SAMtools/1.3.1-foss-2016b`
    - `ml nanopolish/0.7.1-foss-2016b`
