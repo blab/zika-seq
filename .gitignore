@@ -84,3 +84,5 @@ Thumbs.db
 .dockerignore
 data/
 build/
+
+*.bam
