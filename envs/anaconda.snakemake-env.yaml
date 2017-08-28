@@ -1,0 +1,15 @@
+name: zika-seq_snakemake-env
+channels:
+- bioconda
+- defaults
+dependencies:
+- boto
+- boto3
+- drmaa
+- ipython
+- python=3.*
+- numpy
+- pandas
+- psutil
+- pip:
+  - snakemake
