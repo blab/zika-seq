@@ -54,7 +54,7 @@ If this is the case, then you will need to split the files back up into smaller 
 ##### Extract fasta files from basecalled reads and demultiplex reads based on barcoding:
   1. Load Poretools with `ml nanopolish/0.7.1-foss-2016b` (Uses Python 2).
   2. Change working directory to `<BASECALLED_READS_DIRECTORY>/workspace/demux/`.
-  3. Submit job as `sbatch --time=96:00:00 --mem=32000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS.org --wrap="$EBROOTNANOPOLISH/nanopolish extract -b albacore -t template -o nanopolish_full.fasta ../"`.
+  3. Submit job as `sbatch --time=96:00:00 --mem=32000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="$EBROOTNANOPOLISH/nanopolish extract -b albacore -t template -o nanopolish_full.fasta ../"`.
   4. Load Porechop with `module load Python/3.5.2-foss-2016b-fh1` (uses Python 3).
   5. Submit job as `sbatch --time=24:00:00 --mem=20000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="porechop -i <FILENAME.fasta> -b . --barcode_threshold 75 --threads 16 --check_reads 100000"`.
   6. Once job completes, run `gunzip NB*` from within the directory to unzip the files in preparation for consensus genome generation.
