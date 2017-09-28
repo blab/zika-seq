@@ -34,7 +34,7 @@ then
 else
   source activate nanopolish
   nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/fh/fast/bedford_t/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
-  source activate snakemake-env
+  source activate pipeline-env
 fi
 
 
