@@ -80,9 +80,13 @@ Thumbs.db
 # iPython
 *.ipynb_checkpoints
 
-* Docker files
+# Docker files
 .dockerignore
 data/
 build/
 
+# Bam files
 *.bam
+
+# Snakemage generated files
+.snakemake/
