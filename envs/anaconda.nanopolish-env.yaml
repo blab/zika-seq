@@ -1,0 +1,6 @@
+name: zika-seq_nanopolish-env
+channels:
+- bioconda
+- defaults
+dependencies:
+- nanopolish

@@ -28,3 +28,5 @@ fi
 
 # Environment in which snakemake will be run
 conda env create -f envs/anaconda.snakemake-env.yaml
+conda env create -f envs/anaconda.pipeline-env.yaml
+conda env create -f envs/anaconda.nanopolish-env.yaml
