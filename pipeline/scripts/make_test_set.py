@@ -1,7 +1,7 @@
 import shutil
 import os
 
-workspace = '/fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/basecalled_reads/workspace'
+workspace = '/fh/fast/bedford_t/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads'
 new_dir = '/fh/bpotter/test_fast5s'
 count=0
 for n in range(600,610):
