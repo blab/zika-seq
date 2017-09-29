@@ -47,13 +47,13 @@ rule basecall:
     input:
         raw="%s/%s" % (RAW_READS, ONE_FILE)
     output:
-        "%s/workspace/{params.one_file}" % (BASECALLED_READS)
+        "%s/workspace/pipeline.log" % (BASECALLED_READS)
     shell:
         "read_fast5_basecaller.py -i %s -t 8 --config {params.cfg} -r -s %s -o fast5 -n 0" % (RAW_READS, BASECALLED_READS)
 
 rule extract_fasta:
     input:
-        "%s/workspace/%s" % (BASECALLED_READS, ONE_FILE)
+        "%s/workspace/pipeline.log" % (BASECALLED_READS)
     output:
         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
     shell:
