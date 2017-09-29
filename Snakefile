@@ -24,12 +24,12 @@ rule all:
         "{params.prefix}_poor.fasta",
         ""
 
-def _get_one_file():
+def get_one_file():
     call = "find %s -name \"*.fast5\" | head -n 1" % config["raw_reads"]
     fname = subprocess.check_output(call,shell=True)
     return fname
 
-ONE_FILE=_get_one_file()
+ONE_FILE=get_one_file()
 
 def _get_raw_reads_dir(wildcards):
     return config["raw_reads"]
@@ -89,6 +89,8 @@ rule gunzip_demuxed_fastas:
         "gunzip -c {input} > {output}"
 
 def _get_samples(wildcards):
+    """ Build a string of all samples that will be processed in a pipeline.py run.
+    """
     s = config['samples']
     samples = " ".join(s)
     return samples
