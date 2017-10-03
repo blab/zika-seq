@@ -56,24 +56,26 @@ rule extract_fasta:
         "%s/pipeline.log" % (BASECALLED_READS)
     output:
         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
+    conda:
+        "envs/anaconda.nanopolish-env.yaml"
     shell:
-        "nanopolish extract -b albacore -t template -o {output} %s/workspace/" % (BASECALLED_READS)
+        "nanopolish extract -b albacore -t template -o {output} %s/workspace/pass" % (BASECALLED_READS)
 
 rule demultiplex_full_fasta:
     input:
         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
     output:
-        "%s/{barcodes}.fasta.gz" % (DEMUX_DIR)
+        "%s/{barcodes}.fasta" % (DEMUX_DIR)
     shell:
         "porechop -i {input} -b %s --barcode_threshold 75 --threads 16 --check_reads 100000" % (DEMUX_DIR)
 
-rule gunzip_demuxed_fastas:
-    input:
-        "%s/{barcodes}.fasta.gz" % (DEMUX_DIR)
-    output:
-        "%s/{barcodes}.fasta" % (DEMUX_DIR)
-    shell:
-        "gunzip -c {input} > {output}"
+# rule gunzip_demuxed_fastas:
+#     input:
+#         "%s/{barcodes}.fasta.gz" % (DEMUX_DIR)
+#     output:
+#         "%s/{barcodes}.fasta" % (DEMUX_DIR)
+#     shell:
+#         "gunzip -c {input} > {output}"
 
 def _get_samples(wildcards):
     """ Build a string of all samples that will be processed in a pipeline.py run.
