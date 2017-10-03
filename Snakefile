@@ -2,7 +2,7 @@ import time
 import subprocess
 from cfg import config
 
-BARCODES = [ 'NB%02d' % (s) for s in range(1,13) ]
+BARCODES = [ 'BC%02d' % (s) for s in range(1,13) ]
 DEMUX_DIR=config['demux_dir']
 BASECALLED_READS=config['basecalled_reads']
 RAW_READS = config["raw_reads"]
