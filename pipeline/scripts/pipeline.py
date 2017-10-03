@@ -44,7 +44,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
-        fastas = [ '%s%s/alba121/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        fastas = [ '%s%s/process/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
         for fasta in fastas:
             if fasta.endswith('na.fasta'):
                 fastas.remove(fasta)
@@ -81,11 +81,11 @@ def process_sample_fastas(sm_mapping, build_dir, dimension):
         # build consensus
         sample_stem = build_dir + sample
         if dimension == '2d':
-            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         print(" ".join(call))
-        subprocess.call(call)
+        subprocess.call(call, shell=True)
         # annotate consensus
         # >ZBRD116|ZBRD116|2015-08-28|brazil|alagoas|arapiraca|minion
         print('#############\n')
@@ -180,7 +180,7 @@ def overlap(sr_mapping, build_dir):
         call = "awk '$1 == \"" + chromosome_name + "\" {print $0}' " + coveragefile + " > " + chfile
         print(call)
         subprocess.call([call], shell=True)
-        call = "Rscript /fh/fast/bedford_t/zika-seq/pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
+        call = "Rscript /home/barneypotter/zika-seq/pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
         print(call)
         subprocess.call([call], shell=True)
         print("")
@@ -209,12 +209,12 @@ def per_base_error_rate(sr_mapping, build_dir):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser( description = "Bioinformatic pipeline for generating consensus genomes from demultiplexed Zika fastas" )
-    parser.add_argument( '--data_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/data/",
-                            help="directory containing data; default is \'/fh/fast/bedford_t/zika-seq/data/\'")
-    parser.add_argument( '--samples_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/samples/",
-                            help="directory containing samples and runs TSVs; default is \'/fh/fast/bedford_t/zika-seq/samples/\'" )
-    parser.add_argument( '--build_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/build/",
-                            help="directory for output data; default is \'/fh/fast/bedford_t/zika-seq/build/\'" )
+    parser.add_argument( '--data_dir', type = str, default = "/home/barneypotter/zika-seq/data/",
+                            help="directory containing data; default is \'/home/barneypotter/zika-seq/data/\'")
+    parser.add_argument( '--samples_dir', type = str, default = "/home/barneypotter/zika-seq/samples/",
+                            help="directory containing samples and runs TSVs; default is \'/home/barneypotter/zika-seq/samples/\'" )
+    parser.add_argument( '--build_dir', type = str, default = "/home/barneypotter/zika-seq/build/",
+                            help="directory for output data; default is \'/home/barneypotter/zika-seq/build/\'" )
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
                             help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
     parser.add_argument('--samples', type = str, default = None, nargs='*',
