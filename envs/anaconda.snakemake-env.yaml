@@ -1,8 +1,10 @@
 name: zika-seq_snakemake-env
 channels:
 - bioconda
+- esteinig
 - defaults
 dependencies:
+- biopython
 - boto
 - boto3
 - drmaa
@@ -11,5 +13,6 @@ dependencies:
 - numpy
 - pandas
 - psutil
+- porechop
 - pip:
   - snakemake

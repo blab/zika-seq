@@ -1,6 +1,10 @@
 name: zika-seq_nanopolish-env
 channels:
 - bioconda
+- conda-forge
 - defaults
 dependencies:
+- hdf5
 - nanopolish
+- biopython
+- vcftools

@@ -1,0 +1,15 @@
+name: zika-seq_pipeline-env
+channels:
+  - r
+  - bioconda
+  - defaults
+dependencies:
+  - biopython
+  - bwa
+  - python=3.*
+  - pyvcf
+  - R
+  - r-optparse
+  - r-reshape
+  - samtools
+  - vcftools
