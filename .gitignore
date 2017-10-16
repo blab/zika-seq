@@ -86,3 +86,4 @@ data/
 build/
 
 *.bam
+*.snakemake/*
