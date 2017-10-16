@@ -85,7 +85,7 @@ def process_sample_fastas(sm_mapping, build_dir, dimension):
         elif dimension == '1d':
             call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         print(" ".join(call))
-        subprocess.call(call, shell=True)
+        subprocess.call(" ".join(call), shell=True)
         # annotate consensus
         # >ZBRD116|ZBRD116|2015-08-28|brazil|alagoas|arapiraca|minion
         print('#############\n')
@@ -149,7 +149,8 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     f = open(output_file, "w")
     call = ['cat'] + input_file_list
     print(" ".join(call) + " > " + output_file)
-    subprocess.call(call, stdout=f)
+    if len(input_file_list) >= 1:
+        subprocess.call(call, stdout=f)
     # concatenate poor samples
     print("Poor samples: " + " ".join(good_samples))
     input_file_list = [build_dir + sample + ".consensus.fasta" for sample in poor_samples]
@@ -157,7 +158,8 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     f = open(output_file, "w")
     call = ['cat'] + input_file_list
     print(" ".join(call) + " > " + output_file)
-    subprocess.call(call, stdout=f)
+    if len(input_file_list) >= 1:
+        subprocess.call(call, stdout=f)
     print("")
 
 def overlap(sr_mapping, build_dir):
