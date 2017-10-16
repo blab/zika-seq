@@ -6,6 +6,8 @@ BARCODES = [ 'BC%02d' % (s) for s in range(1,13) ]
 DEMUX_DIR=config['demux_dir']
 BASECALLED_READS=config['basecalled_reads']
 RAW_READS = config["raw_reads"]
+BUILD_DIR = config["build_dir"]
+PREFIX = config["prefix"]
 
 def get_one_file():
     call = "find %s -name \"*.fast5\" | head -n 1" % config["raw_reads"]
@@ -18,25 +20,14 @@ def get_one_file():
 
 ONE_FILE=get_one_file()
 
-def _get_prefix(wildcards):
-    """Return the name that will be prepended onto final output consensus genomes
-    as defined in the configuration file. If no prefix is given, a string of the
-    current date.
-    """
-    if "prefix" in config:
-        prefix = config["prefix"]
-    else:
-        prefix = time.strftime("%d-%m-%Y")
-
-    return prefix
-
 rule all:
     params:
-        prefix=_get_prefix
+        prefix=PREFIX,
+        build=BUILD_DIR
     input:
-        "{params.prefix}_good.fasta",
-        "{params.prefix}_partial.fasta",
-        "{params.prefix}_poor.fasta",
+        "%s/%s_good.fasta" % (BUILD_DIR, PREFIX),
+        "%s/%s_partial.fasta" % (BUILD_DIR, PREFIX),
+        "%s/%s_poor.fasta" % (BUILD_DIR, PREFIX)
 
 def _get_albacore_config(wildcards):
     return config["albacore_config"]
@@ -86,14 +77,15 @@ def _get_samples(wildcards):
 
 rule pipeline:
     params:
-        prefix=_get_prefix,
         dimension=config['dimension'],
         samples=_get_samples
     input:
-        expand("%s/{barcodes}.fasta" % (DEMUX_DIR),barcodes=BARCODES)
+        expand("%s/{barcodes}.fasta" % (DEMUX_DIR),barcodes=BARCODES),
     output:
-        "{params.prefix}_good.fasta",
-        "{params.prefix}_partial.fasta",
-        "{params.prefix}_poor.fasta"
+        "%s/%s_good.fasta" % (BUILD_DIR, PREFIX),
+        "%s/%s_partial.fasta" % (BUILD_DIR, PREFIX),
+        "%s/%s_poor.fasta" % (BUILD_DIR, PREFIX),
+    conda:
+        "envs/anaconda.pipeline-env.yaml"
     shell:
         "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension}"
