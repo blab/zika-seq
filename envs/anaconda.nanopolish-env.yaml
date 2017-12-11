@@ -1,10 +1,14 @@
-name: zika-seq_nanopolish-env
+name: zika-seq_nanopolish
 channels:
+- biobuilds
 - bioconda
 - conda-forge
 - defaults
 dependencies:
+- fastx-toolkit
 - hdf5
-- nanopolish
+- htslib
+- nanopolish=0.8.1
 - biopython
 - vcftools
+- samtools

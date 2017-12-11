@@ -1,11 +1,14 @@
-name: zika-seq_pipeline-env
+name: zika-seq_pipeline
 channels:
+  - biobuilds
   - r
   - bioconda
   - defaults
 dependencies:
   - biopython
   - bwa
+  - fastx-toolkit
+  - pysam
   - python=3.*
   - pyvcf
   - R
