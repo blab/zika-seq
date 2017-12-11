@@ -29,4 +29,28 @@ fi
 # Environment in which snakemake will be run
 conda env create -f envs/anaconda.snakemake-env.yaml
 conda env create -f envs/anaconda.pipeline-env.yaml
-conda env create -f envs/anaconda.nanopolish-env.yaml
+# conda env create -f envs/anaconda.nanopolish-env.yaml
+
+# Install albacore
+if [[ -z "$(which read_fast5_basecaller.py)" ]]
+then
+  echo "Installing Albacore"
+
+  sudo apt-get update
+  sudo apt-get install wget
+  wget -O- https://mirror.oxfordnanoportal.com/apt/ont-repo.pub | sudo apt-key add -
+  echo "deb http://mirror.oxfordnanoportal.com/apt trusty-stable non-free" | sudo tee /etc/apt/sources.list.d/nanoporetech.sources.list
+  sudo apt-get update
+
+  # Edit this line with the appropriate file path to Albacore deb
+  sudo dpkg -i ~/Downloads/python3-ont-albacore_2.0.2-1-xenial_all.deb
+
+  sudo apt-get -f install
+fi
+
+# Install nanopolish
+if [[ -z "$(which nanopolish)" ]]
+then
+  cd && git clone --recursive https://github.com/jts/nanopolish.git && cd nanopolish && make
+  export $PATH=$PATH:~/nanopolish/
+fi
