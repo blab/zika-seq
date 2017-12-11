@@ -4,6 +4,7 @@ set -e
 ref=$1
 sample=$2
 amplicons=$3
+lib=$4
 
 if [[ -z "$(which sbatch)" ]]
 then
@@ -32,9 +33,10 @@ if [[ "${CLUSTER}" -eq "1" ]]
 then
   $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/home/barneypotter/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 else
-  source activate zika-seq_nanopolish-env &> /dev/null
+  # source activate zika-seq_nanopolish &> /dev/null
+  nanopolish index -d /media/amphora/zika-seq/data/$lib/raw_reads $sample.fastq
   nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`/home/barneypotter/zika-seq/pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
-  source activate zika-seq_pipeline-env &> /dev/null
+  source activate zika-seq_pipeline &> /dev/null
 fi
 
 # 4) filter the variants and produce a consensus
