@@ -10,7 +10,7 @@ BUILD_DIR = config["build_dir"]
 PREFIX = config["prefix"]
 
 def get_one_file():
-    call = "find %s -name \"*.fast5\" | head -n 1" % config["raw_reads"]
+    call = "find %s -name \"*.fast5\" | head -n 1" % (config["raw_reads"]+"/0")
     fname = subprocess.check_output(call,shell=True)
     if type(fname) != str:
         fname = str(fname)[2:-3]
@@ -40,25 +40,36 @@ rule basecall:
     output:
         "%s/pipeline.log" % (BASECALLED_READS)
     shell:
-        "read_fast5_basecaller.py -i %s -t 8 --config {params.cfg} -r -s %s -o fast5 -n 0" % (RAW_READS, BASECALLED_READS)
+        "read_fast5_basecaller.py -i %s -t 8 --config {params.cfg} -r -o fastq -s %s -q 0" % (RAW_READS, BASECALLED_READS)
 
-rule extract_fasta:
-    input:
-        "%s/pipeline.log" % (BASECALLED_READS)
-    output:
-        "%s/nanopolish_full.fasta" % (DEMUX_DIR)
-    conda:
-        "envs/anaconda.nanopolish-env.yaml"
-    shell:
-        "nanopolish extract -b albacore -t template -o {output} %s/workspace/pass" % (BASECALLED_READS)
+# rule extract_fasta:
+#     input:
+#         "%s/pipeline.log" % (BASECALLED_READS)
+#     output:
+#         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
+#     conda:
+#         "envs/anaconda.nanopolish-env.yaml"
+#     shell:
+#         "nanopolish extract -b albacore -t template -o {output} %s/workspace/pass" % (BASECALLED_READS)
+
+def get_fastq_file():
+    call = "find %s -name \"*.fast5\" | head -n 1" % (config["basecalled_reads"]+"/workspace/pass")
+    fname = subprocess.check_output(call,shell=True)
+    if type(fname) != str:
+        fname = str(fname)[2:-3]
+    fname = fname.replace(config["basecalled_reads"]+"/workspace/pass","")[1:]
+    print("Example file: %s" % (fname))
+    return fname
+
+FASTQ=get_fastq_file()
 
 rule demultiplex_full_fasta:
     input:
-        "%s/nanopolish_full.fasta" % (DEMUX_DIR)
+        "%s/pipeline.log" % (BASECALLED_READS)
     output:
-        "%s/{barcodes}.fasta" % (DEMUX_DIR)
+        "%s/BC01.fastq" % (DEMUX_DIR)
     shell:
-        "porechop -i {input} -b %s --barcode_threshold 75 --threads 16 --check_reads 100000" % (DEMUX_DIR)
+        "porechop -i %s/workspace/pass/%s -b %s --barcode_threshold 75 --threads 8 --check_reads 100000" % (BASECALLED_READS, FASTQ, DEMUX_DIR)
 
 # rule gunzip_demuxed_fastas:
 #     input:
@@ -80,7 +91,7 @@ rule pipeline:
         dimension=config['dimension'],
         samples=_get_samples
     input:
-        expand("%s/{barcodes}.fasta" % (DEMUX_DIR),barcodes=BARCODES),
+        "%s/BC01.fastq" % (DEMUX_DIR)
     output:
         "%s/%s_good.fasta" % (BUILD_DIR, PREFIX),
         "%s/%s_partial.fasta" % (BUILD_DIR, PREFIX),

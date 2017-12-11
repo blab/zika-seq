@@ -38,6 +38,23 @@ def sample_to_metadata_mapping(samples_dir):
             sm_mapping[sample] = metadata
     return sm_mapping
 
+def fastq_to_fasta(sr_mapping, data_dir):
+    '''Convert fastqs into fastas for input
+    '''
+    import re
+    first = True
+
+    for sample in sr_mapping:
+        if first:
+            run = sr_mapping[sample][0][0]
+            fastqs = os.listdir('%s%s/process/demux/' % (data_dir, run))
+            for fastq in fastqs:
+                fasta = re.sub('q$', 'a', fastq)
+                print("Converting %s to %s." % (fastq, fasta))
+                call = "fastq_to_fasta -i %s%s/process/demux/%s -o %s%s/process/demux/%s" % (data_dir, run, fastq, data_dir, run, fasta)
+                subprocess.call(call, shell=True)
+            first = False
+
 def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     ''' Construct one fasta for each sample from two input fastas.
     '''
@@ -49,7 +66,6 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             if fasta.endswith('na.fasta'):
                 fastas.remove(fasta)
                 print('Remvoed 1 fasta ending in na.fasta')
-        print(fastas)
         assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
         complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
         with open(complete_fasta, 'w+') as f:
@@ -72,6 +88,43 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             print(" > ".join([call, final_fasta]))
             subprocess.call(call, shell=True, stdout=f)
 
+def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
+    ''' Construct one fastq for each sample from two input fastqs.
+    '''
+    import gzip
+    for sample in sr_mapping:
+        # Grab a matched pair of barcode fastqs; global paths
+        fastqs = [ '%s%s/process/demux/%s.fastq' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        for fastq in fastqs:
+            if fastq.endswith('na.fastq'):
+                fastqs.remove(fastq)
+                print('Remvoed 1 fastq ending in na.fastq')
+        print(fastqs)
+        assert len(fastqs) == 2, 'Expected 2 .fastq files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastqs), data_dir, sr_mapping[sample][0])
+        complete_fastq = '%s%s.fastq' % (build_dir, sample)
+        # complete_fastq = '%s%s_complete.fastq' % (build_dir, sample)
+        with open(complete_fastq, 'w+') as f:
+            with open(fastqs[0], 'r') as f1:
+                print('Writing %s to %s' % (fastqs[0],complete_fastq))
+                content = f1.read()
+                f.write(content)
+            with open(fastqs[1], 'r') as f2:
+                print('Writing %s to %s' % (fastqs[1],complete_fastq))
+                content = f2.read()
+                f.write(content)
+
+        # final_fastq = '%s%s.fastq' % (build_dir, sample)
+        # with open(final_fastq, 'w+') as f:
+        #     (run, barcode) = sr_mapping[sample][0]
+        #     sed_str = '%s%s/alba121/workspace' % (data_dir, run)
+        #     sed_str = sed_str.split('/')
+        #     sed_str = '\/'.join(sed_str)
+        #     call = 'sed \'s/\.\./%s/\' %s%s_complete.fastq' % (sed_str, build_dir, sample)
+        #     print(" > ".join([call, final_fastq]))
+        #     subprocess.call(call, shell=True, stdout=f)
+
+# def run_nanopolish_index(build_dir)
+
 def process_sample_fastas(sm_mapping, build_dir, dimension):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
@@ -83,7 +136,7 @@ def process_sample_fastas(sm_mapping, build_dir, dimension):
         if dimension == '2d':
             call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31']
         print(" ".join(call))
         subprocess.call(" ".join(call), shell=True)
         # annotate consensus
@@ -251,11 +304,15 @@ if __name__=="__main__":
     tmp_sm = { s: sm_mapping[s] for s in params.samples }
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
+    fastq_to_fasta(sr_mapping, dd)
+    print('*****')
 
     # Only run specified run_steps.
     # If pipeline is modified, add helper function here and put its name in pipeline below
     def csf():
         construct_sample_fastas(sr_mapping, dd, bd)
+    def csfq():
+        construct_sample_fastqs(sr_mapping, dd, bd)
     def psf():
         process_sample_fastas(sm_mapping, bd, params.dimension)
     def gcf():
@@ -267,8 +324,8 @@ if __name__=="__main__":
 
     if params.run_steps is not None:
         for index in params.run_steps:
-            assert index in [1,2,3,4,5], 'Unknown step number %s, options are 1, 2, 3, 4, or 5.' % (index)
-    pipeline = [ csf, psf, gcf, go, pber ]
+            assert index in [1,2,3,4,5,6], 'Unknown step number %s, options are 1, 2, 3, 4, 5, or 6.' % (index)
+    pipeline = [ csf, csfq, psf, gcf, go, pber ]
     if params.run_steps is None:
         for fxn in pipeline:
             fxn()
