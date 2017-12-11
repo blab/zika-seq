@@ -12,7 +12,7 @@ For explanation of the Docker pipeline, see `docker_README.md`.
 
 ----------
 
-##Running the MinION bioinformatic pipeline on Rhino
+## Running the MinION bioinformatic pipeline on Rhino
 
 ### Required modules
 Different modules are required for different parts of the pipeline; they can be loaded using `module load <module name>` from Rhino. Descriptions of when each module should be loaded are in the step by step instructions below.
@@ -73,6 +73,36 @@ Porechop will write out a fasta file for each barcode in the `demux/` directory 
    3. Submit the job as `sbatch --time=48:00:00 --mem=30000 --mail-type=END,FAIL --mail-user=<EMAIL_ADDRESS> --wrap="python pipeline/scripts/pipeline.py --samples <SAMPLES_TO_RUN> --dimension <DIMENSION>"`.
 
 The [`pipeline.py`](scripts/pipeline.py) script does all the heavy lifting in terms of alignment to a reference, calling variants, and writing consensus genomes. Details are in a separate [`README`](scripts/README.md). Note that output is written to the `build/` directory.
+
+## Running the pipeline from Nano:
+_This pipeline uses the Conda package manager and Snakemake to compile the entire pipeline quickly on a laptop computer. One run of the pipeline will correspond to one sequencing library. Note that this changes may be necessary if run on an operating system other than Ubuntu 16.04 LTS._
+
+1. Download Albacore
+
+Download the `.deb` for Alabacore from the (ONT)[https://nanoporetech.com/]. If a version other than 2.0.2 is downloaded, modify the `dpkg` command in `install.sh` appropriately.
+
+2. Download and install from the github repo:
+```
+git clone https://github.com/blab/zika-seq.git
+git checkout create_wrap
+chmod 700 install.sh
+./install.sh
+```
+
+3. Open `cfg.py` and change config information as appropriate:
+  - `raw_reads` : directory containing un-basecalled `.fast5` files
+  - `dimension` : sequencing dimension (1d or 2d)
+  - `demux_dir` : path to where demultiplexing will take place
+  - `build_dir` : global path to output location (`zika-seq/build`)
+  - `samples` : list of all samples that are included for the library that will be processed
+  - `albacore_config` : name of the config file to be used during basecalling by Albacore
+  - `prefix` : prefix to prepend onto output consensus genome filenames
+
+4. Run the pipeline:
+  ```
+  source activate zika-seq
+  snakemake --use-conda
+  ```
 
 ## Description of directories within `pipeline`:
 
