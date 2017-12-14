@@ -82,12 +82,13 @@ _This pipeline uses the Conda package manager and Snakemake to compile the entir
 Download the `.deb` for Alabacore from the (ONT)[https://nanoporetech.com/]. If a version other than 2.0.2 is downloaded, modify the `dpkg` command in `install.sh` appropriately.
 
 2. Download and install from the github repo:
+  ```
+  git clone https://github.com/blab/zika-seq.git
+  git checkout create_wrap
+  cd zika-seq
+  ./install.sh
 ```
-git clone https://github.com/blab/zika-seq.git
-git checkout create_wrap
-chmod 700 install.sh
-./install.sh
-```
+  If `install.sh` fails, you may need to run `chmod 700 install.sh` before `./install.sh`.
 
 3. Open `cfg.py` and change config information as appropriate:
   - `raw_reads` : directory containing un-basecalled `.fast5` numbered directories.
@@ -97,7 +98,7 @@ chmod 700 install.sh
   - `samples` : list of all samples that are included for the library that will be processed
   - `albacore_config` : name of the config file to be used during basecalling by Albacore
   - `prefix` : prefix to prepend onto output consensus genome filenames
-
+  
   Important: Make sure that all paths to directory paths listed in `demux_dir`, `build_dir` exist prior to running `snakemake`.
 
 4. Run the pipeline:
