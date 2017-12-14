@@ -82,9 +82,12 @@ Thumbs.db
 
 # Docker files
 .dockerignore
+
+# Data, build, and local files
 data/
 build/
 build_test/
+cft_test_local.py
 
 # Bam files
 *.bam
