@@ -87,7 +87,7 @@ Thumbs.db
 data/
 build/
 build_test/
-cft_test_local.py
+cfg_test_local.py
 
 # Bam files
 *.bam
