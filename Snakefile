@@ -89,7 +89,9 @@ def _get_samples(wildcards):
 rule pipeline:
     params:
         dimension=config['dimension'],
-        samples=_get_samples
+        samples=_get_samples,
+        raw=config['raw_reads'],
+        build=BUILD_DIR
     input:
         "%s/BC01.fastq" % (DEMUX_DIR)
     output:
@@ -99,4 +101,4 @@ rule pipeline:
     conda:
         "envs/anaconda.pipeline-env.yaml"
     shell:
-        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension}"
+        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension} --raw_reads {params.raw} --build_dir {params.build}"
