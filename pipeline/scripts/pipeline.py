@@ -125,7 +125,7 @@ def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
 
 # def run_nanopolish_index(build_dir)
 
-def process_sample_fastas(sm_mapping, build_dir, dimension):
+def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
     '''
@@ -136,7 +136,7 @@ def process_sample_fastas(sm_mapping, build_dir, dimension):
         if dimension == '2d':
             call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31']
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads]
         print(" ".join(call))
         subprocess.call(" ".join(call), shell=True)
         # annotate consensus
@@ -268,7 +268,7 @@ if __name__=="__main__":
                             help="directory containing data; default is \'/home/barneypotter/zika-seq/data/\'")
     parser.add_argument( '--samples_dir', type = str, default = "/home/barneypotter/zika-seq/samples/",
                             help="directory containing samples and runs TSVs; default is \'/home/barneypotter/zika-seq/samples/\'" )
-    parser.add_argument( '--build_dir', type = str, default = "/home/barneypotter/zika-seq/build/",
+    parser.add_argument( '--build_dir', type = str, default = "build/",
                             help="directory for output data; default is \'/home/barneypotter/zika-seq/build/\'" )
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
                             help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
@@ -305,7 +305,6 @@ if __name__=="__main__":
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
     fastq_to_fasta(sr_mapping, dd)
-    print('*****')
 
     # Only run specified run_steps.
     # If pipeline is modified, add helper function here and put its name in pipeline below
@@ -314,7 +313,7 @@ if __name__=="__main__":
     def csfq():
         construct_sample_fastqs(sr_mapping, dd, bd)
     def psf():
-        process_sample_fastas(sm_mapping, bd, params.dimension)
+        process_sample_fastas(sm_mapping, bd, params.dimension, params.raw_reads)
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():
