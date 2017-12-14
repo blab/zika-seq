@@ -1,5 +1,5 @@
 config = { 'raw_reads':
-                '/home/barneypotter/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads/0',
+                '/home/barneypotter/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads',
            'dimension':
                 '1d',
            'demux_dir':

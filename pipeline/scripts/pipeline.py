@@ -134,9 +134,9 @@ def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads):
         # build consensus
         sample_stem = build_dir + sample
         if dimension == '2d':
-            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/home/barneypotter/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/home/barneypotter/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads]
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads]
         print(" ".join(call))
         subprocess.call(" ".join(call), shell=True)
         # annotate consensus
@@ -238,7 +238,7 @@ def overlap(sr_mapping, build_dir):
         call = "awk '$1 == \"" + chromosome_name + "\" {print $0}' " + coveragefile + " > " + chfile
         print(call)
         subprocess.call([call], shell=True)
-        call = "Rscript /home/barneypotter/zika-seq/pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
+        call = "Rscript pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
         print(call)
         subprocess.call([call], shell=True)
         print("")
@@ -267,12 +267,12 @@ def per_base_error_rate(sr_mapping, build_dir):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser( description = "Bioinformatic pipeline for generating consensus genomes from demultiplexed Zika fastas" )
-    parser.add_argument( '--data_dir', type = str, default = "/home/barneypotter/zika-seq/data/",
-                            help="directory containing data; default is \'/home/barneypotter/zika-seq/data/\'")
-    parser.add_argument( '--samples_dir', type = str, default = "/home/barneypotter/zika-seq/samples/",
-                            help="directory containing samples and runs TSVs; default is \'/home/barneypotter/zika-seq/samples/\'" )
+    parser.add_argument( '--data_dir', type = str, default = "data/",
+                            help="directory containing data; default is \'data/\'")
+    parser.add_argument( '--samples_dir', type = str, default = "samples/",
+                            help="directory containing samples and runs TSVs; default is \'samples/\'" )
     parser.add_argument( '--build_dir', type = str, default = "build/",
-                            help="directory for output data; default is \'/home/barneypotter/zika-seq/build/\'" )
+                            help="directory for output data; default is \'build/\'" )
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
                             help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
     parser.add_argument('--samples', type = str, default = None, nargs='*',

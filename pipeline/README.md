@@ -92,8 +92,8 @@ chmod 700 install.sh
 3. Open `cfg.py` and change config information as appropriate:
   - `raw_reads` : directory containing un-basecalled `.fast5` files
   - `dimension` : sequencing dimension (1d or 2d)
-  - `demux_dir` : path to where demultiplexing will take place
-  - `build_dir` : global path to output location (`zika-seq/build`)
+  - `demux_dir` : path to directory where demultiplexing will take place
+  - `build_dir` : path to output location (`zika-seq/build`)
   - `samples` : list of all samples that are included for the library that will be processed
   - `albacore_config` : name of the config file to be used during basecalling by Albacore
   - `prefix` : prefix to prepend onto output consensus genome filenames
