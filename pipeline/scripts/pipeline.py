@@ -170,17 +170,20 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
         consensus_file = build_dir + sample + ".consensus.fasta"
         with open(consensus_file) as f:
             lines = f.readlines()
-        seq = lines[1]
-        coverage = 1 - seq.count("N") / float(len(seq))
-        print("N's in consensus: " + str(seq.count("N"))) #DEBUG
-        print("Total genome length: " + str(len(seq))) #DEBUG
-        print("Non-N percentage: "+ str(coverage)) #DEBUG
-        if coverage >= 0.5 and coverage < 0.8:
-            partial_samples.append(sample)
-        elif coverage >= 0.8:
-            good_samples.append(sample)
+        if len(lines) > 0:
+            seq = lines[1]
+            coverage = 1 - seq.count("N") / float(len(seq))
+            print("N's in consensus: " + str(seq.count("N"))) #DEBUG
+            print("Total genome length: " + str(len(seq))) #DEBUG
+            print("Non-N percentage: "+ str(coverage)) #DEBUG
+            if coverage >= 0.5 and coverage < 0.8:
+                partial_samples.append(sample)
+            elif coverage >= 0.8:
+                good_samples.append(sample)
+            else:
+                poor_samples.append(sample)
         else:
-            poor_samples.append(sample)
+            print("WARNING: {} does not contain a consensus genome.".format(consensus_file))
     # sort samples
     partial_samples.sort()
     good_samples.sort()
@@ -277,10 +280,12 @@ if __name__=="__main__":
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
     parser.add_argument('--run_steps', type = int, default = None, nargs='*',
-                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas \n\t2. Process sample fastas \n\t3. Gather consensus fastas \n\t 4. Generate overlap graphs \n\t5. Calculate per-base error rates")
+                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas\n\t2 Construct sample fastqs \n\t3. Process sample fastas \n\t4. Gather consensus fastas \n\t 5. Generate overlap graphs \n\t6. Calculate per-base error rates")
+    parser.add_argument('--raw_reads', type=str, default=None, help="directory containing raw .fast5 reads")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
+    assert params.raw_reads is not None, "Directory containing raw reads is required."
 
     dd = params.data_dir
     bd = params.build_dir
@@ -322,6 +327,7 @@ if __name__=="__main__":
         per_base_error_rate(sr_mapping, bd)
 
     if params.run_steps is not None:
+        print("Running steps {}.".format(", ".join(map(str,params.run_steps))))
         for index in params.run_steps:
             assert index in [1,2,3,4,5,6], 'Unknown step number %s, options are 1, 2, 3, 4, 5, or 6.' % (index)
     pipeline = [ csf, csfq, psf, gcf, go, pber ]
