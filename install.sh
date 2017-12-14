@@ -43,9 +43,14 @@ then
   sudo apt-get update
 
   # Edit this line with the appropriate file path to Albacore deb
+  if [["$(uname -s)" -eq "Linux" ]]
+  then
   sudo dpkg -i ~/Downloads/python3-ont-albacore_2.0.2-1-xenial_all.deb
 
-  sudo apt-get -f install
+    sudo apt-get -f install
+  else
+    echo "Please install Albacore before running pipeline"
+  fi
 fi
 
 # Install nanopolish
