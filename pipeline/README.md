@@ -79,7 +79,7 @@ _This pipeline uses the Conda package manager and Snakemake to compile the entir
 
 1. Download Albacore
 
-Download the `.deb` for Alabacore from the (ONT)[https://nanoporetech.com/]. If a version other than 2.0.2 is downloaded, modify the `dpkg` command in `install.sh` appropriately.
+Download the `.deb` for Alabacore from the [ONT Community](https://community.nanoporetech.com/downloads). If a version other than 2.0.2 is downloaded, modify the `dpkg` command in `install.sh` appropriately.
 
 2. Download and install from the github repo:
   ```
@@ -98,7 +98,7 @@ Download the `.deb` for Alabacore from the (ONT)[https://nanoporetech.com/]. If 
   - `samples` : list of all samples that are included for the library that will be processed
   - `albacore_config` : name of the config file to be used during basecalling by Albacore
   - `prefix` : prefix to prepend onto output consensus genome filenames
-  
+
   Important: Make sure that all paths to directory paths listed in `demux_dir`, `build_dir` exist prior to running `snakemake`.
 
 4. Run the pipeline:
