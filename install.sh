@@ -19,7 +19,7 @@ then
   bash $CONDA_SCRIPT -b -p $CONDA_DIR
 
   CONDA_BIN_DIR=$CONDA_DIR/bin
-  PATH=$CONDA_BIN_DIR:$PATH
+  export PATH=$CONDA_BIN_DIR:$PATH
 
   rm -rf $CONDA_SCRIPT
 else
