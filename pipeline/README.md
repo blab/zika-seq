@@ -84,8 +84,8 @@ Download the `.deb` for Alabacore from the [ONT Community](https://community.nan
 2. Download and install from the github repo:
   ```
   git clone https://github.com/blab/zika-seq.git
-  git checkout create_wrap
   cd zika-seq
+  git checkout create_wrap
   ./install.sh
 ```
   If `install.sh` fails, you may need to run `chmod 700 install.sh` before `./install.sh`.
