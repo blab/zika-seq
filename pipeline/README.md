@@ -90,7 +90,9 @@ Download the `.deb` for Alabacore from the [ONT Community](https://community.nan
 ```
   If `install.sh` fails, you may need to run `chmod 700 install.sh` before `./install.sh`.
 
-3. Open `cfg.py` and change config information as appropriate:
+3. Make any directories that you have specified in the config file that do not already exist. We usually put these directories in the repo itself. If it is your very first time running the repo you'll need to make `build` and `data` directories. For subsequent runs, you'll need to make library-specific directories that contain `basecalled_reads`, `process`, and `demux` directories.
+
+4. Open `cfg.py` and change config information as appropriate:
   - `raw_reads` : directory containing un-basecalled `.fast5` numbered directories.
   - `dimension` : sequencing dimension (1d or 2d)
   - `demux_dir` : path to directory where demultiplexing will take place
@@ -99,13 +101,16 @@ Download the `.deb` for Alabacore from the [ONT Community](https://community.nan
   - `albacore_config` : name of the config file to be used during basecalling by Albacore
   - `prefix` : prefix to prepend onto output consensus genome filenames
 
-  Important: Make sure that all paths to directory paths listed in `demux_dir`, `build_dir` exist prior to running `snakemake`.
+  Reminder: Make sure that all paths to directory paths listed in `demux_dir`, `build_dir` exist prior to running `snakemake`.
 
-4. Run the pipeline:
+5. Run the pipeline:
   ```
   source activate zika-seq
   snakemake --use-conda
   ```
+Note: If this is your first time using `conda` and `snakemake`, you'll need to add the path to your version miniconda to your bash profile.
+
+To check whether a path already exists, do `echo $PATH`. If there isn't a path to conda in the bash profile already, make one using `export`
 
 ## Description of directories within `pipeline`:
 
