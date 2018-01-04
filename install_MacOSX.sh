@@ -13,8 +13,6 @@ then
 
   CONDA_BIN_DIR=$CONDA_DIR/bin
   export $PATH=$CONDA_BIN_DIR:$PATH
-
-  rm -rf $CONDA_SCRIPT
   if [[ -z "$(which conda)" ]]
   then
     echo "Successfully installed Miniconda"
@@ -30,7 +28,6 @@ echo "Installing conda environment: zika-seq"
 conda env create -f envs/anaconda.snakemake-env.yaml
 echo "Installing conda environment: zika-seq_pipeline"
 conda env create -f envs/anaconda.pipeline-env_MacOSX.yaml
-source activate zika-seq
 
 ## Install albacore
 if [[ -z "$(which read_fast5_basecaller.py)" ]]
@@ -38,7 +35,7 @@ then
   echo "Installing Albacore"
   # Edit this line with path to Albacore wheel file downloaded from https://community.nanoporetech.com/downloads
   # We recommend creating a zika-seq/albacore directory and downloading to that directory
-  pip3 install albacore/ont_albacore-xxx_x86_64.whl || echo "Please donwload Albacore wheel file from https://community.nanoporetech.com/downloads and update install_macOSX.sh line 41 as appropriate."
+  pip3 install albacore/ont_albacore-xxx_x86_64.whl || echo "Please donwload Albacore wheel file from https://community.nanoporetech.com/downloads and update install_macOSX.sh line 40 as appropriate."
   if [[ -z "$(which read_fast5_basecaller.py)" ]]
   then
     echo "Successfully installed Albacore"
@@ -62,7 +59,7 @@ then
 else
   echo "Porechop already installed"
 fi
- 
+
 ## Install Nanopolish
 if [[ -z "$(which nanopolish)" ]]
 then
@@ -77,3 +74,6 @@ then
 else
   echo "Nanopolish already installed"
 fi
+
+rm -rf Porechop/
+rm -rf $CONDA_SCRIPT
