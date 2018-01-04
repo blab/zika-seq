@@ -7,31 +7,33 @@ if [[ -z "$(which conda)" ]]
 then
   echo "Installing miniconda"
 
-  if [["$(uname -s)" -eq "Darwin" ]]
-  then
-    CONDA_SCRIPT=Miniconda3-latest-MacOSX-x86_64.sh
-  else
-    CONDA_SCRIPT=Miniconda3-latest-Linux-x86_64.sh
-  fi
+  CONDA_SCRIPT=Miniconda3-latest-Linux-x86_64.sh
 
   CONDA_DIR=$HOME/miniconda3
   wget https://repo.continuum.io/miniconda/$CONDA_SCRIPT
   bash $CONDA_SCRIPT -b -p $CONDA_DIR
 
   CONDA_BIN_DIR=$CONDA_DIR/bin
-  export PATH=$CONDA_BIN_DIR:$PATH
+  export $PATH=$CONDA_BIN_DIR:$PATH
 
   rm -rf $CONDA_SCRIPT
+  if [[ -z "$(which conda)" ]]
+  then
+    echo "Successfully installed Miniconda"
+  else
+    echo "Error installing Miniconda: skipping for now"
+  fi
 else
   echo "miniconda already installed"
 fi
 
 # Environment in which snakemake will be run
+echo "Installing conda environment: zika-seq"
 conda env create -f envs/anaconda.snakemake-env.yaml
+echo "Installing conda environment: zika-seq_pipeline"
 conda env create -f envs/anaconda.pipeline-env.yaml
-# conda env create -f envs/anaconda.nanopolish-env.yaml
 
-# Install albacore
+# Install Albacore
 if [[ -z "$(which read_fast5_basecaller.py)" ]]
 then
   echo "Installing Albacore"
@@ -41,32 +43,24 @@ then
   wget -O- https://mirror.oxfordnanoportal.com/apt/ont-repo.pub | sudo apt-key add -
   echo "deb http://mirror.oxfordnanoportal.com/apt trusty-stable non-free" | sudo tee /etc/apt/sources.list.d/nanoporetech.sources.list
   sudo apt-get update
-fi
-
   # Edit this line with the appropriate file path to Albacore deb
-if [[ "$(uname -s)" -eq "Linux" ]]
-then
-
-  if [[ -z "$(which read_fast5_basecaller.py)" ]]
-  then
-    echo "Installing Albacore"
-    sudo dpkg -i ~/Downloads/python3-ont-albacore_2.0.2-1-xenial_all.deb
-    sudo apt-get -f install
-  else
-    echo "albacore already installed"
-  fi
-
+  sudo dpkg -i ~/Downloads/python3-ont-albacore_2.0.2-1-xenial_all.deb
+  sudo apt-get -f install
 else
-
-  echo "Please install Albacore before running pipeline"
-
+  echo "Albacore already installed"
 fi
 
-# Install nanopolish
+# Install Nanopolish
 if [[ -z "$(which nanopolish)" ]]
 then
   cd && git clone --recursive https://github.com/jts/nanopolish.git && cd nanopolish && make
   export $PATH=$PATH:~/nanopolish/
+  if [[ -z "$(which nanopolish)" ]]
+  then
+    echo "Successfully installed Nanopolish"
+  else
+    echo "Error installing Nanopolish: skipping for now"
+  fi
 else
-  echo "nanopolish already installed"
+  echo "Nanopolish already installed"
 fi
