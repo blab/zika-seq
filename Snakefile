@@ -42,16 +42,6 @@ rule basecall:
     shell:
         "read_fast5_basecaller.py -i %s -t 8 --config {params.cfg} -r -o fastq -s %s -q 0" % (RAW_READS, BASECALLED_READS)
 
-# rule extract_fasta:
-#     input:
-#         "%s/pipeline.log" % (BASECALLED_READS)
-#     output:
-#         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
-#     conda:
-#         "envs/anaconda.nanopolish-env.yaml"
-#     shell:
-#         "nanopolish extract -b albacore -t template -o {output} %s/workspace/pass" % (BASECALLED_READS)
-
 def get_fastq_file():
     call = "find %s -name \"*.fast5\" | head -n 1" % (config["basecalled_reads"]+"/workspace/pass")
     fname = subprocess.check_output(call,shell=True)
