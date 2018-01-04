@@ -89,6 +89,10 @@ build/
 build_test/
 cfg_test_local.py
 
+# Installation directories
+albacore/
+nanopolish/
+
 # Bam files
 *.bam
 
