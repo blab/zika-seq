@@ -25,9 +25,9 @@ fi
 
 ## Create environment in which snakemake will be run
 echo "Installing conda environment: zika-seq"
-conda env create -f envs/anaconda.snakemake-env.yaml
+conda env create -f envs/anaconda.snakemake-env_MacOSX.yaml
 echo "Installing conda environment: zika-seq_pipeline"
-conda env create -f envs/anaconda.pipeline-env_MacOSX.yaml
+conda env create -f envs/anaconda.pipeline-env.yaml
 
 ## Install albacore
 if [[ -z "$(which read_fast5_basecaller.py)" ]]
