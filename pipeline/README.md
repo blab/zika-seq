@@ -26,11 +26,16 @@ Download the `.deb` for Albacore from the [ONT Community](https://community.nano
   git clone https://github.com/blab/zika-seq.git
   cd zika-seq
   git checkout create_wrap
-  ./install.sh
 ```
-  If `install.sh` fails, you may need to run `chmod 700 install.sh` before `./install.sh`.
-
-  Note that `install.sh` currently only works for Linux machines. We are working on a version of the install script that will set up the pipeline on a Mac.
+If you are running Ubuntu 16.04:
+```
+  ./install_Ubuntu16_04.sh
+```
+If you are running Mac OSX:
+```
+  ./install_MacOSX.sh
+```
+  If `./<install_script>` fails, you may need to run `chmod 700 <install_script>` before rerunning.
 
 3. Make any directories that you have specified in the config file that do not already exist. We usually put these directories in the repo itself. If it is your very first time running the repo you'll need to make `build` and `data` directories. For subsequent runs, you'll need to make library-specific directories that contain `basecalled_reads`, `process`, and `demux` directories.
 
