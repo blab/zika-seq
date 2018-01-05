@@ -2,6 +2,10 @@ import time
 import subprocess
 from cfg import config
 
+for directory in [config['demux_dir'], config['basecalled_reads'], config['build_dir']]
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
 BARCODES = [ 'BC%02d' % (s) for s in range(1,13) ]
 DEMUX_DIR=config['demux_dir']
 BASECALLED_READS=config['basecalled_reads']
