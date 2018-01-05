@@ -1,6 +1,7 @@
 import time
 import subprocess
 from cfg import config
+import os
 
 for directory in [config['demux_dir'], config['basecalled_reads'], config['build_dir']]
 if not os.path.exists(directory):
