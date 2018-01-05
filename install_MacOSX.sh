@@ -35,7 +35,7 @@ then
   echo "Installing Albacore"
   # Edit this line with path to Albacore wheel file downloaded from https://community.nanoporetech.com/downloads
   # We recommend creating a zika-seq/albacore directory and downloading to that directory
-  pip3 install albacore/ont_albacore-xxx_x86_64.whl || echo "Please donwload Albacore wheel file from https://community.nanoporetech.com/downloads and update install_macOSX.sh line 40 as appropriate."
+  pip3 install albacore/ont_albacore-xxx_x86_64.whl || echo "Please donwload Albacore wheel file from https://community.nanoporetech.com/downloads and update install_macOSX.sh line 38 as appropriate."
   if [[ -z "$(which read_fast5_basecaller.py)" ]]
   then
     echo "Successfully installed Albacore"
