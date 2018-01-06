@@ -1,6 +1,21 @@
 #!/bin/bash
 # Install zika-seq requirements -- MacOSX
 
+if [[ -z "$(which wget)" ]]
+then
+  echo "Installing wget"
+  brew install wget
+  if [[ -z "$(which wget)" ]]
+  then
+    echo "Successfully intalled wget"
+  else
+    echo "Error installing wget: skipping for now."
+    echo "Make sure that wget is properly installed if Albacore, Porechop, or Nanopolish fail to install."
+  fi
+else
+  echo "Wget already installed"
+fi
+
 ## Install Miniconda3
 if [[ -z "$(which conda)" ]]
 then
@@ -12,7 +27,7 @@ then
   bash $CONDA_SCRIPT -b -p $CONDA_DIR
 
   CONDA_BIN_DIR=$CONDA_DIR/bin
-  export $PATH=$CONDA_BIN_DIR:$PATH
+  export PATH=$CONDA_BIN_DIR:$PATH
   if [[ -z "$(which conda)" ]]
   then
     echo "Successfully installed Miniconda"
@@ -63,8 +78,9 @@ fi
 ## Install Nanopolish
 if [[ -z "$(which nanopolish)" ]]
 then
-  cd && git clone --recursive https://github.com/jts/nanopolish.git && cd nanopolish && make
-  export $PATH=$PATH:~/nanopolish/
+  git clone --recursive https://github.com/jts/nanopolish.git && cd nanopolish && make CXX=g++-7 CC=gcc-7 && cd ..
+  NANOPOLISH_BIN_DIR=$PATH/nanopolish/bin
+  export PATH=$NANOPOLISH_BIN_DIR:$PATH
   if [[ -z "$(which nanopolish)" ]]
   then
     echo "Successfully installed Nanopolish"
