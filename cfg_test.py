@@ -1,13 +1,13 @@
 config = { 'raw_reads':
-                '/PATH/TO/zika-seq/data/usvi-library8-1d-2017-03-31/raw_reads',
+                'data/usvi-library8-1d-2017-03-31/raw_reads',
            'dimension':
                 '1d',
            'demux_dir':
-                '/PATH/TO/zika-seq/data/usvi-library8-1d-2017-03-31/process_test/demux',
+                'data/usvi-library8-1d-2017-03-31/process/demux',
            'basecalled_reads':
-                '/PATH/TO/zika-seq/data/usvi-library8-1d-2017-03-31/basecalled_reads_test',
+                'data/usvi-library8-1d-2017-03-31/basecalled_reads',
             'build_dir':
-                '/PATH/TO/zika-seq/build_test',
+                'build',
            'samples':
                 ['VI39'],
            'albacore_config':

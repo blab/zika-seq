@@ -64,3 +64,14 @@ then
 else
   echo "Nanopolish already installed"
 fi
+
+echo "Building data directories and downloading test data"
+mkdir -p data/usvi-library8-1d-2017-03-31/process/demux
+mkdir data/usvi-library8-1d-2017-03-31/raw_reads
+mkdir data/usvi-library8-1d-2017-03-31/basecalled_reads
+mkdir build
+
+### THIS SHOULD BE TEMPORARY
+cp ~/Desktop/0.tar.gz data/usvi-library8-1d-2017-03-31/raw_reads/
+
+echo "Done!"
