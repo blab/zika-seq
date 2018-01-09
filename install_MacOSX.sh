@@ -97,10 +97,11 @@ mkdir data/usvi-library8-1d-2017-03-31/raw_reads
 mkdir data/usvi-library8-1d-2017-03-31/basecalled_reads
 mkdir build
 
-### THIS SHOULD BE TEMPORARY
-cp ~/Desktop/0.tar.gz data/usvi-library8-1d-2017-03-31/raw_reads/
-tar xvzf data/usvi-library8-1d-2017-03-31/raw_reads/0.tar.gz
-rm data/usvi-library8-1d-2017-03-31/raw_reads/0.tar.gz
+# extract test data
+echo "Downloading and extracting example dataset"
+cd data/usvi-library8-1d-2017-03-31/raw_reads/ && wget https://s3.amazonaws.com/trvrb/zika_seq_example.tar.gz
+tar xvzf data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
+rm data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
 
 echo "Cleaning up"
 rm -rf Porechop/
