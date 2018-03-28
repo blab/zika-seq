@@ -8,6 +8,7 @@ dependencies:
   - biopython
   - bwa
   - fastx-toolkit
+  - nanopolish=0.9.0
   - pysam
   - python=3.*
   - pyvcf
