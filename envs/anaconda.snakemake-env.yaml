@@ -1,0 +1,19 @@
+name: zika-seq
+channels:
+- bioconda
+- esteinig
+- defaults
+dependencies:
+- biopython
+- boto
+- boto3
+- drmaa
+- ipython
+- pysam
+- python=3.*
+- numpy
+- pandas
+- psutil
+- porechop
+- pip:
+  - snakemake

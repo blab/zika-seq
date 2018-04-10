@@ -11,8 +11,98 @@ The vast majority of this README describes the bioinformatic pipeline to analyze
 For explanation of the Docker pipeline, see `docker_README.md`.
 
 ----------
+## Running the pipeline from Nano (Bedford Lab personal Linux box):
 
-##Running the MinION bioinformatic pipeline on Rhino
+_This pipeline uses the Conda package manager and Snakemake to compile the entire pipeline quickly on a laptop computer. One run of the pipeline will correspond to one sequencing library. Note that this changes may be necessary if run on an operating system other than Ubuntu 16.04 LTS._
+
+#### Setting up and running the pipeline
+
+1. Download Albacore
+
+Download the `.deb` for Albacore from the [ONT Community](https://community.nanoporetech.com/downloads). If a version other than 2.0.2 is downloaded, modify the `dpkg` command in `install.sh` appropriately. Note that you need to have login credentials with Nanopore to access the Albacore software.
+
+2. Download and install the pipeline from the github repo:
+  ```
+  git clone https://github.com/blab/zika-seq.git
+  cd zika-seq
+  git checkout create_wrap
+```
+If you are running Ubuntu 16.04:
+```
+  ./install_Ubuntu16_04.sh
+```
+If you are running Mac OSX:
+```
+  ./install_MacOSX.sh
+```
+  If `./<install_script>` fails, you may need to run `chmod 700 <install_script>` before rerunning.
+
+Note: If you are running the install on Mac OSX, there's a possibility that nanopolish will not install properly. If so, you can do a manual install of nanopolish with:
+
+`git clone --recursive https://github.com/jts/nanopolish.git`
+
+`cd nanopolish`
+
+`make CXX=g++-7 CC=gcc-7`
+
+Then, add nanopolish to your $PATH with `export PATH=$PATH:~/your/path/to/nanopolish/`
+
+We've found that the install tends to fail if you make without referencing these exact versions of g++ and gcc. If this still doesn't work, it might be an issue with Xcode install of CommandLineTools (we've found that this happens on OSX High Sierra). In this case, try running `xcode-select --install` to properly install CommandLineTools, then re-cloning and making the nanopolish directory.
+
+
+3. Make any directories that you have specified in the config file that do not already exist. We usually put these directories in the repo itself. If it is your very first time running the repo you'll need to make `build` and `data` directories. For subsequent runs, you'll need to make library-specific directories that contain `basecalled_reads`, `process`, and `demux` directories.
+
+4. Open `cfg.py` and change config information as appropriate:
+  - `raw_reads` : directory containing un-basecalled `.fast5` numbered directories.
+  - `dimension` : sequencing dimension (1d or 2d)
+  - `demux_dir` : path to directory where demultiplexing will take place
+  - `build_dir` : path to output location (`zika-seq/build`)
+  - `samples` : list of all samples that are included for the library that will be processed
+  - `albacore_config` : name of the config file to be used during basecalling by Albacore
+  - `prefix` : prefix to prepend onto output consensus genome filenames
+
+  Reminder: Make sure that all paths to directory paths listed in `demux_dir`, `build_dir` exist prior to running `snakemake`.
+
+5. Run the pipeline:
+  ```
+  source activate zika-seq
+  snakemake --use-conda
+  ```
+
+#### Tips
+
+If this is your first time using `conda` and `snakemake`, you'll need to add the path to your version of miniconda to your bash profile. To check whether a path already exists, do `echo $PATH`. If there isn't a path to conda in the bash profile already, make one using `export PATH=$PATH:your/path/to/miniconda3/bin`.
+
+Remember to move all final files that you want to keep to a separate directory, as everything in the `build` directory will be overwritten next time you run the pipeline (with a different config file).
+
+If you had a single sample that failed, rather than re-running the pipeline on all the samples again, change the config file so that the pipeline will only run on the _single_ failed sample.
+
+#### Inside the pipeline...
+
+When Albacore basecalls the raw `fast5` reads, it makes a `workspace` directory, which then contains a `pass` and a `fail` directory. Both the `pass` and the `fail` directory contain a single `fastq`. The fastq in the `pass` directory contains the high quality reads, and the pipeline only uses this `fastq`.
+
+The basecalled `fastq` file serves as input to [`porechop`](https://github.com/rrwick/Porechop), the program which performs barcode demultiplexing. Porechop writes a single `fastq` file for each barcode to the `demux` directory you created.
+
+Next we run `pipeline.py`, which is a large script that references other custom python scripts and shell scripts to do run every other step of the pipeline. This is what is occurring in `pipeline.py`.
+
+1.  Map sample IDs and run information that is contained in the `samples.tsv` and the `runs.tsv` files. This allows us to know which sample IDs are linked to which barcodes and primers etc.
+
+2. Convert demuxed `fastq` files to `fasta` files. (If you look in the `demux` directory after a pipeline run you'll see both file types present for each barcode).
+
+3. Using the linked sample and run information, combine the two barcode `fastq` or `fasta` files that represent pool 1 and pool 2 of the same sample. The pool-combined files are written as `<sample ID>.fasta` and `<sample ID>.fastq` to the `build` directory you made previously.
+
+4. Map the reads in `<sample ID>.fasta` to a reference sequence using `bwa-mem`, and pipe to `samtools` to get a sorted bam file. Output files are labeled `<sample ID>.sorted.bam`.
+
+5. Trim primer sequences out of the bam file using the custom script `align_trim.py`. Output files are labeled `<sample ID>.trimmed.sorted.bam`.
+
+6. Use [`nanopolish`](https://github.com/jts/nanopolish) to call SNPs more accurately. This is a two step process. First step is using `nanopolish index` to create a map of how basecalled reads in `<sample ID>.fastq` are linked to the raw reads (signal level data). This step takes a while since for every sample all the program needs to iterate through all the raw reads.  Next, `nanopolish variants` will walk through the indexed `fastq` and a reference file, determine which SNPs are real given the signal level data, and write true SNPs to a VCF file.
+
+7. Run `margin_cons.py` to walk through the reference sequence, the trimmed bam file, and the VCF file. This script looks at read coverage at a site, masking the sequence with 'N' if the read depth is below a hardcoded threshold (we use a threshold of 20 reads). If a site has sufficient coverage to call the base, either the reference base or the variant base (as recorded in the VCF) is written to the consensus sequence. Consensus sequences are written to `<sample ID>_complete.fasta`. The proportion of the genome that has over 20x coverage and over 40x coverage is logged to `<sample_ID>-log.txt`.
+
+8. Consensus sequences are bundled together into `good`, `partial`, or `poor` files depending on the percent of the genome that was sequenced. Good quality genomes are >80% complete, partial genomes are between 50% and 80% complete, and poor genomes are <50% complete.
+
+
+## Running the MinION bioinformatic pipeline on Rhino (Fred Hutch cluster)
 
 ### Required modules
 Different modules are required for different parts of the pipeline; they can be loaded using `module load <module name>` from Rhino. Descriptions of when each module should be loaded are in the step by step instructions below.

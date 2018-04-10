@@ -38,18 +38,34 @@ def sample_to_metadata_mapping(samples_dir):
             sm_mapping[sample] = metadata
     return sm_mapping
 
+def fastq_to_fasta(sr_mapping, data_dir):
+    '''Convert fastqs into fastas for input
+    '''
+    import re
+    first = True
+
+    for sample in sr_mapping:
+        if first:
+            run = sr_mapping[sample][0][0]
+            fastqs = os.listdir('%s%s/process/demux/' % (data_dir, run))
+            for fastq in fastqs:
+                fasta = re.sub('q$', 'a', fastq)
+                print("Converting %s to %s." % (fastq, fasta))
+                call = "fastq_to_fasta -i %s%s/process/demux/%s -o %s%s/process/demux/%s" % (data_dir, run, fastq, data_dir, run, fasta)
+                subprocess.call(call, shell=True)
+            first = False
+
 def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     ''' Construct one fasta for each sample from two input fastas.
     '''
     import gzip
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
-        fastas = [ '%s%s/alba121/workspace/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        fastas = [ '%s%s/process/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
         for fasta in fastas:
             if fasta.endswith('na.fasta'):
                 fastas.remove(fasta)
                 print('Remvoed 1 fasta ending in na.fasta')
-        print(fastas)
         assert len(fastas) == 2, 'Expected 2 .fasta files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastas), data_dir, sr_mapping[sample][0])
         complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
         with open(complete_fasta, 'w+') as f:
@@ -72,7 +88,44 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
             print(" > ".join([call, final_fasta]))
             subprocess.call(call, shell=True, stdout=f)
 
-def process_sample_fastas(sm_mapping, build_dir, dimension):
+def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
+    ''' Construct one fastq for each sample from two input fastqs.
+    '''
+    import gzip
+    for sample in sr_mapping:
+        # Grab a matched pair of barcode fastqs; global paths
+        fastqs = [ '%s%s/process/demux/%s.fastq' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        for fastq in fastqs:
+            if fastq.endswith('na.fastq'):
+                fastqs.remove(fastq)
+                print('Remvoed 1 fastq ending in na.fastq')
+        print(fastqs)
+        assert len(fastqs) == 2, 'Expected 2 .fastq files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastqs), data_dir, sr_mapping[sample][0])
+        complete_fastq = '%s%s.fastq' % (build_dir, sample)
+        # complete_fastq = '%s%s_complete.fastq' % (build_dir, sample)
+        with open(complete_fastq, 'w+') as f:
+            with open(fastqs[0], 'r') as f1:
+                print('Writing %s to %s' % (fastqs[0],complete_fastq))
+                content = f1.read()
+                f.write(content)
+            with open(fastqs[1], 'r') as f2:
+                print('Writing %s to %s' % (fastqs[1],complete_fastq))
+                content = f2.read()
+                f.write(content)
+
+        # final_fastq = '%s%s.fastq' % (build_dir, sample)
+        # with open(final_fastq, 'w+') as f:
+        #     (run, barcode) = sr_mapping[sample][0]
+        #     sed_str = '%s%s/alba121/workspace' % (data_dir, run)
+        #     sed_str = sed_str.split('/')
+        #     sed_str = '\/'.join(sed_str)
+        #     call = 'sed \'s/\.\./%s/\' %s%s_complete.fastq' % (sed_str, build_dir, sample)
+        #     print(" > ".join([call, final_fastq]))
+        #     subprocess.call(call, shell=True, stdout=f)
+
+# def run_nanopolish_index(build_dir)
+
+def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
     '''
@@ -81,11 +134,11 @@ def process_sample_fastas(sm_mapping, build_dir, dimension):
         # build consensus
         sample_stem = build_dir + sample
         if dimension == '2d':
-            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_2d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', '/fh/fast/bedford_t/zika-seq/pipeline/refs/KJ776791.2.fasta', sample_stem, '/fh/fast/bedford_t/zika-seq/pipeline/metadata/v2_500.amplicons.ver2.bed']
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads]
         print(" ".join(call))
-        subprocess.call(call)
+        subprocess.call(" ".join(call), shell=True)
         # annotate consensus
         # >ZBRD116|ZBRD116|2015-08-28|brazil|alagoas|arapiraca|minion
         print('#############\n')
@@ -117,17 +170,20 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
         consensus_file = build_dir + sample + ".consensus.fasta"
         with open(consensus_file) as f:
             lines = f.readlines()
-        seq = lines[1]
-        coverage = 1 - seq.count("N") / float(len(seq))
-        print("N's in consensus: " + str(seq.count("N"))) #DEBUG
-        print("Total genome length: " + str(len(seq))) #DEBUG
-        print("Non-N percentage: "+ str(coverage)) #DEBUG
-        if coverage >= 0.5 and coverage < 0.8:
-            partial_samples.append(sample)
-        elif coverage >= 0.8:
-            good_samples.append(sample)
+        if len(lines) > 0:
+            seq = lines[1]
+            coverage = 1 - seq.count("N") / float(len(seq))
+            print("N's in consensus: " + str(seq.count("N"))) #DEBUG
+            print("Total genome length: " + str(len(seq))) #DEBUG
+            print("Non-N percentage: "+ str(coverage)) #DEBUG
+            if coverage >= 0.5 and coverage < 0.8:
+                partial_samples.append(sample)
+            elif coverage >= 0.8:
+                good_samples.append(sample)
+            else:
+                poor_samples.append(sample)
         else:
-            poor_samples.append(sample)
+            print("WARNING: {} does not contain a consensus genome.".format(consensus_file))
     # sort samples
     partial_samples.sort()
     good_samples.sort()
@@ -149,7 +205,8 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     f = open(output_file, "w")
     call = ['cat'] + input_file_list
     print(" ".join(call) + " > " + output_file)
-    subprocess.call(call, stdout=f)
+    if len(input_file_list) >= 1:
+        subprocess.call(call, stdout=f)
     # concatenate poor samples
     print("Poor samples: " + " ".join(good_samples))
     input_file_list = [build_dir + sample + ".consensus.fasta" for sample in poor_samples]
@@ -157,7 +214,8 @@ def gather_consensus_fastas(sm_mapping, build_dir, prefix):
     f = open(output_file, "w")
     call = ['cat'] + input_file_list
     print(" ".join(call) + " > " + output_file)
-    subprocess.call(call, stdout=f)
+    if len(input_file_list) >= 1:
+        subprocess.call(call, stdout=f)
     print("")
 
 def overlap(sr_mapping, build_dir):
@@ -180,7 +238,7 @@ def overlap(sr_mapping, build_dir):
         call = "awk '$1 == \"" + chromosome_name + "\" {print $0}' " + coveragefile + " > " + chfile
         print(call)
         subprocess.call([call], shell=True)
-        call = "Rscript /fh/fast/bedford_t/zika-seq/pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
+        call = "Rscript pipeline/scripts/depth_coverage.R --inFile " + chfile + " --outPath " + build_dir + " --name " + sample
         print(call)
         subprocess.call([call], shell=True)
         print("")
@@ -209,12 +267,12 @@ def per_base_error_rate(sr_mapping, build_dir):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser( description = "Bioinformatic pipeline for generating consensus genomes from demultiplexed Zika fastas" )
-    parser.add_argument( '--data_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/data/",
-                            help="directory containing data; default is \'/fh/fast/bedford_t/zika-seq/data/\'")
-    parser.add_argument( '--samples_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/samples/",
-                            help="directory containing samples and runs TSVs; default is \'/fh/fast/bedford_t/zika-seq/samples/\'" )
-    parser.add_argument( '--build_dir', type = str, default = "/fh/fast/bedford_t/zika-seq/build/",
-                            help="directory for output data; default is \'/fh/fast/bedford_t/zika-seq/build/\'" )
+    parser.add_argument( '--data_dir', type = str, default = "data/",
+                            help="directory containing data; default is \'data/\'")
+    parser.add_argument( '--samples_dir', type = str, default = "samples/",
+                            help="directory containing samples and runs TSVs; default is \'samples/\'" )
+    parser.add_argument( '--build_dir', type = str, default = "build/",
+                            help="directory for output data; default is \'build/\'" )
     parser.add_argument('--prefix', type = str, default = "ZIKA_USVI",
                             help="string to be prepended onto all output consensus genome files; default is \'ZIKA_USVI\'")
     parser.add_argument('--samples', type = str, default = None, nargs='*',
@@ -222,10 +280,12 @@ if __name__=="__main__":
     parser.add_argument('--dimension', type = str, default = '2d',
                             help="dimension of library to be fun; options are \'1d\' or \'2d\', default is \'2d\'")
     parser.add_argument('--run_steps', type = int, default = None, nargs='*',
-                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas \n\t2. Process sample fastas \n\t3. Gather consensus fastas \n\t 4. Generate overlap graphs \n\t5. Calculate per-base error rates")
+                            help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas\n\t2 Construct sample fastqs \n\t3. Process sample fastas \n\t4. Gather consensus fastas \n\t 5. Generate overlap graphs \n\t6. Calculate per-base error rates")
+    parser.add_argument('--raw_reads', type=str, default=None, help="directory containing raw .fast5 reads")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
+    assert params.raw_reads is not None, "Directory containing raw reads is required."
 
     dd = params.data_dir
     bd = params.build_dir
@@ -249,13 +309,16 @@ if __name__=="__main__":
     tmp_sm = { s: sm_mapping[s] for s in params.samples }
     sr_mapping = tmp_sr
     sm_mapping = tmp_sm
+    fastq_to_fasta(sr_mapping, dd)
 
     # Only run specified run_steps.
     # If pipeline is modified, add helper function here and put its name in pipeline below
     def csf():
         construct_sample_fastas(sr_mapping, dd, bd)
+    def csfq():
+        construct_sample_fastqs(sr_mapping, dd, bd)
     def psf():
-        process_sample_fastas(sm_mapping, bd, params.dimension)
+        process_sample_fastas(sm_mapping, bd, params.dimension, params.raw_reads)
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():
@@ -264,9 +327,10 @@ if __name__=="__main__":
         per_base_error_rate(sr_mapping, bd)
 
     if params.run_steps is not None:
+        print("Running steps {}.".format(", ".join(map(str,params.run_steps))))
         for index in params.run_steps:
-            assert index in [1,2,3,4,5], 'Unknown step number %s, options are 1, 2, 3, 4, or 5.' % (index)
-    pipeline = [ csf, psf, gcf, go, pber ]
+            assert index in [1,2,3,4,5,6], 'Unknown step number %s, options are 1, 2, 3, 4, 5, or 6.' % (index)
+    pipeline = [ csf, csfq, psf, gcf, go, pber ]
     if params.run_steps is None:
         for fxn in pipeline:
             fxn()

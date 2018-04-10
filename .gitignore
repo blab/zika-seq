@@ -80,10 +80,22 @@ Thumbs.db
 # iPython
 *.ipynb_checkpoints
 
-* Docker files
+# Docker files
 .dockerignore
+
+# Data, build, and local files
 data/
 build/
+build_test/
+cfg_test_local.py
 
+# Installation directories
+albacore/
+nanopolish/
+Porechop/
+
+# Bam files
 *.bam
+
+# Snakemage generated files
 *.snakemake/*
