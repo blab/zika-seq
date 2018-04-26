@@ -1,6 +1,7 @@
 import time
 import subprocess
 from cfg import config
+import os
 
 BARCODES = [ 'BC%02d' % (s) for s in range(1,13) ]
 DEMUX_DIR=config['demux_dir']
@@ -42,16 +43,6 @@ rule basecall:
     shell:
         "read_fast5_basecaller.py -i %s -t 8 --config {params.cfg} -r -o fastq -s %s -q 0" % (RAW_READS, BASECALLED_READS)
 
-# rule extract_fasta:
-#     input:
-#         "%s/pipeline.log" % (BASECALLED_READS)
-#     output:
-#         "%s/nanopolish_full.fasta" % (DEMUX_DIR)
-#     conda:
-#         "envs/anaconda.nanopolish-env.yaml"
-#     shell:
-#         "nanopolish extract -b albacore -t template -o {output} %s/workspace/pass" % (BASECALLED_READS)
-
 def get_fastq_file():
     call = "find %s -name \"*.fast5\" | head -n 1" % (config["basecalled_reads"]+"/workspace/pass")
     fname = subprocess.check_output(call,shell=True)
@@ -91,7 +82,8 @@ rule pipeline:
         dimension=config['dimension'],
         samples=_get_samples,
         raw=config['raw_reads'],
-        build=BUILD_DIR
+        build=BUILD_DIR,
+        basecalled_reads=config['basecalled_reads']
     input:
         "%s/BC01.fastq" % (DEMUX_DIR)
     output:
@@ -101,4 +93,4 @@ rule pipeline:
     conda:
         "envs/anaconda.pipeline-env.yaml"
     shell:
-        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension} --raw_reads {params.raw} --build_dir {params.build}"
+        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension} --raw_reads {params.raw} --build_dir {params.build} --basecalled_reads {params.basecalled_reads}"
