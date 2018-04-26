@@ -26,11 +26,29 @@ Download the `.deb` for Albacore from the [ONT Community](https://community.nano
   git clone https://github.com/blab/zika-seq.git
   cd zika-seq
   git checkout create_wrap
-  ./install.sh
 ```
-  If `install.sh` fails, you may need to run `chmod 700 install.sh` before `./install.sh`.
+If you are running Ubuntu 16.04:
+```
+  ./install_Ubuntu16_04.sh
+```
+If you are running Mac OSX:
+```
+  ./install_MacOSX.sh
+```
+  If `./<install_script>` fails, you may need to run `chmod 700 <install_script>` before rerunning.
 
-  Note that `install.sh` currently only works for Linux machines. We are working on a version of the install script that will set up the pipeline on a Mac.
+Note: If you are running the install on Mac OSX, there's a possibility that nanopolish will not install properly. If so, you can do a manual install of nanopolish with:
+
+`git clone --recursive https://github.com/jts/nanopolish.git`
+
+`cd nanopolish`
+
+`make CXX=g++-7 CC=gcc-7`
+
+Then, add nanopolish to your $PATH with `export PATH=$PATH:~/your/path/to/nanopolish/`
+
+We've found that the install tends to fail if you make without referencing these exact versions of g++ and gcc. If this still doesn't work, it might be an issue with Xcode install of CommandLineTools (we've found that this happens on OSX High Sierra). In this case, try running `xcode-select --install` to properly install CommandLineTools, then re-cloning and making the nanopolish directory.
+
 
 3. Make any directories that you have specified in the config file that do not already exist. We usually put these directories in the repo itself. If it is your very first time running the repo you'll need to make `build` and `data` directories. For subsequent runs, you'll need to make library-specific directories that contain `basecalled_reads`, `process`, and `demux` directories.
 
