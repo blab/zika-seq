@@ -89,6 +89,11 @@ build/
 build_test/
 cfg_test_local.py
 
+# Installation directories
+albacore/
+nanopolish/
+Porechop/
+
 # Bam files
 *.bam
 
