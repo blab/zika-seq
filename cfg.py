@@ -9,7 +9,7 @@ config = { 'raw_reads':
             'build_dir':
                 'build',
            'samples':
-                ['VI44'],
+                ['COL02','VI25_1d'],
            'albacore_config':
                 'r94_450bps_linear.cfg',
            'prefix':
