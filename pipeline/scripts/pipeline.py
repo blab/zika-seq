@@ -98,7 +98,7 @@ def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
         for fastq in fastqs:
             if fastq.endswith('na.fastq'):
                 fastqs.remove(fastq)
-                print('Remvoed 1 fastq ending in na.fastq')
+                print('Removed 1 fastq ending in na.fastq')
         print(fastqs)
         assert len(fastqs) == 2, 'Expected 2 .fastq files for %s, instead found %s.\nCheck that they are present and gzipped in %s%s/basecalled_reads/workspace/demux/' % (sample, len(fastqs), data_dir, sr_mapping[sample][0])
         complete_fastq = '%s%s.fastq' % (build_dir, sample)
@@ -125,7 +125,7 @@ def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
 
 # def run_nanopolish_index(build_dir)
 
-def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads):
+def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads, basecalled_reads):
     ''' Run fasta_to_consensus script to construct consensus files.
     TODO: Make sure that this runs after changes to inputs and fasta_to_consensus on 1d reads
     '''
@@ -136,7 +136,7 @@ def process_sample_fastas(sm_mapping, build_dir, dimension, raw_reads):
         if dimension == '2d':
             call = ['pipeline/scripts/fasta_to_consensus_2d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed']
         elif dimension == '1d':
-            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads]
+            call = ['pipeline/scripts/fasta_to_consensus_1d.sh', 'pipeline/refs/KJ776791.2.fasta', sample_stem, 'pipeline/metadata/v2_500.amplicons.ver2.bed', 'usvi-library8-1d-2017-03-31', raw_reads, basecalled_reads]
         print(" ".join(call))
         subprocess.call(" ".join(call), shell=True)
         # annotate consensus
@@ -282,11 +282,12 @@ if __name__=="__main__":
     parser.add_argument('--run_steps', type = int, default = None, nargs='*',
                             help="Numbered steps that should be run (i.e. 1 2 3):\n\t1. Construct sample fastas\n\t2 Construct sample fastqs \n\t3. Process sample fastas \n\t4. Gather consensus fastas \n\t 5. Generate overlap graphs \n\t6. Calculate per-base error rates")
     parser.add_argument('--raw_reads', type=str, default=None, help="directory containing raw .fast5 reads")
+    parser.add_argument('--basecalled_reads', type=str, default=None, help="directory containing basecalled reads")
     params = parser.parse_args()
 
     assert params.dimension in [ '1d', '2d' ], "Unknown library dimension: options are \'1d\' or \'2d\'."
     assert params.raw_reads is not None, "Directory containing raw reads is required."
-
+    assert params.basecalled_reads is not None, "Directory containing basecalled_reads reads is required."
     dd = params.data_dir
     bd = params.build_dir
     sd = params.samples_dir
@@ -318,7 +319,7 @@ if __name__=="__main__":
     def csfq():
         construct_sample_fastqs(sr_mapping, dd, bd)
     def psf():
-        process_sample_fastas(sm_mapping, bd, params.dimension, params.raw_reads)
+        process_sample_fastas(sm_mapping, bd, params.dimension, params.raw_reads, params.basecalled_reads)
     def gcf():
         gather_consensus_fastas(sm_mapping, bd, params.prefix)
     def go():

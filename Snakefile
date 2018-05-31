@@ -1,6 +1,6 @@
 import time
 import subprocess
-from cfg_test import config
+from cfg import config
 import os
 
 BARCODES = [ 'BC%02d' % (s) for s in range(1,13) ]
@@ -82,7 +82,8 @@ rule pipeline:
         dimension=config['dimension'],
         samples=_get_samples,
         raw=config['raw_reads'],
-        build=BUILD_DIR
+        build=BUILD_DIR,
+        basecalled_reads=config['basecalled_reads']
     input:
         "%s/BC01.fastq" % (DEMUX_DIR)
     output:
@@ -92,4 +93,4 @@ rule pipeline:
     conda:
         "envs/anaconda.pipeline-env.yaml"
     shell:
-        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension} --raw_reads {params.raw} --build_dir {params.build}"
+        "python pipeline/scripts/pipeline.py --samples {params.samples} --dimension {params.dimension} --raw_reads {params.raw} --build_dir {params.build} --basecalled_reads {params.basecalled_reads}"

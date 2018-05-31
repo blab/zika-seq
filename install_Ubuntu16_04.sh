@@ -14,7 +14,7 @@ then
   bash $CONDA_SCRIPT -b -p $CONDA_DIR
 
   CONDA_BIN_DIR=$CONDA_DIR/bin
-  export $PATH=$CONDA_BIN_DIR:$PATH
+  export PATH=$CONDA_BIN_DIR:$PATH
 
   rm -rf $CONDA_SCRIPT
   if [[ -z "$(which conda)" ]]
@@ -65,16 +65,16 @@ else
   echo "Nanopolish already installed"
 fi
 
-echo "Building data directories and downloading test data"
-mkdir -p data/usvi-library8-1d-2017-03-31/process/demux
-mkdir data/usvi-library8-1d-2017-03-31/raw_reads
-mkdir data/usvi-library8-1d-2017-03-31/basecalled_reads
-mkdir build
-
-# extract test data
-echo "Downloading and extracting example dataset"
-cd data/usvi-library8-1d-2017-03-31/raw_reads/ && wget https://s3.amazonaws.com/trvrb/zika_seq_example.tar.gz
-tar xvzf data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
-rm data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
+# echo "Building data directories and downloading test data"
+# mkdir -p data/usvi-library8-1d-2017-03-31/process/demux
+# mkdir data/usvi-library8-1d-2017-03-31/raw_reads
+# mkdir data/usvi-library8-1d-2017-03-31/basecalled_reads
+# mkdir build
+#
+# # extract test data
+# echo "Downloading and extracting example dataset"
+# cd data/usvi-library8-1d-2017-03-31/raw_reads/ && wget https://s3.amazonaws.com/trvrb/zika_seq_example.tar.gz
+# tar xvzf data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
+# rm data/usvi-library8-1d-2017-03-31/raw_reads/zika_seq_example.tar.gz
 
 echo "Done!"

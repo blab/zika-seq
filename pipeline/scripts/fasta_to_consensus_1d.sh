@@ -6,6 +6,7 @@ sample=$2
 amplicons=$3
 lib=$4
 raw=$5
+basecalled_reads=$6
 
 if [[ -z "$(which sbatch)" ]]
 then
@@ -35,7 +36,8 @@ then
   $EBROOTNANOPOLISH/nanopolish variants --progress -t 16 --reads $sample.fasta -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
 else
   # source activate zika-seq_nanopolish &> /dev/null
-  nanopolish index -d $raw $sample.fastq
+  nanopolish index -d $raw -s $basecalled_reads/sequencing_summary.txt $sample.fastq
+  #nanopolish index -d $raw $sample.fastq
   nanopolish variants --progress -t 16 --reads $sample.fastq -o $sample.vcf -b $sample.trimmed.sorted.bam -g $ref -vv -w "`pipeline/scripts/nanopolish_header.py $ref`" --snps --ploidy 1
   source activate zika-seq_pipeline &> /dev/null
 fi
