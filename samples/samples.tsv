@@ -82,3 +82,5 @@ COL16	COL/FH16/2015	2016-06-22	colombia	valle_del_cauca	cali	GVI-484286	minion
 COL17	COL/FH17/2015	2016-06-27	colombia	atlantico	barranquilla	vezbar00126	minion
 COL18	COL/FH18/2015	2016-08-08	colombia	atlantico	barranquilla	vezbar00283	minion
 COL19	COL/FH19/2015	2016-08-30	colombia	valle_del_cauca	cali	vezcal0403	minion
+neg_control_6	NEG	XXXX-XX-XX	na	na	na	library7negative	minion
+neg_control_7	NEG	XXXX-XX-XX	na	na	na	library8negative	minion
