@@ -1,6 +1,6 @@
 # Two-step RT-PCR for amplicon generation
 
-_Perform the following in a hood or in a pre-PCR designated area_
+_Perform the following in a clean pre-PCR hood or in a pre-PCR designated area. The hood and all pipettes/tips entering the hood should be cleaned with 10% bleach and 70% ethanol prior to use._
 
 #### Reverse Transcription
 
@@ -16,9 +16,11 @@ _Perform the following in a hood or in a pre-PCR designated area_
   * 10 uL ProtoScript II Reaction Mix
   * 2 uL ProtoScript II Enzyme Mix
 
+_Note: you can also make the this as a mastermix, and pipette once per sample._
+
 5. Place on the thermocycler and run the following program:
 
-  * 25 degrees Celsius for 5 minutes _**note: this step can be swapped for a 5 minute hold at room temperature_
+  * 25 degrees Celsius for 5 minutes _**note: this step can be swapped for a 5 minute hold at room temperature._
   * 48 degrees Celsius for 15 minutes  
   * 80 degrees Celsius for 5 minutes
   * Hold at 10 degrees Celsius
@@ -45,4 +47,4 @@ _Perform the following in a hood or in a pre-PCR designated area_
     * 65 degrees Celsius for 5 minutes
   * Step 3: Hold at 4 degrees Celsius.
 
-_**note: If generating amplicons for Miseq run rather than MinION run, you should do only 35 cycles of amplification, since you will have additional cycles of amplification during library prep_
+_**note: If generating amplicons for Miseq run rather than MinION run, you should do only 35 cycles of amplification, since you will have additional cycles of amplification during library prep._

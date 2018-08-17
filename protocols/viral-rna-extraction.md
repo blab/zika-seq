@@ -8,6 +8,8 @@ _Other equivalent extraction methods can also be used (e.g. Trizol, Omega etc.)_
 
 _In addition to the samples, remember to have an extraction negative control (add nuclease-free water instead of serum/urine)._
 
+_We recommend that this protocol be carried out in a clean, pre-PCR hood that has been wiped down with bleach and ethanol before use. If you have particular concern about sample cross-contamination, gloves should be wiped with a bleach-soaked towellete between each sample. Until particle lysis is complete (end of incubation in step 6), there are infectious virions in the sample. All pipette tips and tubes should be discarded and soaked in 10% bleach for 1 hour to sterilize._
+
 1.	Remove serum samples from freezer and allow to come up to room temperature.
 2.	Prepare stock solution of Buffer AVL + carrier RNA. _Per sample_ add:
 
@@ -34,4 +36,4 @@ _In addition to the samples, remember to have an extraction negative control (ad
 17.	Place column in clean, labelled 1.5 mL tube. Add 50 uL of Buffer AVE at room temperature to column.
 18.	Incubate at room temp for 1 minute.
 19.	Centrifuge at room temp at 8000 rpm for 1 minute.
-20.	Place extracted RNA in eluate on ice if proceeding directly to PCR or store in freezer.
+20.	Place extracted RNA on ice if proceeding directly to PCR or store at -80 degrees Celsius.
