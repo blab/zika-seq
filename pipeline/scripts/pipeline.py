@@ -70,16 +70,16 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                 if fasta.endswith('na.fasta'):
                     fastas.remove(fasta)
                     print('Removed 1 fasta ending in na.fasta')
-                    complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
-                    with open(complete_fasta, 'w+') as f:
-                        with open(fastas[0], 'r') as f1:
-                            print('Writing %s to %s' % (fastas[0],complete_fasta))
-                            content = f1.read()
-                            f.write(content)
-                            with open(fastas[1], 'r') as f2:
-                                print('Writing %s to %s' % (fastas[1],complete_fasta))
-                                content = f2.read()
-                                f.write(content)
+                complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
+                with open(complete_fasta, 'w+') as f:
+                    with open(fastas[0], 'r') as f1:
+                        print('Writing %s to %s' % (fastas[0],complete_fasta))
+                        content = f1.read()
+                        f.write(content)
+                    with open(fastas[1], 'r') as f2:
+                        print('Writing %s to %s' % (fastas[1],complete_fasta))
+                        content = f2.read()
+                        f.write(content)
 
         elif len(fastas) == 1: #if you pooled both pools together and used one barcode PER SAMPLE (not per pool)
             complete_fasta = '%s%s_complete.fasta' % (build_dir, sample)
@@ -90,6 +90,7 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
                     f.write(content)
 
         final_fasta = '%s%s.fasta' % (build_dir, sample)
+
         with open(final_fasta, 'w+') as f:
             (run, barcode) = sr_mapping[sample][0]
             sed_str = '%s%s/alba121/workspace' % (data_dir, run)
@@ -112,18 +113,16 @@ def construct_sample_fastqs(sr_mapping, data_dir, build_dir):
                 if fastq.endswith('na.fastq'):
                     fastqs.remove(fastq)
                     print('Removed 1 fastq ending in na.fastq')
-                    print(fastqs)
-                    complete_fastq = '%s%s.fastq' % (build_dir, sample)
-                    # complete_fastq = '%s%s_complete.fastq' % (build_dir, sample)
-                    with open(complete_fastq, 'w+') as f:
-                        with open(fastqs[0], 'r') as f1:
-                            print('Writing %s to %s' % (fastqs[0],complete_fastq))
-                            content = f1.read()
-                            f.write(content)
-                            with open(fastqs[1], 'r') as f2:
-                                print('Writing %s to %s' % (fastqs[1],complete_fastq))
-                                content = f2.read()
-                                f.write(content)
+                complete_fastq = '%s%s.fastq' % (build_dir, sample)
+                with open(complete_fastq, 'w+') as f:
+                    with open(fastqs[0], 'r') as f1:
+                        print('Writing %s to %s' % (fastqs[0],complete_fastq))
+                        content = f1.read()
+                        f.write(content)
+                    with open(fastqs[1], 'r') as f2:
+                        print('Writing %s to %s' % (fastqs[1],complete_fastq))
+                        content = f2.read()
+                        f.write(content)
 
         elif len(fastqs) == 1: #pools were pooled prior to sequencing, so each sample has only 1 fastq
             complete_fastq = '%s%s.fastq' % (build_dir, sample)
