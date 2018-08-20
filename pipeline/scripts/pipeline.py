@@ -62,6 +62,8 @@ def construct_sample_fastas(sr_mapping, data_dir, build_dir):
     for sample in sr_mapping:
         # Grab a matched pair of barcode fastas; global paths
         fastas = [ '%s%s/process/demux/%s.fasta' % (data_dir, run, barcode) for (run, barcode) in sr_mapping[sample] ]
+        print "sample {0} contains {1} fasta file(s).".format(sample,len(fastas))
+        print (fastas[0],fastas[1])
 
         if len(fastas) == 2:         # if you have barcoded the two pools separately
             for fasta in fastas:
