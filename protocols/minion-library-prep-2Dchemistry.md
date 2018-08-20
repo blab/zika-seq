@@ -1,4 +1,4 @@
-# MinION library preparation
+# MinION library preparation (2D chemistry, deprecated)
 
 #### Normalize amplicon concentrations
 
