@@ -38,13 +38,13 @@ Prepare two primer pools by mixing equal volumes of each primer. To help normali
 |400_3_out_L  |400_3_out_R  |
 |400_9_out_L  |400_9_out_R  |
 |400_21_out_L |400_21_out_R |
-|400_20_out_L |400_20_out_R |
 |400_33_out_L |400_33_out_R |
 
 |Pool 2       |             |
 |-------------|-------------|
 |400_8_out_L  |400_8_out_R  |
 |400_14_out_L |400_14_out_R |
+|400_20_out_L |400_20_out_R |
 |400_16_out_L |400_16_out_R |
 |400_34_out_L |400_34_out_R |
 
