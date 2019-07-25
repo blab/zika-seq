@@ -60,7 +60,7 @@ rule demultiplex_full_fasta:
     output:
         "%s/BC01.fastq" % (DEMUX_DIR)
     shell:
-        "porechop -i %s/workspace/pass/%s -b %s --barcode_threshold 75 --threads 8 --check_reads 100000" % (BASECALLED_READS, FASTQ, DEMUX_DIR)
+        "porechop -i %s/workspace/pass/%s -b %s --barcode_threshold 75 --discard_middle --require_two_barcodes --threads 8 --check_reads 100000" % (BASECALLED_READS, FASTQ, DEMUX_DIR)
 
 # rule gunzip_demuxed_fastas:
 #     input:

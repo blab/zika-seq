@@ -94,8 +94,9 @@ albacore/
 nanopolish/
 Porechop/
 
-# Bam files
+# Ignore Bam files
 *.bam
+output/bam-files/*
 
 # Snakemage generated files
 *.snakemake/*
